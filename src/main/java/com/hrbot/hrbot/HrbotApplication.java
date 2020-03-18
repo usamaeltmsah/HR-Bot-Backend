@@ -9,19 +9,20 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 public class HrbotApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(HrbotApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(HrbotApplication.class, args);
+	}
 
-    @RequestMapping("/send_answer")
-    public double evalAnswer(String answer) {
+    @RequestMapping("/eval_answer")
+    public double evalAnswer(String answer)
+    {
         double score = 0.0;
 
         /*
-         *
-         * ToDo: Receive score from evalModel, and save it in score variable
-         *
-         * */
+        *
+        * ToDo: Receive score from evalModel, and save it in score variable
+        *
+        * */
 
         return score;
     }
