@@ -50,5 +50,4 @@ public class HrbotApplication {
         }
         return saved;
     }
-
 }
