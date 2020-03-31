@@ -28,4 +28,14 @@ class Answer extends Model
     {
         return $this->belongsTo(Question::class);
     }
+
+    /**
+     * The answer should be an answer for some question
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function interview(): BelongsTo
+    {
+        return $this->belongsTo(interview::class);
+    }
 }
