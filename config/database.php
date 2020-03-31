@@ -158,5 +158,6 @@ return [
     'tables' => [
         'jobs' => 'jobs',
         'questions' => 'questions',
+        'answers' => 'answers',
     ],
 ];
