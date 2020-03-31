@@ -161,5 +161,6 @@ return [
         'answers' => 'answers',
         'job_question'=> 'job_question',
         'interviews' => 'interviews',
+        'interview_answer' => 'interview_answer',
     ],
 ];
