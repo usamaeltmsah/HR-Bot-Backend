@@ -159,5 +159,6 @@ return [
         'jobs' => 'jobs',
         'questions' => 'questions',
         'answers' => 'answers',
+        'job_question'=> 'job_question',
     ],
 ];
