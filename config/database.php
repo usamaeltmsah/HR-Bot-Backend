@@ -157,5 +157,6 @@ return [
     */
     'tables' => [
         'jobs' => 'jobs',
+        'questions' => 'questions',
     ],
 ];
