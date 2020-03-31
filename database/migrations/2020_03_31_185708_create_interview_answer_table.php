@@ -19,9 +19,9 @@ class CreateInterviewAnswerTable extends Migration
             $table->timestamps();
 
             // Indexes
-            $table->foreign('job_id')
+            $table->foreign('interview_id')
                   ->references('id')
-                  ->on(config('database.tables.jobs'))
+                  ->on(config('database.tables.interviews'))
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
