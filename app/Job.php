@@ -33,7 +33,7 @@ class Job extends Model
     /**
      * A job may have one or more done interviews
      * 
-     * @return  
+     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function interviews(): HasMany
     {
