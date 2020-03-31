@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Job extends Model
@@ -29,4 +30,13 @@ class Job extends Model
         return $this->belongsToMany(Question::class)->withTimestamps();
     }
 
+    /**
+     * A job may have one or more done interviews
+     * 
+     * @return  
+     */
+    public function interviews(): HasMany
+    {
+        return $this->hasMany(Interview::class);
+    }
 }

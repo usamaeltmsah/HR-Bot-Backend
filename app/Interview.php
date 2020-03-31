@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Interview extends Model
 {
@@ -16,5 +17,15 @@ class Interview extends Model
         parent::__construct($attributes);
 
         $this->setTable(config('database.tables.interviews'));
+    }
+
+    /**
+     * The interview is done for a specific job
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function job(): BelongsTo
+    {
+        return $this->belongsTo(Job::class);
     }
 }
