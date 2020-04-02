@@ -17,4 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/jobs/{job}/questions', 'JobController@getQuestions')->name('job.questions');
+Route::get('/jobs/{job}/questions', 'JobQuestionsController@getQuestions')->name('job.questions');
