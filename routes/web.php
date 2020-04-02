@@ -19,3 +19,5 @@ Route::get('/', function () {
 
 
 Route::get('ansEval/{score}', 'AnswerController@evalAnswer');
+Route::post('interview/answer','AnswerController@addAnswerOfQuestionTODB')->name('interview.answer');
+Route::get('interview/answer/{answerId}','AnswerController@getAnswerById');

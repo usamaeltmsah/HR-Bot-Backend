@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Answer extends Model
 {
+    protected $fillable=[
+
+        'body',
+        'score',
+        'question_id',
+        'interview_id'
+    ];
     /**
      * Create a new Eloquent model instance.
      *
