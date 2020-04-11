@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('ansEval/{score}', 'AnswerController@evalAnswer');
+Route::post('interview/answer','AnswerController@addAnswerOfQuestionTODB')->name('interview.answer');
+Route::get('interview/answer/{answerId}','AnswerController@getAnswerById');
