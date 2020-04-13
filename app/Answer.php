@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\AnswerCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -13,6 +14,14 @@ class Answer extends Model
      * @param array $attributes
      */
     protected $fillable = ['score', 'body', 'question_id'];
+
+    /**
+     * The event map for the model
+     * @var array $dispatchesEvents
+    */
+    protected $dispatchesEvents = [
+        'created' => AnswerCreated::class,
+    ];
 
     public function __construct(array $attributes = [])
     {
