@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Events\AnswerCreated;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -22,7 +23,6 @@ class Answer extends Model
     protected $dispatchesEvents = [
         'created' => AnswerCreated::class,
     ];
-
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -48,5 +48,21 @@ class Answer extends Model
     public function interview(): BelongsTo
     {
         return $this->belongsTo(interview::class);
+    }
+
+    /**
+     * Save the answer and its evaluation(score) in the database
+     *
+     * @param double $score
+     * @param string $answer
+     */
+    public function saveAnswerRow($score, $answer)
+    {
+        /**
+         * ToDo: There's are some missing foreign keys should be assigned to make it possible to save the answer.
+        */
+        $this->score = $score;
+        $this->body = $answer;
+        $this->save();
     }
 }

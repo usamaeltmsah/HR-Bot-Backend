@@ -16,6 +16,7 @@ class AnswerController extends Controller
     protected static function evalAnswer($answerBody)
     {
 //        $score = "GET(API)";
+
         $score = 0.0;
         /*
          *
@@ -24,7 +25,6 @@ class AnswerController extends Controller
          * */
         return $score;
     }
-
     /**
      * Save the answer and its evaluation(score) in the database
      *

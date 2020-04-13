@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
 /**
  * JUST FOR TESTING,
  * YOU CAN REMOVE THEM.
@@ -29,4 +28,3 @@ Route::get('event/test', function (){
     $ans->question_id = 4;
    return event(new App\Events\AnswerCreated($ans)) ;
 });
-
