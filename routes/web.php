@@ -26,5 +26,5 @@ Route::get('event/test', function (){
     $ans = new \App\Answer();
     $ans->body = "THIS IS AN ANSWER";
     $ans->question_id = 4;
-   return event(new App\Events\AnswerCreated($ans)) ;
+   return event(new App\Events\AnswerCreated($ans));
 });
