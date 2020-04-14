@@ -34,7 +34,7 @@ class AnswerController extends Controller
      */
     public static function sendAnsEvalToDB($answerObj)
     {
-        $score = AnswerController::evalAnswer($answerObj->body);
+        $score = self::evalAnswer($answerObj->body);
         $ans = new Answer();
         /**
          * ToDo: There's are some missing foreign keys should be assigned to make it possible to save the answer.
