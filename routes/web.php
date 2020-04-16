@@ -16,15 +16,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-/**
- * JUST FOR TESTING,
- * YOU CAN REMOVE THEM.
- */
-Route::get('ansEval/{answer}', 'AnswerController@sendAnsEvalToDB');
-
-Route::get('event/test', function (){
-    $ans = new \App\Answer();
-    $ans->body = "THIS IS AN ANSWER";
-    $ans->question_id = 4;
-   return event(new App\Events\AnswerCreated($ans));
-});
