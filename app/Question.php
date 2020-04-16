@@ -40,4 +40,14 @@ class Question extends Model
     {
         return $this->hasMany(Answer::class);
     }
+
+    /**
+     * The question may belong to one or more skill
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function skills(): BelongsToMany
+    {
+        return $this->belongsToMany(Skill::class)->withTimestamps();
+    }
 }

@@ -168,5 +168,8 @@ return [
         'job_question'=> 'job_question',
         'interviews' => 'interviews',
         'interview_answer' => 'interview_answer',
+        'skills' => 'skills',
+        'recruiters' => 'recruiters',
+        'position_skill' => 'position_skill',
     ],
 ];

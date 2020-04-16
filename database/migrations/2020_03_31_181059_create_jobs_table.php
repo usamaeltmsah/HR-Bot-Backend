@@ -17,18 +17,19 @@ class CreateJobsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('description');
-            $table->timestamp('accepts_interviews_form');
-            $table->string('accepts_interviews_until');
+            $table->dateTime('accepts_interviews_from datetime');
+            $table->dateTime('accepts_interviews_until');
+            $table->integer('interview_duration');
             $table->string('status');
-            $table->integer('recruiter_id')->unsigned();
+            $table->integer('recruiter_id')->unsigned()->nullable();
             $table->timestamps();
 
             // Indexes
-            $table->foreign('recruiter_id')
-                ->references('id')
-                ->on(config('database.tables.recruiter'))
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+//            $table->foreign('recruiter_id')
+//                ->references('id')
+//                ->on(config('database.tables.recruiters'))
+////                ->onDelete('cascade')
+//                ->onUpdate('cascade');
         });
     }
 

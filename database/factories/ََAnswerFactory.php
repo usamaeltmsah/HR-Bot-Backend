@@ -9,5 +9,6 @@ $factory->define(Answer::class, function (Faker $faker) {
     return [
         'body' => $faker->paragraph(),
         'question_id' => 1,
+        'score' => 5.7,
     ];
 });

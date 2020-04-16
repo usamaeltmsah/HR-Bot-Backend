@@ -18,7 +18,7 @@ class CreateRecruitersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('phone')->unique()->nullable();
+            $table->string('phone')->nullable();
             $table->timestamps();
         });
     }
