@@ -28,7 +28,3 @@ Route::get('event/test', function (){
     $ans->question_id = 4;
    return event(new App\Events\AnswerCreated($ans));
 });
-
-//Route::get('/skills', 'SkillsController@index');
-//Route::get('/skills/create', 'SkillsController@create');
-//Route::get('/skills/{skill}', 'SkillsController@show');
