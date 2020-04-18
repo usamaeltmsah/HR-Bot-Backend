@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/jobs/{job}/questions', 'JobQuestionsController@getQuestions')->name('job.questions');
+
+Route::post('jobs/{job}/interviews/{interview}/questions/{question}/answers','AnswersController@store');

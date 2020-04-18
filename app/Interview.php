@@ -22,7 +22,7 @@ class Interview extends Model
 
     /**
      * The interview is done for a specific job
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function job(): BelongsTo
@@ -32,11 +32,12 @@ class Interview extends Model
 
     /**
      * The interview may have one or more answer
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);
     }
+
 }
