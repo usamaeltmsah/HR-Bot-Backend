@@ -150,4 +150,23 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | HRBOT Database Tables
+    |--------------------------------------------------------------------------
+    |
+    | Specify your database tables that should be used to store your
+    | resources. A sensible defaults has been defined for you, but
+    | you may use whatever you like. The table you want to use
+    | must have the same structure as of the default ones.
+    |
+    */
+    'tables' => [
+        'jobs' => 'jobs',
+        'questions' => 'questions',
+        'answers' => 'answers',
+        'job_question'=> 'job_question',
+        'interviews' => 'interviews',
+        'interview_answer' => 'interview_answer',
+    ],
 ];
