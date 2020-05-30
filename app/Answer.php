@@ -23,6 +23,7 @@ class Answer extends Model
     protected $dispatchesEvents = [
         'created' => AnswerCreated::class,
     ];
+    
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
