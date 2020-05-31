@@ -15,7 +15,7 @@ jobs:
       # Using the RAM variation mitigates I/O contention
       # for database intensive operations.
       # - image: circleci/mysql:5.7-ram
-      #
+      # 
       # - image: redis:3
 
     steps:
@@ -29,11 +29,11 @@ jobs:
       # composer cache
       - restore_cache:
           keys:
-            # "composer.json" can be used if "composer.json"
-            # is not committed to the repository.
-            - v1-dependencies-{{ checksum "composer.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+          # "composer.json" can be used if "composer.json"
+          # is not committed to the repository.
+          - v1-dependencies-{{ checksum "composer.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
 
       - run: composer install -n --prefer-dist
 
