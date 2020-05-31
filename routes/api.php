@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/jobs/{job}/questions', 'JobQuestionsController@getQuestions')->name('job.questions');
+
+Route::post('/interviews/{interview}/questions/{question}/answers','AnswersController@store');

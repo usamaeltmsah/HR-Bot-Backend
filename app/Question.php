@@ -22,7 +22,7 @@ class Question extends Model
 
     /**
      * The question may belong to one or more job
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function jobs(): BelongsToMany
@@ -32,11 +32,12 @@ class Question extends Model
 
     /**
      * The question may have one or more answer
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function answers(): HasMany
     {
         return $this->hasMany(Answer::class);
     }
+
 }

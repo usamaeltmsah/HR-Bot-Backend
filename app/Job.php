@@ -22,7 +22,7 @@ class Job extends Model
 
     /**
      * The job may need answers for one or more question
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function questions(): BelongsToMany
@@ -32,7 +32,7 @@ class Job extends Model
 
     /**
      * A job may have one or more done interviews
-     * 
+     *
      * @return  \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function interviews(): HasMany
