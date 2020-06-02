@@ -16,10 +16,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('event/test', function (){
-    return \App\Answer::create([
-    	'body' => "THIS IS AN ANSWER",
-    	'question_id' => 4
-    ]);
-});

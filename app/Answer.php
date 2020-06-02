@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Events\AnswerCreated;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
