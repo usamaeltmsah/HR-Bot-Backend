@@ -20,7 +20,6 @@ class Question extends Model
 
         $this->setTable(config('database.tables.questions'));
     }
-  
     /**
      * The question may belong to one or more job
      * 
