@@ -18,7 +18,7 @@ class AnswerController extends Controller
         return new AnswerResourceCollection(Answer::paginate());
     }
 
-    /**dispatchesEvents
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
