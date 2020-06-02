@@ -19,9 +19,10 @@ class Answer extends Model
      * The event map for the model
      * @var array $dispatchesEvents
     */
-//    protected $dispatchesEvents = [
-//        'created' => AnswerCreated::class,
-//    ];
+    protected $dispatchesEvents = [
+        'created' => AnswerCreated::class,
+    ];
+    
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
