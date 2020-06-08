@@ -40,4 +40,17 @@ class LoginController extends Controller
             ]
         ], 200);
     }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request): Response
+    {
+        $request->user()->token()->revoke();
+
+        return new Response('', 204);
+    }
 }
