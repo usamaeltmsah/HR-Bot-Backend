@@ -13,7 +13,8 @@ class JobController extends Controller
     }
 
     public function show($id){
-        dd('show');
+        $row = Job::findOrFail($id);
+        return $row;
     }
 
     public function store($id, Request $request){

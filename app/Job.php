@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
 
-    protected $fillable = [ 'title', 'desc', 'accept_interviews_from', 'accept_interviews_until', 'interviews_duration', 'recruiter_id'];
+    protected $fillable = [
+        'title',
+        'desc',
+        'accept_interviews_from',
+        'accept_interviews_until',
+        'interviews_duration',
+        'recruiter_id'
+    ];
 
 
     public function questions(){
