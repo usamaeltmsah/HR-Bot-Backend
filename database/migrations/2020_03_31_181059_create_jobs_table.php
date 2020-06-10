@@ -15,7 +15,24 @@ class CreateJobsTable extends Migration
     {
         Schema::create(config('database.tables.jobs'), function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->text('desc');
+            $table->dateTime('accept_interviews_from');
+            $table->dateTime('accept_interviews_until');
+            $table->dateTime('interviews_duration');
+            $table->integer('recruiter_id');
             $table->timestamps();
+
+
+            /*
+             * must be run after creating the recruiters table
+             */
+
+//            $table->foreign('recruiter_id')
+//                ->references('id')
+//                ->on('recruiters')
+//                ->onDelete('cascade')
+//                ->onUpdate('cascade');
         });
     }
 
