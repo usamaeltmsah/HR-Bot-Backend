@@ -110,6 +110,10 @@ class JobsController extends Controller
             $rows = $rows->where('title', 'like', '%' . request()->get('title') . '%');
         }
 
+        if(request()->has('available') && request()->get('available') == 'true'){
+            $rows = $rows->where('accept_interviews_until', '>', now() );
+        }
+
         return $rows;
     }
 
