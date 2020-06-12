@@ -23,3 +23,4 @@ Route::apiResource('/skills', 'SkillController');
 Route::apiResource('/questions', 'QuestionController');
 
 Route::apiResource('/answers', 'AnswerController');
+Route::apiResource('jobs', 'JobsController');
