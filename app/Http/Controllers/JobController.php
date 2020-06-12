@@ -50,13 +50,31 @@ class JobController extends Controller
     }
 
     public function update(Job $job, Request $request){
-        try {
-            $job->update($request->all());
-            $res = ApiHelper::createApiResponse(false, 200, 'Job updated successfully', null);
-            return response()->json($res, 200);
-        }catch (Exception $exception){
-            $res = ApiHelper::createApiResponse(true, 400, 'Job update failed', null);
+
+        $validator = Validator::make($request->all(),[
+            'title'                     => ['required', 'string'],
+            'desc'                      => ['required', 'string'],
+            'accept_interviews_from'    => ['required', 'date_format:Y-m-d H:i:s'],
+            'accept_interviews_until'   => ['required', 'date_format:Y-m-d H:i:s'],
+            'interviews_duration'       => ['required', 'date_format:Y-m-d H:i:s']
+        ]);
+
+        if($validator->fails()){
+            $res = ApiHelper::createApiResponse(true, 400, $validator->errors()->first(), null);
             return response()->json($res, 400);
+        }else{
+            try {
+                $payload = $request->all();
+                if(isset($payload['recruiter_id'])){
+                    unset($payload['recruiter_id']);
+                }
+                $job->update($payload);
+                $res = ApiHelper::createApiResponse(false, 200, 'Job updated successfully', null);
+                return response()->json($res, 200);
+            }catch (Exception $exception){
+                $res = ApiHelper::createApiResponse(true, 400, 'Job update failed', null);
+                return response()->json($res, 400);
+            }
         }
 
     }
