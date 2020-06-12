@@ -12,7 +12,9 @@ class JobsController extends Controller
 {
     public function index(){
         try{
-            $jobs = Job::orderBy('id', 'desc')->paginate();
+            $rows = new Job();
+            $rows = $this->filter($rows);
+            $jobs = $rows->orderBy('id', 'desc')->paginate();
             $res = ApiHelper::createApiResponse(false, 200, 'there are no jobs', $jobs->items());
             $res['total'] = $jobs->total();
             $res['perPage'] = $jobs->perPage();
@@ -102,6 +104,15 @@ class JobsController extends Controller
 
     }
 
+
+    protected function filter($rows){
+        if(request()->has('title') && request()->get('title') != ''){
+            $rows = $rows->where('title', 'like', '%' . request()->get('title') . '%');
+        }
+
+        return $rows;
+    }
+
     /**
      * @param $exception
      * @return \Illuminate\Http\JsonResponse
@@ -144,5 +155,5 @@ class JobsController extends Controller
         ]);
         return $validator;
     }
-    
+
 }
