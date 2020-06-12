@@ -21,6 +21,10 @@ class BackEndController extends Controller{
         try{
             $rows = $this->model;
             $rows = $this->filter($rows);
+            $with = $this->with();
+            if(!empty($with)){
+                $rows = $rows->with($with);
+            }
             $rows = $rows->orderBy('id', 'desc')->paginate();
             if($rows->total() > 0){
                 $res = ApiHelper::createApiResponse(false, 200, '', $rows->items());
@@ -133,6 +137,11 @@ class BackEndController extends Controller{
     /** filter data in index method by attaching parameters */
     protected function filter($rows){
         return $rows;
+    }
+
+    /** if you want to get some methods with data to improve the performance of the queries */
+    protected function with(){
+        return [];
     }
 
     /** set reply to the exception of the database in json format */
