@@ -21,3 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
 Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout');
+
+Route::apiResource('/skills', 'SkillController');
+Route::apiResource('/questions', 'QuestionController');
+Route::apiResource('/answers', 'AnswerController');
