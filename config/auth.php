@@ -45,6 +45,16 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+
+        'recruiter' => [
+            'driver' => 'passport',
+            'provider' => 'recruiters',
+        ],
+
+        'applicant' => [
+            'driver' => 'passport',
+            'provider' => 'applicants',
+        ],
     ],
 
     /*
@@ -70,10 +80,15 @@ return [
             'model' => App\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'recruiters' => [
+            'driver' => 'eloquent',
+            'model' => App\Recruiter::class,
+        ],
+
+        'applicants' => [
+            'driver' => 'eloquent',
+            'model' => App\Applicant::class,
+        ],
     ],
 
     /*
