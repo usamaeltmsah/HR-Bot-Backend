@@ -2,42 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ApiHelper;
+use App\Skill;
 use App\Http\Requests\SkillFormRequest;
 use App\Http\Resources\SkillResource;
-use App\Skill;
-use Illuminate\Http\Request;
-use Validator;
 
-class SkillsController extends BackEndController{
+class SkillsController extends Controller{
 
-    public function __construct(Skill $model)
-    {
-        parent::__construct($model);
+    public function index(){
+        $skills = Skill::orderBy('id', 'desc')->paginate();
+        return SkillResource::collection($skills);
     }
-
-    /**
-     * @overwrite to
-     * construct the json response for index method
-     */
-    protected function responsePartialContent($rows){
-
-        return SkillResource::collection($rows);
-    }
-
 
     public function show(Skill $skill){
         return new SkillResource($skill);
     }
-
-    /** validation on the request to store a new skill */
-    protected function storeValidator(Request $request){
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string']
-        ]);
-        return $validator;
-    }
-
 
     public function store(SkillFormRequest $request){
 
