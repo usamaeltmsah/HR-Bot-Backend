@@ -7,6 +7,13 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class SkillResourceCollection extends ResourceCollection
 {
     /**
+     * Indicates if the resource's collection keys should be preserved.
+     *
+     * @var bool
+     */
+    public $preserveKeys = true;
+
+    /**
      * Transform the resource collection into an array.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -14,6 +21,8 @@ class SkillResourceCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'data' => $this->collection
+        ];
     }
 }
