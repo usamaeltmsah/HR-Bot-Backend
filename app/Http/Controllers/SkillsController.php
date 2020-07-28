@@ -17,12 +17,13 @@ class SkillsController extends BackEndController{
     }
 
     /**
-     * overwrite to
+     * @overwrite to
      * construct the json response for index method
      */
     protected function responsePartialContent($rows){
+        $error_message = (sizeof($rows) == 0) ? 'Empty List' : 'partial content';
         return (new SkillResourceCollection($rows))
-            ->additional(['success' => true, 'code' => 206, 'message' => 'partial content'])
+            ->additional(['success' => true, 'code' => 206, 'message' => $error_message])
             ->response()->setStatusCode(206);
     }
 
