@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ApiHelper;
-use App\Job;
+use App\Http\Resources\SkillResourceCollection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Validator;
@@ -19,6 +18,24 @@ class BackEndController extends Controller{
 
     public function index(){
         try{
+
+            $rows = $this->getRows();
+            return $this->responsePartialContent($rows);
+
+
+        }catch (Exception $exception){
+
+            throw $exception;
+
+        }
+    }
+
+    /** construct the json response for index method */
+    protected function responsePartialContent($rows){
+        return response($rows, 206);
+    }
+
+    protected function getRows(){
             $rows = $this->model;
             $rows = $this->filter($rows);
             $with = $this->with();
@@ -26,20 +43,7 @@ class BackEndController extends Controller{
                 $rows = $rows->with($with);
             }
             $rows = $rows->orderBy('id', 'desc')->paginate();
-            if($rows->total() > 0){
-                $res = ApiHelper::createApiResponse(false, 200, '', $rows->items());
-                $res['total'] = $rows->total();
-                $res['perPage'] = $rows->perPage();
-                $res['currentPage'] = $rows->currentPage();
-                return response()->json($res, 200);
-            }else{
-                $errorMessage = 'There Are No ' . $this->getPluralModelName();
-                $this->responseForBadRequest($errorMessage);
-            }
-
-        }catch (Exception $exception){
-            return $this->throwDatabaseException($exception);
-        }
+            return $rows;
     }
 
     public function show($id){
@@ -144,14 +148,9 @@ class BackEndController extends Controller{
         return [];
     }
 
-    /** set reply to the exception of the database in json format */
-    protected function throwDatabaseException($exception){
-        $res = ApiHelper::createApiResponse(true, 400, $exception, null);
-        return response()->json($res, 400);
-    }
-
     /** set reply to the Bad requests in json format */
     protected function responseForBadRequest($errorMessage){
+
         $res = ApiHelper::createApiResponse(true, 400, $errorMessage, null);
         return response()->json($res, 400);
     }
