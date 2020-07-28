@@ -37,20 +37,15 @@ class SkillsController extends Controller{
        return new SkillResource($skill);
    }
 
-//    /**
-//     * Remove the specified resource from storage.
-//     *
-//     * @param  \App\Skill  $skill
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function destroy(Skill $skill)
-//    {
-//        $skill->delete();
-
-// //        $response = [
-// //            'msg' => 'Skill'.$skill.'successfully deleted',
-// //        ];
-// //        return response()->json($response, 204);
-//        return response()->json();
-//    }
+   /**
+    * Remove the specified skill from storage.
+    *
+    * @param  \App\Skill  $skill
+    * @return \Illuminate\Http\Response
+    */
+   public function destroy(Skill $skill)
+   {
+       $skill->delete();
+       return response(null, 204);
+   }
 }
