@@ -2,91 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\QuestionResource;
-use App\Http\Resources\QuestionResourceCollection;
 use App\Question;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Resources\QuestionResource;
+use App\Http\Requests\QuestionFormRequest;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class QuestionController extends BackEndController
-{
-    public function __construct(Question $model)
-    {
-        parent::__construct($model);
+class QuestionsController extends Controller {
+
+    /**
+     * Get all the questions
+     * 
+     * @return \Illuminate\Http\Resources\Json\ResourceCollection
+     */
+    public function index(): ResourceCollection {
+        $questions = Question::orderBy('id', 'desc')->paginate();
+        return QuestionResource::collection($questions);
     }
 
     /**
-     * @overwrite to
-     * construct the json response for index method
+     * Get the question with the given id
+     * 
+     * @param  \App\Question $question
+     * @return \App\Http\Resources\QuestionResource
      */
-    protected function responsePartialContent($rows){
-
-        return QuestionResource::collection($rows);
+    public function show(Question $question): QuestionResource {
+        return new QuestionResource($question);
     }
 
     /**
-     * Display a listing of the resource.
-     * @return QuestionResourceCollection|\Illuminate\Http\Response
+     * Store a new question with the given data
+     * 
+     * @param  \App\Http\Requests\QuestionFormRequest $request
+     * @return \App\Http\Resources\QuestionResource
      */
-//    public function index():QuestionResourceCollection
-//    {
-//        return new QuestionResourceCollection(Question::paginate());
-//    }
+    public function store(QuestionFormRequest $request): QuestionResource {
+        $question = Question::create($request->validated());
+        return new QuestionResource($question);
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return QuestionResource|\Illuminate\Http\Response
-     */
-//    public function store(Request $request):QuestionResource
-//    {
-//        $request->validate([
-//            'body' => 'required',
-//        ]);
-//
-//        $question = Question::create($request->all());
-//        return new QuestionResource($question);
-//    }
+   /**
+    * Update the specified question in storage.
+    *
+    * @param  \App\Http\Requests\QuestionFormRequest $request
+    * @param  \App\Question $question
+    * @return \App\Http\Resources\QuestionResource
+    */
+   public function update(QuestionFormRequest $request, Question $question): QuestionResource {
+       $question->update($request->validated());
+       return new QuestionResource($question);
+   }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Question $question
-.idea/workspace.xml
-.idea/php.xml
-.idea/HR-Bot-Backend.iml
-     * @return QuestionResource|\Illuminate\Http\Response
-     */
-//    public function show(Question $question):QuestionResource
-//    {
-//        return new QuestionResource(Question::firstWhere('id', $question->id));
-//    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Question $question
-     * @return QuestionResource|\Illuminate\Http\Response
-     */
-//    public function update(Request $request, Question $question):QuestionResource
-//    {
-//        $question->update($request->all());
-//
-//        return new QuestionResource($question);
-//    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Question  $question
-     * @return \Illuminate\Http\Response
-     */
-//    public function destroy(Question $question)
-//    {
-//        $question->delete();
-//
-//        return response()->json();
-//    }
+   /**
+    * Remove the specified question from storage.
+    *
+    * @param  \App\Question  $question
+    * @return \Illuminate\Http\Response
+    */
+   public function destroy(Question $question): Response {
+       $question->delete();
+       return response(null, 204);
+   }
 }
