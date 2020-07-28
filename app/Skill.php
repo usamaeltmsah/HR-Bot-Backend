@@ -9,13 +9,15 @@ class Skill extends Model
 {
     protected $fillable = ['name'];
 
-    /**
-     * The skill may be required for one or more jobs
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function skills(): BelongsToMany
-    {
-        return $this->belongsToMany(Job::class)->withTimestamps();
+
+    public function jobs(): BelongsToMany{
+        return $this->belongsToMany(Job::class, 'skills_jobs');
     }
+
+    /** it should work when make a relation between skills and questions */
+//    public function questions(): BelongsToMany{
+//        return $this->belongsToMany(Question::class, 'skills_questions');
+//    }
+
+
 }

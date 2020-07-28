@@ -38,6 +38,9 @@ class QuestionController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Question $question
+.idea/workspace.xml
+.idea/php.xml
+.idea/HR-Bot-Backend.iml
      * @return QuestionResource|\Illuminate\Http\Response
      */
     public function show(Question $question):QuestionResource
