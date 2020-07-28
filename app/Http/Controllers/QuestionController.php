@@ -20,10 +20,8 @@ class QuestionController extends BackEndController
      * construct the json response for index method
      */
     protected function responsePartialContent($rows){
-        $error_message = (sizeof($rows) == 0) ? 'Empty List' : 'partial content';
-        return (new QuestionResourceCollection($rows))
-            ->additional(['success' => true, 'code' => 206, 'message' => $error_message])
-            ->response()->setStatusCode(206);
+
+        return QuestionResource::collection($rows);
     }
 
     /**

@@ -3,9 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="3aac0f10-8b73-4d61-b77c-a933cc98d980" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BackEndController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BackEndController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/QuestionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/QuestionController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SkillsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SkillsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/QuestionResourceCollection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/SkillResourceCollection.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,6 +189,7 @@
       <workItem from="1595913403956" duration="4449000" />
       <workItem from="1595933746804" duration="2486000" />
       <workItem from="1595941860338" duration="2098000" />
+      <workItem from="1595945548708" duration="3960000" />
     </task>
     <servers />
   </component>
@@ -197,9 +201,13 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="350" y="0" width="646" height="723" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1366.728@0.0.1366.728" timestamp="1591978039885" />
-    <state x="416" y="121" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1595943791912">
+    <state x="416" y="113" width="524" height="495" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595947725096">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="416" y="121" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1595943791912" />
+    <state x="416" y="113" width="524" height="495" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1595947725096" />
+    <state x="416" y="121" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1595949281916">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="416" y="121" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1595949281916" />
   </component>
 </project>

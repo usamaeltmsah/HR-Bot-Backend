@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiHelper;
+use App\Http\Requests\SkillFormRequest;
 use App\Http\Resources\SkillResource;
-use App\Http\Resources\SkillResourceCollection;
 use App\Skill;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -21,13 +21,14 @@ class SkillsController extends BackEndController{
      * construct the json response for index method
      */
     protected function responsePartialContent($rows){
-        $error_message = (sizeof($rows) == 0) ? 'Empty List' : 'partial content';
-        return (new SkillResourceCollection($rows))
-            ->additional(['success' => true, 'code' => 206, 'message' => $error_message])
-            ->response()->setStatusCode(206);
+
+        return SkillResource::collection($rows);
     }
 
 
+    public function show(Skill $skill){
+        return new SkillResource($skill);
+    }
 
     /** validation on the request to store a new skill */
     protected function storeValidator(Request $request){
@@ -35,6 +36,13 @@ class SkillsController extends BackEndController{
             'name' => ['required', 'string']
         ]);
         return $validator;
+    }
+
+
+    public function store(SkillFormRequest $request){
+
+          $skill = Skill::create($request->validated());
+          return new SkillResource($skill);
     }
 
 //    /**

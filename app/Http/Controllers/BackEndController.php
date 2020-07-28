@@ -45,36 +45,25 @@ class BackEndController extends Controller{
             return $rows;
     }
 
-    public function show($id){
-        $row = $this->model->find($id);
-        if($row){
-            $res = ApiHelper::createApiResponse(false, 200, '', $row);
-            return response()->json($res, 200);
-        }else{
-            $errorMessage = $this->getModelName() . ' Does Not Exist';
-            return $this->responseForBadRequest($errorMessage);
-        }
 
-    }
-
-    public function store(Request $request){
-
-        $validator = $this->storeValidator($request);
-
-        if($validator->fails()) {
-            $errorMessage = $validator->errors()->first();
-            $this->responseForBadRequest($errorMessage);
-        }else{
-            try{
-                $this->model->create($request->all());
-                $res = ApiHelper::createApiResponse(false, 201, $this->getModelName() . ' Added Successfully', null);
-                return response()->json($res, 201);
-            }catch (Exception $exception){
-                return $this->throwDatabaseException($exception);
-            }
-
-        }
-    }
+//    public function store(Request $request){
+//
+//        $validator = $this->storeValidator($request);
+//
+//        if($validator->fails()) {
+//            $errorMessage = $validator->errors()->first();
+//            $this->responseForBadRequest($errorMessage);
+//        }else{
+//            try{
+//                $this->model->create($request->all());
+//                $res = ApiHelper::createApiResponse(false, 201, $this->getModelName() . ' Added Successfully', null);
+//                return response()->json($res, 201);
+//            }catch (Exception $exception){
+//                return $this->throwDatabaseException($exception);
+//            }
+//
+//        }
+//    }
 
     public function update($id, Request $request){
 
