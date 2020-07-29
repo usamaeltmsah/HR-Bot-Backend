@@ -14,10 +14,9 @@ class Skill extends Model
         return $this->belongsToMany(Job::class, 'skills_jobs');
     }
 
-    /** it should work when make a relation between skills and questions */
-//    public function questions(): BelongsToMany{
-//        return $this->belongsToMany(Question::class, 'skills_questions');
-//    }
+    public function questions(): BelongsToMany{
+        return $this->belongsToMany(Question::class, 'skill_questions');
+    }
 
 
 }

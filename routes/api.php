@@ -55,3 +55,8 @@ Route::apiResource('/jobs', 'JobsController');
  *  - any applicant didn't access this interview before
  */
 Route::get('/jobs/{job}/questions', 'JobsController@getJobQuestions');
+/**
+ * people who can access this link
+ * - just all recruiters
+ */
+Route::get('/skills/{skill}/questions', 'SkillsController@getSkillQuestions');

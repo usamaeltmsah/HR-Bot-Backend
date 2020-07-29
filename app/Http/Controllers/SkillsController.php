@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\QuestionResource;
 use App\Skill;
 use Illuminate\Http\Response;
 use App\Http\Resources\SkillResource;
@@ -12,7 +13,7 @@ class SkillsController extends Controller {
 
     /**
      * Get all the skills
-     * 
+     *
      * @return \Illuminate\Http\Resources\Json\ResourceCollection
      */
     public function index(): ResourceCollection {
@@ -22,7 +23,7 @@ class SkillsController extends Controller {
 
     /**
      * Get the skill with the given id
-     * 
+     *
      * @param  \App\Skill $skill
      * @return \App\Http\Resources\SkillResource
      */
@@ -32,7 +33,7 @@ class SkillsController extends Controller {
 
     /**
      * Store a new skill with the given data
-     * 
+     *
      * @param  \App\Http\Requests\SkillFormRequest $request
      * @return \App\Http\Resources\SkillResource
      */
@@ -63,5 +64,15 @@ class SkillsController extends Controller {
    public function destroy(Skill $skill): Response {
        $skill->delete();
        return response(null, 204);
+   }
+
+    /**
+     * get all questions related to a specific skill
+     * @param Skill $skill
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+   public function getSkillQuestions(Skill $skill){
+        $questions = $skill->questions;
+        return QuestionResource::collection($questions);
    }
 }
