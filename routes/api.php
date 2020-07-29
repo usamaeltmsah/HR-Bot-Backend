@@ -22,6 +22,38 @@ Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
 Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout');
 
-Route::apiResource('/skills', 'SkillController');
-Route::apiResource('/questions', 'QuestionController');
+/**
+ * crud operations for skills
+ * people who can access this link
+ * - recruiter can create a new skill
+ * - recruiter can Update/ Delete/ retrieve a skill who created before
+ */
+Route::apiResource('/skills', 'SkillsController');
+/**
+ * crud operations for questions
+ * people who can access this link
+ * - recruiter can create a new question for a specific job
+ * - recruiter can Update/ Delete/ retrieve a question who created before
+ */
+Route::apiResource('/questions', 'QuestionsController');
+/**
+ * crud operations for answers
+ * people who can access this link
+ * - recruiter can add a perfect answer for a question who added
+ * - recruiter can Update/ Delete/ retrieve a perfect answer who created before
+ * - applicant can just add his/her answer for a given question in the interview
+ */
 Route::apiResource('/answers', 'AnswerController');
+/**
+ * crud operations for jobs
+ * people who can access this link
+ * - recruiter can create a new job
+ * - recruiter can Update/ Delete/ retrieve a job who created before
+ */
+Route::apiResource('/jobs', 'JobsController');
+/**
+ *  people who can access this link
+ *  - the recruiter who created the job
+ *  - any applicant didn't access this interview before
+ */
+Route::get('/jobs/{job}/questions', 'JobsController@getJobQuestions');
