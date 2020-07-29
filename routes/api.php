@@ -22,8 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 /**
  * crud operations for skills
  * people who can access this link
+ * - recruiter can retrieve all skills
  * - recruiter can create a new skill
- * - recruiter can Update/ Delete/ retrieve a skill who created before
+ * - recruiter can Update/ Delete skills who created before
  */
 Route::apiResource('/skills', 'SkillsController');
 /**
