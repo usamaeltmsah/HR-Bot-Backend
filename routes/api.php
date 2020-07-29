@@ -22,4 +22,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('/skills', 'SkillsController');
 Route::apiResource('/questions', 'QuestionsController');
 Route::apiResource('/answers', 'AnswerController');
-Route::apiResource('jobs', 'JobsController');
+Route::apiResource('/jobs', 'JobsController');

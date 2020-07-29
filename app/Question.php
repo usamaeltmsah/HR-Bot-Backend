@@ -20,20 +20,20 @@ class Question extends Model
 
         $this->setTable(config('database.tables.questions'));
     }
-  
+
     /**
      * The question may belong to one or more job
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function jobs(): BelongsToMany
     {
-        return $this->belongsToMany(Job::class)->withTimestamps();
+        return $this->belongsToMany(Job::class, job_questions);
     }
 
     /**
      * The question may have one or more answer
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function answers(): HasMany
