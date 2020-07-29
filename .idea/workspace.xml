@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3aac0f10-8b73-4d61-b77c-a933cc98d980" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/JobsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/JobsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Question.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Question.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/ََQuestionFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ََQuestionFactory.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -191,7 +189,8 @@
       <workItem from="1595933746804" duration="2486000" />
       <workItem from="1595941860338" duration="2098000" />
       <workItem from="1595945548708" duration="3960000" />
-      <workItem from="1596004721982" duration="4181000" />
+      <workItem from="1596004721982" duration="5282000" />
+      <workItem from="1596015339121" duration="3242000" />
     </task>
     <servers />
   </component>

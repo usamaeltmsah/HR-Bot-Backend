@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Http\Resources\JobResource;
+use App\Http\Resources\QuestionResource;
 use App\Job;
 use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -79,6 +80,15 @@ class JobsController extends Controller {
     public function destroy(Job $job) : Response{
         $job->delete();
         return response(null, 204);
+    }
+
+    /**
+     * @param Job $job
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function getJobQuestions(Job $job) {
+        $questions = $job->questions;
+        return QuestionResource::collection($questions);
     }
 
 

@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Question::class, function (Faker $faker) {
     return [
-        'body' => $faker->paragraph(),
+        'body' => $faker->sentence() . '?',
     ];
 });
