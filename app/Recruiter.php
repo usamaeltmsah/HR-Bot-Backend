@@ -2,14 +2,20 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Scopes\RecruiterScope;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Recruiter extends Model
-{
-    protected $fillable = [];
-
-    protected $hidden = [];
+class Recruiter extends User
+{	
+	/**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new RecruiterScope);
+    }
 
     public function jobs(): HasMany
     {
