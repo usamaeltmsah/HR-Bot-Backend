@@ -35,4 +35,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * Is this user a recruiter
+     * 
+     * @return boolean
+     */
+    public function isRecruiter(): bool {
+        return 'recruiter' == $this->role;
+    }
+
+    /**
+     * Is this user a applicant
+     * 
+     * @return boolean
+     */
+    public function isApplicant(): bool {
+        return 'applicant' == $this->role;
+    }
 }
