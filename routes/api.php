@@ -22,6 +22,20 @@ Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
 Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout');
 
+Route::name('recruiterarea.')
+	->middleware('auth:recruiter')
+	->namespace('RecruiterArea')
+	->prefix(config('hrbot.route.prefix.recruiterarea'))->group(function () {
+
+	});
+
+Route::name('applicantarea.')
+	->middleware('auth:applicant')
+	->namespace('ApplicantArea')
+	->prefix(config('hrbot.route.prefix.applicantarea'))->group(function () {
+
+	});
+
 /**
  * crud operations for skills
  * people who can access this link
