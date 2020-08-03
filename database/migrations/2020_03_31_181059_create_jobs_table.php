@@ -19,20 +19,16 @@ class CreateJobsTable extends Migration
             $table->text('desc');
             $table->dateTime('accept_interviews_from');
             $table->dateTime('accept_interviews_until');
-            $table->dateTime('interviews_duration');
-            $table->integer('recruiter_id');
+            $table->integer('interview_duration');
+            $table->integer('recruiter_id')->unsigned();
             $table->timestamps();
 
 
-            /*
-             * must be run after creating the recruiters table
-             */
-
-//            $table->foreign('recruiter_id')
-//                ->references('id')
-//                ->on('recruiters')
-//                ->onDelete('cascade')
-//                ->onUpdate('cascade');
+           $table->foreign('recruiter_id')
+               ->references('id')
+               ->on('users')
+               ->onDelete('cascade')
+               ->onUpdate('cascade');
         });
     }
 

@@ -16,6 +16,8 @@ class CreateInterviewsTable extends Migration
         Schema::create(config('database.tables.interviews'), function (Blueprint $table) {
             $table->increments('id');
             $table->integer('job_id')->unsigned();
+            $table->integer('applicant_id')->unsigned();
+            $table->dateTime('submitted_at')->nullable();
             $table->timestamps();
 
             // Indexes
@@ -24,6 +26,12 @@ class CreateInterviewsTable extends Migration
                   ->on(config('database.tables.jobs'))
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
+
+            $table->foreign('applicant_id')
+               ->references('id')
+               ->on('users')
+               ->onDelete('cascade')
+               ->onUpdate('cascade');
         });
     }
 
