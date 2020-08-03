@@ -28,6 +28,27 @@ class Job extends Model
         return $this->hasMany(Interview::class, 'job_id');
     }
 
+    /**
+     * Check wether the given user is the one created this job
+     * @param  \App\User    $user
+     * @return boolean       
+     */
+    public function isCreatedBy(User $user): bool
+    {
+        return $user->getKey() == $this->recruiter_id;
+    }
+    
+    /**
+     * Check wether this job has interview for the given user
+     * 
+     * @param  \App\User    $user
+     * @return \App\Interview
+     */
+    public function getInterviewFor(User $user): ?Interview
+    {
+        return $this->interviews()->where('applicant_id', $user->getKey())->first();
+    }
+
     /*
      * must be run after creating the recruiters table
      */
