@@ -33,7 +33,8 @@ Route::name('applicantarea.')
 	->middleware('auth:applicant')
 	->namespace('ApplicantArea')
 	->prefix(config('hrbot.route.prefix.applicantarea'))->group(function () {
-
+		Route::get('/jobs/{job}/questions', 'JobQuestionsController@index')
+			->middleware('can:retriveQuestions,job');
 	});
 
 /**
