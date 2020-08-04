@@ -24,6 +24,12 @@ class JobsController extends Controller {
         return JobResource::collection($jobs);
     }
 
+    public function getAvailableJobs() : ResourceCollection{
+        $jobs = new Job();
+        $jobs = $jobs->orderBy('id', 'desc')->where('accept_interviews_until', '>', now() )->paginate();
+        return JobResource::collection($jobs);
+    }
+
     /** filtration on all retrieved data
      * title ==> if the request has parameter title with (key) value to search for
      * available ==> if the request has parameter available with "true" value

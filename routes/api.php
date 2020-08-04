@@ -18,10 +18,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', 'Auth\RegisterController@register');
+// Guest Area
+Route::name('guestarea.')
+    ->namespace('GuestArea')
+    ->prefix('guest')->group( function (){
+        // guest can login
+        Route::post('/register', 'RegisterController@register');
+        // guest can register
+        // display all available jobs
+        Route::get('/availableJobs', 'JobsController@getAvailableJobs');
+    });
+
 Route::post('/login', 'Auth\LoginController@login');
 Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout');
 
+// Recruiter Area
 Route::name('recruiterarea.')
 	->middleware('auth:recruiter')
 	->namespace('RecruiterArea')
@@ -29,6 +40,7 @@ Route::name('recruiterarea.')
 
 	});
 
+// Applicant Area
 Route::name('applicantarea.')
 	->middleware('auth:applicant')
 	->namespace('ApplicantArea')
@@ -36,6 +48,7 @@ Route::name('applicantarea.')
 		Route::get('/jobs/{job}/questions', 'JobQuestionsController@index')
 			->middleware('can:retriveQuestions,job');
 	});
+
 
 /**
  * crud operations for skills
@@ -66,6 +79,7 @@ Route::apiResource('/answers', 'AnswerController');
  * - recruiter can Update/ Delete/ retrieve a job who created before
  */
 Route::apiResource('/jobs', 'JobsController');
+
 /**
  *  people who can access this link
  *  - the recruiter who created the job
