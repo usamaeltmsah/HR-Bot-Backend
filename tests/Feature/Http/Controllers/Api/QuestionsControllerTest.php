@@ -15,9 +15,20 @@ class QuestionsControllerTest extends TestCase
      */
     public function test_guest_cant_get_job_questions()
     {
-        $response = $this->json('GET', '/api/applicant/jobs/3/questions', [
+        $response = $this->json('GET', '/api/applicant/jobs/2/questions', [
             
         ]);
-        $response->assertStatus(401);
+
+        /**
+         * Status is 500: if the guest not registered
+         * Status is 401: if the guest has no authentcation
+         */
+
+        if($response->getStatusCode() == 401) {
+            $response->assertStatus(401);
+        }
+        else {
+            $response->assertStatus(500);
+        }
     }
 }
