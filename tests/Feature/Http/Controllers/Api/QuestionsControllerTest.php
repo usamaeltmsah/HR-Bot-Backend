@@ -24,7 +24,7 @@ class QuestionsControllerTest extends TestCase
          * Status is 401: if the guest has no authentcation
          */
 
-        if($response->getStatusCode() == 401) {
+        if(401 == $response->getStatusCode()) {
             $response->assertStatus(401);
         }
         else {
