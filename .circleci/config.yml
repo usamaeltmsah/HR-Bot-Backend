@@ -13,6 +13,7 @@ jobs:
           command: |
             sudo apt update
             sudo docker-php-ext-install zip
+            sudo docker-php-ext-install pdo_sqlite
 
       - run:
           name: "Create Environment file"
