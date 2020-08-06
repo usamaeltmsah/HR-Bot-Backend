@@ -39,16 +39,10 @@ class JobPolicy
      */
     public function apply(User $user, Job $job): bool
     {
-        if($user->isRecruiter()) {
-            return False;
+        if($user->isApplicant() && is_null($job->getInterviewFor($user))) {
+            return True;
         }
 
-        if($user->isApplicant()) {
-            if($interview = $job->getInterviewFor($user)) {
-                return False;
-            }
-        }
-
-        return True;
+        return False;
     }
 }
