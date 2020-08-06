@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3aac0f10-8b73-4d61-b77c-a933cc98d980" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GuestArea/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GuestArea/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/JobsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/JobsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GuestArea/JobsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GuestArea/JobsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GuestArea/LoginController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GuestArea/RegisterController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Interview.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Interview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_31_185136_create_interviews_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_31_185136_create_interviews_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -165,6 +169,11 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/GuestArea" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
@@ -209,7 +218,9 @@
       <workItem from="1596004721982" duration="5282000" />
       <workItem from="1596015339121" duration="3242000" />
       <workItem from="1596555305575" duration="1928000" />
-      <workItem from="1596557570665" duration="6670000" />
+      <workItem from="1596557570665" duration="9666000" />
+      <workItem from="1596626820047" duration="2362000" />
+      <workItem from="1596717788548" duration="6703000" />
     </task>
     <servers />
   </component>

@@ -17,7 +17,8 @@ class CreateInterviewsTable extends Migration
             $table->increments('id');
             $table->integer('job_id')->unsigned();
             $table->integer('applicant_id')->unsigned();
-            $table->dateTime('submitted_at')->nullable();
+            $table->string('status')->default('interviewing'); // [ interviewing , evaluating, reviewing, completed ]
+            $table->text('feedback');
             $table->timestamps();
 
             // Indexes

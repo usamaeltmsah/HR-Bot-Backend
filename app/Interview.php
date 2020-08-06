@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Interview extends Model
 {
     protected $fillable = [
-        'job_id', 
-        'applicant_id'
+        'job_id',
+        'applicant_id',
+        'status',
+        'feedback'
     ];
 
     /**
@@ -37,7 +39,7 @@ class Interview extends Model
 
     /**
      * The interview is done for a specific job
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function job(): BelongsTo
@@ -47,7 +49,7 @@ class Interview extends Model
 
     /**
      * The interview may have one or more answer
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function answers(): HasMany
@@ -57,7 +59,7 @@ class Interview extends Model
 
     /**
      * check wether this interview is in progress
-     * 
+     *
      * @return boolean
      */
     public function isInProgress(): bool
@@ -67,7 +69,7 @@ class Interview extends Model
 
     /**
      * Check wheter this interview has time to submit
-     * 
+     *
      * @return boolean
      */
     public function hasTimeToSubmit(): bool
@@ -77,11 +79,11 @@ class Interview extends Model
 
     /**
      * Is this interview submitted
-     * 
+     *
      * @return boolean
      */
     public function isSubmitted(): bool
     {
-        return !is_null($this->submitted_at);
+        return !is_null($this->created_at);
     }
 }

@@ -20,13 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Guest Area
 Route::name('guestarea.')
-    ->namespace('GuestArea')
-    ->prefix('guest')->group( function (){
+    ->group( function (){
         // guest can login
-        Route::post('/register', 'RegisterController@register');
         // guest can register
+        Route::post('/register', 'Auth\RegisterController@register');
         // display all available jobs
-        Route::get('/availableJobs', 'JobsController@getAvailableJobs');
+        Route::get('/availableJobs', 'GuestArea\JobsController@getAvailableJobs');
     });
 
 Route::post('/login', 'Auth\LoginController@login');
@@ -47,6 +46,7 @@ Route::name('applicantarea.')
 	->prefix(config('hrbot.route.prefix.applicantarea'))->group(function () {
 		Route::get('/jobs/{job}/questions', 'JobQuestionsController@index')
 			->middleware('can:retriveQuestions,job');
+//		Route::post('/interview', '');
 	});
 
 
