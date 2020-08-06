@@ -37,9 +37,13 @@ Route::name('applicantarea.')
 		Route::post('/jobs/{job}/apply', 'JobsController@apply')
 			->name('job.apply')
 			->middleware('can:apply,job');
-			
-		Route::get('/jobs/{job}/questions', 'JobQuestionsController@index')
-			->middleware('can:retriveQuestions,job');
+
+		Route::name('interviews.')
+			->prefix('interviews')
+			->group(function(){
+				Route::get('{interview}/questions', 'InterviewsController@questions')
+					->middleware('can:retriveQuestions,interview');
+			});
 	});
 
 /**
