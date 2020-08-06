@@ -4,7 +4,7 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.4-node-browsers
-      - image: circleci/mysql:8.0.4
+      - image: circleci/mysql:latest
         environment:
           MYSQL_ROOT_PASSWORD: rootpw
           MYSQL_DATABASE: test_db
@@ -24,12 +24,6 @@ jobs:
               sleep 1
             done
             echo Failed waiting for MySQL && exit 1
-
-      - run:
-          name: Install MySQL CLI; and build test_db
-          command: |
-            sudo apt-get install default-mysql-client
-            mysql -h 127.0.0.1 -u user -ppassw0rd test_db
 
       - run:
           name: "Prepare Environment"
