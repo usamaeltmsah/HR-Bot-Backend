@@ -1,59 +1,74 @@
-# PHP CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-php/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
       # Specify the version you desire here
-      - image: circleci/php:7.3-stretch-node-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # Using the RAM variation mitigates I/O contention
-      # for database intensive operations.
-      # - image: circleci/mysql:5.7-ram
-      # 
-      # - image: redis:3
+      - image: circleci/php:7.4-node-browsers
+      - image: circleci/mysql:latest
+        environment:
+          MYSQL_ROOT_PASSWORD: rootpw
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: user
+          MYSQL_PASSWORD: passw0rd
 
     steps:
       - checkout
+      - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting for MySQL to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
 
-      - run: sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo docker-php-ext-install zip
+      - run:
+          name: "Prepare Environment"
+          command: |
+            sudo apt update
+            sudo docker-php-ext-install zip
+            sudo docker-php-ext-install pdo pdo_mysql
+
+      - run:
+          name: "Create Environment file"
+          command: |
+            mv .env.testing .env
 
       # Download and cache dependencies
-
-      # composer cache
       - restore_cache:
           keys:
-          # "composer.json" can be used if "composer.json"
-          # is not committed to the repository.
-          - v1-dependencies-{{ checksum "composer.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            # "composer.lock" can be used if it is committed to the repo
+            - v1-dependencies-{{ checksum "composer.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
-      - run: composer install -n --prefer-dist
+      - run:
+          name: "Install Dependencies"
+          command: composer install -n --prefer-dist
 
       - save_cache:
-          key: composer-v1-{{ checksum "composer.lock" }}
+          key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
-            - vendor
+            - ./vendor
 
-      # node cache
+      - run:
+          name: "Generate App key"
+          command: php artisan key:generate
 
-      - restore_cache:
-          keys:
-            - node-v4-{{ checksum "package.json" }}
-            - node-v4-
-      - run: npm install
-      - save_cache:
-          key: node-v4-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-            - ~/.yarn
+      # run tests with phpunit
+      - run:
+          name: "Run Unit Tests"
+          command: ./vendor/bin/phpunit tests/Unit
 
-      # run tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit
+      - run:
+          name: "Create database and run migration"
+          command: |
+            touch database/testing.sqlite
+            php artisan migrate --env=testing
+
+      - run:
+          name: "Run Http Tests"
+          command: ./vendor/bin/phpunit tests/Feature
