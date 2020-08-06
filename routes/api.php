@@ -29,6 +29,9 @@ Route::name('guestarea.')
     });
 
 Route::post('/login', 'Auth\LoginController@login');
+Route::get('/login', function (){
+    return "login";
+})->name('login');
 Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout');
 
 // Recruiter Area
@@ -46,8 +49,11 @@ Route::name('applicantarea.')
 	->prefix(config('hrbot.route.prefix.applicantarea'))->group(function () {
 		Route::get('/jobs/{job}/questions', 'JobQuestionsController@index')
 			->middleware('can:retriveQuestions,job');
-//		Route::post('/interview', '');
-	});
+//        Route::post('/interview', 'InterviewController@startInterview');
+
+    });
+
+Route::post('/applicant/interview', 'ApplicantArea\InterviewController@startInterview');
 
 
 /**
