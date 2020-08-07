@@ -6,6 +6,8 @@ use App\Question;
 use App\Interview;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\InterviewAnswerFormRequest;
+use App\Http\Resources\ApplicantArea\AnswerResource;
 use App\Http\Resources\ApplicantArea\QuestionResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,5 +23,24 @@ class InterviewsController extends Controller
      */
     public function questions(Request $request, Interview $interview) : ResourceCollection {
         return QuestionResource::collection($interview->questions);
+    }
+
+	/**
+     * Save an answer for the given question in the given interview
+     * 
+     * @param \App\Interview $interview
+     * @param \App\Question $question
+     * 
+     * @return \App\Http\Resources\ApplicantArea\AnswerResource
+     */
+    public function answer(InterviewAnswerFormRequest $request, Interview $interview, Question $question) : AnswerResource {
+
+    	$data = $request->validated();
+    	
+    	$data['question_id'] = $question->getKey();
+
+    	$answer = $interview->answers()->create($data);
+
+        return new AnswerResource($answer);
     }
 }

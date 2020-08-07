@@ -77,6 +77,16 @@ class Interview extends Model
     }
 
     /**
+     * check wether this interview should be answered by the given user
+     * 
+     * @return boolean
+     */
+    public function shouldBeAnsweredBy(User $user): bool
+    {
+        return $this->applicant_id == $user->getKey();
+    }
+
+    /**
      * Check wheter this interview has time to submit
      * 
      * @return boolean
@@ -86,6 +96,11 @@ class Interview extends Model
         return now()->diffInSeconds($this->created_at) < $this->job->interview_duration;
     }
 
+    public function hasQuestion(Question $question): bool
+    {
+        return $this->questions->contains($question);
+    }
+    
     /**
      * Is this interview submitted
      * 

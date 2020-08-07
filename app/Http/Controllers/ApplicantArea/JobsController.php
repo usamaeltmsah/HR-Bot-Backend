@@ -5,7 +5,7 @@ namespace App\Http\Controllers\ApplicantArea;
 use App\Job;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\InterviewResource;
+use App\Http\Resources\ApplicantArea\InterviewResource;
 
 class JobsController extends Controller
 {
