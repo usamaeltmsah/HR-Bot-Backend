@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\ApplicantArea;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +14,11 @@ class AnswerResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $answer = $this->resource;
+
+        return [
+            'id' => (string) $answer->getRouteKey(),
+            'body' => (string) $answer->body,
+        ];
     }
 }
