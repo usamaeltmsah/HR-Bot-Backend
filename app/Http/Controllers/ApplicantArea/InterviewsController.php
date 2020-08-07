@@ -11,7 +11,6 @@ use App\Http\Resources\ApplicantArea\AnswerResource;
 use App\Http\Resources\ApplicantArea\QuestionResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Http\Resources\ApplicantArea\InterviewResource;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class InterviewsController extends Controller
 {
