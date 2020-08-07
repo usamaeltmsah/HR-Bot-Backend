@@ -39,10 +39,9 @@ class JobQuestionsControllerTest extends TestCase
         $job->questions()->attach($question);
         $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
         $response = Passport::actingAs($user, [], 'applicant');
-        //dd($user->createToken('authToken')->accessToken, route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
         $data = [
-            "data" => [["id"=>$question->id, "body"=>$question->body]]
+            "data" => [["id"=>$question->getRouteKey(), "body"=>$question->body]]
         ];
         $response->assertJson($data);
 
