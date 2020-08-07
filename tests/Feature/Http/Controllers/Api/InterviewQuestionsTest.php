@@ -118,4 +118,14 @@ class InterviewQuestionsTest extends TestCase
 
         $response->assertStatus(201);
     }
+
+    public function test_applicant_can_end_interview(){
+        Passport::actingAs($this->user, [], 'applicant');
+
+        $url = route('applicantarea.interviews.submit', ["interview" => $this->interview->getRouteKey()]);
+        
+        $response = $this->json('POST', $url);
+
+        $response->assertStatus(200);
+    }
 }
