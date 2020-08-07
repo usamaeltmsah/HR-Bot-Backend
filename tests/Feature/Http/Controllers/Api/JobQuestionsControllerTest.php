@@ -32,13 +32,13 @@ class JobQuestionsControllerTest extends TestCase
     
     public function test_applicant_can_get_job_questions()
     {
-
         $user = factory(Applicant::class)->create();
         $job = factory(Job::class)->create();
         $question = factory(Question::class)->create();
         $job->questions()->attach($question);
         $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
         $response = Passport::actingAs($user, [], 'applicant');
+        
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
         $data = [
             "data" => [["id"=>$question->getRouteKey(), "body"=>$question->body]]
@@ -47,5 +47,16 @@ class JobQuestionsControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
-    
+
+    public function test_applicant_cant_access_interview_questions_when_timeout(){
+        $user = factory(Applicant::class)->create();
+        $job = factory(Job::class)->create();
+        $job->interview_duration = 0;
+        $job->save();
+
+        $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
+        Passport::actingAs($user, [], 'applicant');
+        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
+        $response->assertStatus(403);
+    } 
 }
