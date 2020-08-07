@@ -9,7 +9,7 @@ class Job extends Model
 
     protected $fillable = [
         'title',
-        'desc',
+        'description',
         'accept_interviews_from',
         'accept_interviews_until',
         'interviews_duration',
@@ -39,15 +39,6 @@ class Job extends Model
     }
     
     /**
-     * Check whether this job is accepting interviews
-     * @return boolean
-     */
-    public function isAcceptingInteviews(): bool
-    {
-        return now()->between($this->accept_interviews_from, $this->accept_interviews_until);
-    }
-    
-    /**
      * Check wether this job has interview for the given user
      * 
      * @param  \App\User    $user
@@ -57,7 +48,6 @@ class Job extends Model
     {
         return $this->interviews()->where('applicant_id', $user->getKey())->first();
     }
-
 
     /*
      * must be run after creating the recruiters table
