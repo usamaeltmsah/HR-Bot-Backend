@@ -49,7 +49,7 @@ Route::name('applicantarea.')
 					->name('questions.answer')
 					->middleware(['can:access,interview', 'can:answer,interview,question']);
 
-				Route::put('{interview}', 'InterviewsController@submit')
+				Route::post('{interview}/submit', 'InterviewsController@submit')
 					->name('submit')
 					->middleware(['can:access,interview']);
 			});
