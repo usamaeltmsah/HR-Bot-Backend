@@ -14,12 +14,11 @@ class InterviewResource extends JsonResource
      */
     public function toArray($request)
     {
-        $interview = $request->resource;
+        $interview = $this->resource;
 
         return [
             'id' => (string) $interview->getRouteKey(),
             'job_id' => (string) $interview->job_id,
-            'submitted_at' => (string) $interview->submitted_at,
         ];
     }
 }
