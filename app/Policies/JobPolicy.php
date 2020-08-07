@@ -18,7 +18,7 @@ class JobPolicy
      */
     public function apply(User $user, Job $job): bool
     {
-        if($user->isApplicant() && is_null($job->getInterviewFor($user))) {
+        if($user->isApplicant() && $job->isAcceptingInteviews() &&  is_null($job->getInterviewFor($user))) {
             return True;
         }
 
