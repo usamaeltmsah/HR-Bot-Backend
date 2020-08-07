@@ -109,4 +109,13 @@ class InterviewQuestionsTest extends TestCase
 
         $response->assertStatus(201);
     }
+
+    public function test_applicant_can_apply_on_job(){
+        Passport::actingAs(factory(Applicant::class)->create(), [], 'applicant');
+        $url = route('applicantarea.jobs.apply', ["job" => $this->job->getRouteKey()]);
+
+        $response = $this->json('POST', $url);
+
+        $response->assertStatus(201);
+    }
 }
