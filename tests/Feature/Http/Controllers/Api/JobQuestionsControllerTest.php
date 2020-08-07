@@ -13,6 +13,18 @@ use Laravel\Passport\Passport;
 
 class JobQuestionsControllerTest extends TestCase
 {
+    private $user = null;
+    private $job = null;
+    private $interview = null;
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = factory(Applicant::class)->create();
+        $this->job = factory(Job::class)->create();
+        $this->interview = $this->job->interviews()->create(['applicant_id' => $this->user->getKey() ]);
+    }
+
     /**
      * A basic feature test example.
      *
@@ -20,11 +32,7 @@ class JobQuestionsControllerTest extends TestCase
      */
     public function test_guest_cant_get_job_questions()
     {
-        $user = factory(Applicant::class)->create();
-        $job = factory(Job::class)->create();
-        $interview = $job->interviews()->create(['applicant_id' => $user->getKey() ]);
-        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
-
+        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
 
         $response->assertStatus(401);
 
@@ -32,14 +40,11 @@ class JobQuestionsControllerTest extends TestCase
     
     public function test_applicant_can_get_job_questions()
     {
-        $user = factory(Applicant::class)->create();
-        $job = factory(Job::class)->create();
         $question = factory(Question::class)->create();
-        $job->questions()->attach($question);
-        $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
-        $response = Passport::actingAs($user, [], 'applicant');
+        $this->job->questions()->attach($question);
+        Passport::actingAs($this->user, [], 'applicant');
         
-        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
+        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
         $data = [
             "data" => [["id"=>$question->getRouteKey(), "body"=>$question->body]]
         ];
@@ -49,37 +54,26 @@ class JobQuestionsControllerTest extends TestCase
     }
 
     public function test_applicant_cant_access_interview_questions_when_timeout(){
-        $user = factory(Applicant::class)->create();
-        $job = factory(Job::class)->create();
-        $job->interview_duration = 0;
-        $job->save();
+        $this->job->interview_duration = 0;
+        $this->job->save();
 
-        $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
-        Passport::actingAs($user, [], 'applicant');
-        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
+        Passport::actingAs($this->user, [], 'applicant');
+        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
         $response->assertStatus(403);
     } 
 
     public function test_applicant_cant_access_any_interview_not_for_him(){
-        $user = factory(Applicant::class)->create();
-        $job = factory(Job::class)->create();
-
-        $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
         Passport::actingAs(factory(Applicant::class)->create(), [], 'applicant');
-        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
+        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
         $response->assertStatus(403);
     }
 
     public function test_applicant_cant_access_interview_questions_when_he_make_submit(){
-        $user = factory(Applicant::class)->create();
-        $job = factory(Job::class)->create();
+        $this->interview->submitted_at = date("Y-m-d H:i:s");
+        $this->interview->save();
 
-        $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
-        $interview->submitted_at = date("Y-m-d H:i:s");
-        $interview->save();
-
-        Passport::actingAs($user, [], 'applicant');
-        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
+        Passport::actingAs($this->user, [], 'applicant');
+        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
         $response->assertStatus(403);
     }
 }
