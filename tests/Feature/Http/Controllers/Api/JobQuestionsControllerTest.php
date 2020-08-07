@@ -59,4 +59,14 @@ class JobQuestionsControllerTest extends TestCase
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
         $response->assertStatus(403);
     } 
+
+    public function test_applicant_cant_access_any_interview_not_for_him(){
+        $user = factory(Applicant::class)->create();
+        $job = factory(Job::class)->create();
+
+        $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
+        Passport::actingAs(factory(Applicant::class)->create(), [], 'applicant');
+        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
+        $response->assertStatus(403);
+    }
 }
