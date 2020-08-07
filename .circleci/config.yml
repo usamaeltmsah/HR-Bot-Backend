@@ -6,7 +6,6 @@ jobs:
       - image: circleci/php:7.4-node-browsers
       - image: circleci/mysql:latest
         environment:
-          MYSQL_ROOT_PASSWORD: rootpw
           MYSQL_DATABASE: hrbot
           MYSQL_USER: root
 
