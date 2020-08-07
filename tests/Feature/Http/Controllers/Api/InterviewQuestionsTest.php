@@ -55,12 +55,14 @@ class InterviewQuestionsTest extends TestCase
     }
 
     public function test_applicant_cant_access_interview_questions_when_timeout(){
+        $interview_duration = $this->job->interview_duration;
         $this->job->interview_duration = 0;
         $this->job->save();
 
         Passport::actingAs($this->user, [], 'applicant');
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
         $response->assertStatus(403);
+        $this->job->interview_duration = $interview_duration;
     } 
 
     public function test_applicant_cant_access_any_interview_not_for_him(){
@@ -70,11 +72,14 @@ class InterviewQuestionsTest extends TestCase
     }
 
     public function test_applicant_cant_access_interview_questions_when_he_make_submit(){
+        $submitted_at = $this->interview->submitted_at;
         $this->interview->submitted_at = date("Y-m-d H:i:s");
         $this->interview->save();
 
         Passport::actingAs($this->user, [], 'applicant');
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
         $response->assertStatus(403);
+        
+        $this->interview->submitted_at = $submitted_at;
     }
 }
