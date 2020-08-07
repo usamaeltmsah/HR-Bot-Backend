@@ -8,6 +8,7 @@ use Tests\TestCase;
 use App\Applicant;
 use App\Interview;
 use App\Job;
+use App\Question;
 use Laravel\Passport\Passport;
 
 class JobQuestionsControllerTest extends TestCase
@@ -34,9 +35,16 @@ class JobQuestionsControllerTest extends TestCase
 
         $user = factory(Applicant::class)->create();
         $job = factory(Job::class)->create();
+        $question = factory(Question::class)->create();
+        $job->questions()->attach($question);
         $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
         $response = Passport::actingAs($user, [], 'applicant');
+        //dd($user->createToken('authToken')->accessToken, route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
+        $data = [
+            "data" => [["id"=>$question->id, "body"=>$question->body]]
+        ];
+        $response->assertJson($data);
 
         $response->assertStatus(200);
     }
