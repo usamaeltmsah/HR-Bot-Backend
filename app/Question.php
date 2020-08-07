@@ -50,4 +50,14 @@ class Question extends Model
     {
         return $this->belongsToMany(Skill::class)->withTimestamps();
     }
+
+    /**
+     * Is this questions answered in the given interview
+     * @param  Interview $interview
+     * @return boolean
+     */
+    public function isAnsweredInInterview(Interview $interview)
+    {
+        return $this->answers()->where('interview_id', $interview->getKey())->exists();
+    }
 }

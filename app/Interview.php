@@ -86,6 +86,16 @@ class Interview extends Model
         return now()->diffInSeconds($this->created_at) < $this->job->interview_duration;
     }
 
+    public function hasQuestion(Question $question): bool
+    {
+        return $this->questions->contains($question);
+    }
+
+    public function hasAnswerForQuestion(Question $question): bool
+    {
+        
+    }
+    
     /**
      * Is this interview submitted
      * 
