@@ -56,7 +56,7 @@ class Question extends Model
      * @param  Interview $interview
      * @return boolean
      */
-    public function isAnsweredInInterview(Interview $interview)
+    public function isAnsweredIn(Interview $interview)
     {
         return $this->answers()->where('interview_id', $interview->getKey())->exists();
     }
