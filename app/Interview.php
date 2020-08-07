@@ -67,7 +67,7 @@ class Interview extends Model
     }
 
     /**
-     * check wether this interview is in progress
+     * check whether this interview is in progress
      * 
      * @return boolean
      */
@@ -77,7 +77,7 @@ class Interview extends Model
     }
 
     /**
-     * check wether this interview should be answered by the given user
+     * check whether this interview should be answered by the given user
      * 
      * @return boolean
      */
@@ -87,7 +87,7 @@ class Interview extends Model
     }
 
     /**
-     * Check wheter this interview has time to submit
+     * Check whether this interview has time to submit
      * 
      * @return boolean
      */
@@ -96,6 +96,11 @@ class Interview extends Model
         return now()->diffInSeconds($this->created_at) < $this->job->interview_duration;
     }
 
+    /**
+     * Check whether this interview should ask this question
+     * @param  Question $question 
+     * @return boolean
+     */
     public function hasQuestion(Question $question): bool
     {
         return $this->questions->contains($question);
@@ -109,5 +114,11 @@ class Interview extends Model
     public function isSubmitted(): bool
     {
         return !is_null($this->submitted_at);
+    }
+
+    public function submit(): void
+    {
+        $this->submitted_at = now();
+        $this->save();
     }
 }

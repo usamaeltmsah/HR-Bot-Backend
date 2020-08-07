@@ -10,6 +10,7 @@ use App\Http\Requests\InterviewAnswerFormRequest;
 use App\Http\Resources\ApplicantArea\AnswerResource;
 use App\Http\Resources\ApplicantArea\QuestionResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Http\Resources\ApplicantArea\InterviewResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class InterviewsController extends Controller
@@ -42,5 +43,20 @@ class InterviewsController extends Controller
     	$answer = $interview->answers()->create($data);
 
         return new AnswerResource($answer);
+    }
+
+
+    /**
+     * Submit the given interview
+     * 
+     * @param  \App\Interview $interview
+     * 
+     * @return \App\Http\Resources\ApplicantArea\InterviewResource
+     */
+    public function submit(Interview $interview): InterviewResource
+    {
+        $interview->submit();
+
+        return new InterviewResource($interview);
     }
 }
