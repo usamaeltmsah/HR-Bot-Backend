@@ -11,12 +11,12 @@ class InterviewPolicy
     use HandlesAuthorization;
 
     /**
-     * Check wether the current user can retrive the questions for the given job
+     * Check wether the current user can access the given interview
      * @param  App\User   $user 
      * @param  App\Interview    $interview  
      * @return boolean
      */
-    public function retrive_questions(User $user, Interview $interview): bool
+    public function access(User $user, Interview $interview): bool
     {
 
         if($user->isApplicant() && $interview->applicant_id == $user->getKey()) {
