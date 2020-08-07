@@ -43,7 +43,11 @@ Route::name('applicantarea.')
 			->group(function(){
 				Route::get('{interview}/questions', 'InterviewsController@questions')
 					->name('questions.index')
-					->middleware('can:retrive_questions,interview');
+					->middleware(['can:access,interview']);
+
+				Route::post('{interview}/questions/{question}/answers', 'InterviewsController@answer')
+					->name('questions.answer')
+					->middleware(['can:access,interview']);
 			});
 	});
 

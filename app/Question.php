@@ -28,7 +28,7 @@ class Question extends Model
      */
     public function jobs(): BelongsToMany
     {
-        return $this->belongsToMany(Job::class, job_questions);
+        return $this->belongsToMany(Job::class, 'job_questions');
     }
 
     /**

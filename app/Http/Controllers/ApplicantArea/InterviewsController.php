@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\ApplicantArea;
 
+use App\Question;
 use App\Interview;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\QuestionResource;
+use App\Http\Resources\ApplicantArea\QuestionResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class InterviewsController extends Controller
 {
