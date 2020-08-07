@@ -16,6 +16,7 @@ class InterviewQuestionsTest extends TestCase
     private $user = null;
     private $job = null;
     private $interview = null;
+    private $question = null;
 
     public function setUp(): void
     {
@@ -24,6 +25,8 @@ class InterviewQuestionsTest extends TestCase
         $this->user = factory(Applicant::class)->create();
         $this->job = factory(Job::class)->create();
         $this->interview = $this->job->interviews()->create(['applicant_id' => $this->user->getKey() ]);
+        $this->question = factory(Question::class)->create();
+        $this->job->questions()->attach($this->question);
     }
 
     /**
@@ -41,13 +44,11 @@ class InterviewQuestionsTest extends TestCase
     
     public function test_applicant_can_get_job_questions()
     {
-        $question = factory(Question::class)->create();
-        $this->job->questions()->attach($question);
         Passport::actingAs($this->user, [], 'applicant');
         
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
         $data = [
-            "data" => [["id"=>$question->getRouteKey(), "body"=>$question->body]]
+            "data" => [["id"=>$this->question->getRouteKey(), "body"=>$this->question->body]]
         ];
         $response->assertJson($data);
 
@@ -63,6 +64,7 @@ class InterviewQuestionsTest extends TestCase
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
         $response->assertStatus(403);
         $this->job->interview_duration = $interview_duration;
+        $this->job->save();
     } 
 
     public function test_applicant_cant_access_any_interview_not_for_him(){
@@ -79,7 +81,20 @@ class InterviewQuestionsTest extends TestCase
         Passport::actingAs($this->user, [], 'applicant');
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
         $response->assertStatus(403);
-        
+
         $this->interview->submitted_at = $submitted_at;
+        $this->interview->save();
+    }
+
+    public function test_applicant_cant_save_an_empty_answer(){
+        Passport::actingAs($this->user, [], 'applicant');
+        $url = route('applicantarea.interviews.questions.answer', [
+            'interview' => $this->interview->getRouteKey(), 
+            'question' => $this->question->getRouteKey()
+        ]);
+
+        $response = $this->json('POST', $url);
+
+        $response->assertStatus(422);
     }
 }
