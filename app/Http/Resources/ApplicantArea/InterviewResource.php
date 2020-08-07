@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\ApplicantArea;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +14,12 @@ class InterviewResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $interview = $request->resource;
+
+        return [
+            'id' => (string) $interview->getRouteKey(),
+            'job_id' => (string) $interview->job_id,
+            'submitted_at' => (string) $interview->submitted_at,
+        ];
     }
 }
