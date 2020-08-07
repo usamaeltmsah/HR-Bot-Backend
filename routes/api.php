@@ -42,7 +42,8 @@ Route::name('applicantarea.')
 			->prefix('interviews')
 			->group(function(){
 				Route::get('{interview}/questions', 'InterviewsController@questions')
-					->middleware('can:retriveQuestions,interview');
+					->name('questions.index')
+					->middleware('can:retrive_questions,interview');
 			});
 	});
 

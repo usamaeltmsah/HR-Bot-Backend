@@ -1,5 +1,8 @@
 <?php
 
+use App\Job;
+use App\User;
+use App\Question;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        factory(User::class, 5)->create();
+    	$jobs = factory(Job::class, 10)->create();
+
+        foreach ($jobs as $job) {
+        	$questions = factory(Question::class, 5)->create();
+        	$job->questions()
+        			->attach($questions);
+        }
     }
 }

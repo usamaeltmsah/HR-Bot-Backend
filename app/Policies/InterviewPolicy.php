@@ -16,7 +16,7 @@ class InterviewPolicy
      * @param  App\Interview    $interview  
      * @return boolean
      */
-    public function retriveQuestions(User $user, Interview $interview): bool
+    public function retrive_questions(User $user, Interview $interview): bool
     {
 
         if($user->isApplicant() && $interview->applicant_id == $user->getKey()) {
