@@ -69,4 +69,17 @@ class JobQuestionsControllerTest extends TestCase
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
         $response->assertStatus(403);
     }
+
+    public function test_applicant_cant_access_interview_questions_when_he_make_submit(){
+        $user = factory(Applicant::class)->create();
+        $job = factory(Job::class)->create();
+
+        $interview = $job->interviews()->create(['applicant_id' => $user->getKey()]);
+        $interview->submitted_at = date("Y-m-d H:i:s");
+        $interview->save();
+
+        Passport::actingAs($user, [], 'applicant');
+        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
+        $response->assertStatus(403);
+    }
 }
