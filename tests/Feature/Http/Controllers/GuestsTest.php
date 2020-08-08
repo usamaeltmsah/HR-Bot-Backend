@@ -24,4 +24,13 @@ class GuestsTest extends TestCase
         
         $response->assertStatus(201);
     }
+
+    public function test_guest_can_register_as_recruiter()
+    {
+        $user = factory('App\Recruiter')->raw();
+
+        $response = $this->post('api/register', $user);
+        
+        $response->assertStatus(201);
+    }
 }
