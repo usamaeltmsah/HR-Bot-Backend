@@ -3,13 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Job extends Model
 {
 
     protected $fillable = [
         'title',
-        'desc',
+        'description',
         'accept_interviews_from',
         'accept_interviews_until',
         'interviews_duration',
@@ -46,7 +47,7 @@ class Job extends Model
     {
         return now()->between($this->accept_interviews_from, $this->accept_interviews_until);
     }
-    
+
     /**
      * Check wether this job has interview for the given user
      * 
@@ -58,6 +59,46 @@ class Job extends Model
         return $this->interviews()->where('applicant_id', $user->getKey())->first();
     }
 
+    /**
+     * only jobs that are accepting interviews
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * 
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAcceptingInterviews(Builder $query): Builder
+    {
+        return $query->where('accept_interviews_from', '<', now())
+                    ->where('accept_interviews_until', '>', now());
+    }
+
+    /**
+     * only jobs that the given user didn't apply on it before
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder    $query
+     * @param  \App\User                                $user
+     * 
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeDidntApplyBefore(Builder $query, User $user): Builder
+    {
+        return $query->whereDoesntHave('interviews', function (Builder $query) use ($user) {
+            $query->shouldBeAnsweredBy($user);
+        });
+    }
+
+    /**
+     * only jobs that are created by the given user
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder    $query
+     * @param  \App\User                                $user
+     * 
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCreatedBy(Builder $query, User $user): Builder
+    {
+        return $query->where('recruiter_id', $user->getKey());
+    }
 
     /*
      * must be run after creating the recruiters table

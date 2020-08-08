@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\ApplicantArea;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +14,12 @@ class JobResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $job = $this->resource;
+
+        return [
+            'id' => (string) $job->getRouteKey(),
+            'title' => (string) $job->title,
+            'description' => (string) $job->description,
+        ];
     }
 }

@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\RecruiterArea;
 
+use App\Job;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
-use App\Http\Resources\JobResource;
+use App\Http\Resources\RecruiterArea\JobResource;
 use App\Http\Resources\QuestionResource;
-use App\Job;
-use Illuminate\Http\Response;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class JobsController extends Controller {
@@ -15,31 +17,46 @@ class JobsController extends Controller {
 
     /**
      * list all Jobs
+     * 
+     * @param \Illuminate\Http\Request $request
+     * 
      * @return \Illuminate\Http\Resources\Json\ResourceCollection
      */
-    public function index() : ResourceCollection{
-        $jobs = new Job();
-        $jobs = $this->filter($jobs);
-        $jobs = $jobs->orderBy('id', 'desc')->paginate();
+    public function index(Request $request) : ResourceCollection
+    {
+        $user = $request->user();
+
+        $query = Job::createdBy($user)
+                    ->latest();
+
+        $query = $this->applyIndexFilters($request, $query);
+
+        $jobs = $query->paginate();
+
         return JobResource::collection($jobs);
     }
 
-    /** filtration on all retrieved data
+    /** 
+     * filtration on all retrieved data
+     * 
      * title ==> if the request has parameter title with (key) value to search for
-     * available ==> if the request has parameter available with "true" value
+     * 
      * @param $jobs
+     * 
      * @return an instance of Job Model
      */
-    protected function filter($jobs){
-        if(request()->has('title') && request()->get('title') != ''){
-            $jobs = $jobs->where('title', 'like', '%' . request()->get('title') . '%');
+    protected function applyIndexFilters($request, $query)
+    {
+
+        $filters = $request->validate([
+            'title' => ['nullable', 'string', 'min:1'],
+        ]);
+
+        if(isset($filters['title'])){
+            $query = $query->where('title', 'like', '%' . $filters['title'] . '%');
         }
 
-        if(request()->has('available') && request()->get('available') == 'true'){
-            $jobs = $jobs->where('accept_interviews_until', '>', now() );
-        }
-
-        return $jobs;
+        return $query;
     }
 
     /**

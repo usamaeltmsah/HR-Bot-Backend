@@ -16,7 +16,7 @@ class CreateJobsTable extends Migration
         Schema::create(config('database.tables.jobs'), function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->text('desc');
+            $table->text('description');
             $table->dateTime('accept_interviews_from');
             $table->dateTime('accept_interviews_until');
             $table->integer('interview_duration');

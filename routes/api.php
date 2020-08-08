@@ -26,7 +26,12 @@ Route::name('recruiterarea.')
 	->middleware('auth:recruiter')
 	->namespace('RecruiterArea')
 	->prefix(config('hrbot.route.prefix.recruiterarea'))->group(function () {
-
+		Route::name('jobs.')
+			->prefix('jobs')
+			->group(function(){
+				Route::get('/', 'JobsController@index')
+					->name('index');
+			});
 	});
 
 Route::name('applicantarea.')
@@ -34,9 +39,16 @@ Route::name('applicantarea.')
 	->namespace('ApplicantArea')
 	->prefix(config('hrbot.route.prefix.applicantarea'))->group(function () {
 
-		Route::post('/jobs/{job}/apply', 'JobsController@apply')
-			->name('job.apply')
-			->middleware('can:apply,job');
+		Route::name('jobs.')
+			->prefix('jobs')
+			->group(function(){
+				Route::get('/', 'JobsController@index')
+					->name('index');
+
+				Route::post('{job}/apply', 'JobsController@apply')
+					->name('apply')
+					->middleware('can:apply,job');
+			});
 
 		Route::name('interviews.')
 			->prefix('interviews')
