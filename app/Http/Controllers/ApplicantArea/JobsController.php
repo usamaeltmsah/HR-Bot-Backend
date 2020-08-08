@@ -46,7 +46,7 @@ class JobsController extends Controller
 
     	$query = $this->applyIndexFilters($request, $query);
 
-		$jobs = $query->get();
+		$jobs = $query->paginate();
 
     	return JobResource::collection($jobs);
     }
