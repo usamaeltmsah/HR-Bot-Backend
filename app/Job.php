@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Job extends Model
 {
@@ -62,21 +62,23 @@ class Job extends Model
     /**
      * only jobs that are accepting interviews
      * 
-     * @param  \Illuminate\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder $query
      * 
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAcceptingInterviews(Builder $query): Builder
     {
-        return $query->where('accept_interviews_from', '>', now())
-                    ->where('accept_interviews_until', '<', now());
+        return $query->where('accept_interviews_from', '<', now())
+                    ->where('accept_interviews_until', '>', now());
     }
 
     /**
      * only jobs that the given user didn't apply on it before
-     * @param  Builder $query [description]
-     * @param  User    $user  [description]
-     * @return [type]         [description]
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder    $query
+     * @param  \App\User                                $user
+     * 
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeDidntApplyBefore(Builder $query, User $user): Builder
     {
