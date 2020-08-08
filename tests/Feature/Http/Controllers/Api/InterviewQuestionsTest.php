@@ -98,7 +98,7 @@ class InterviewQuestionsTest extends TestCase
         $response->assertStatus(422);
     }
 
-    public function test_applicant_cananswer_question(){
+    public function test_applicant_can_answer_question(){
         Passport::actingAs($this->user, [], 'applicant');
         $url = route('applicantarea.interviews.questions.answer', [
             'interview' => $this->interview->getRouteKey(), 
