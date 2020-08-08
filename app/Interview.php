@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -131,9 +131,9 @@ class Interview extends Model
     /**
      * only interviews that should be answered by the given user
      * 
-     * @param  \Illuminate\Database\Query\Builder   $query
-     * @param  \App\User                            $user
-     * @return \Illuminate\Database\Query\Builder
+     * @param  \Illuminate\Database\Eloquent\Builder    $query
+     * @param  \App\User                                $user
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeShouldBeAnsweredBy(Builder $query, User $user): Builder
     {

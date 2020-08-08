@@ -5,7 +5,7 @@ namespace App\Http\Controllers\ApplicantArea;
 use App\Job;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Resources\ApplicantArea\JobResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Http\Resources\ApplicantArea\InterviewResource;
@@ -41,9 +41,9 @@ class JobsController extends Controller
 
     	$query = Job::acceptingInterviews()
     				->didntApplyBefore($user)
-    				->select(['id', 'title', 'desc']);
+    				->select(['id', 'title', 'description']);
 
-    	$query = $this->applyIndexFilters($request, $q);
+    	$query = $this->applyIndexFilters($request, $query);
 
 		$jobs = $query->get();
 
@@ -53,10 +53,10 @@ class JobsController extends Controller
     /**
      * Apply the index function filters
      * 
-     * @param  \Illuminate\Http\Request 			$request 
-     * @param  \Illuminate\Database\Query\Builder 	$query
+     * @param  \Illuminate\Http\Request                     $request 
+     * @param  \Illuminate\Database\Eloquent\Builder        $query
      * 
-     * @return \Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function applyIndexFilters(Request $request, Builder $query): Builder
     {
