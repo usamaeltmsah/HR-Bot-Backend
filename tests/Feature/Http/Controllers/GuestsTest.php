@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers\Api;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Passport\Passport;
 use Tests\TestCase;
 use App\Applicant;
 use App\Recruiter;
@@ -77,11 +78,29 @@ class GuestsTest extends TestCase
 
     public function test_applicant_can_logout()
     {
-        //
+        /*
+        $applicant = factory(Applicant::class)->create();
+        Passport::actingAs($applicant, [], 'applicant');
+
+        $response = $this->post('api/logout', [
+            'email' => $applicant->email,
+            'password' => $applicant->passwords,
+        ]);
+        $response->assertStatus(200);
+        */
     }
 
     public function test_recruiter_can_logout()
     {
-        //
+        /*
+        $recruiter = factory(Recruiter::class)->create();
+        Passport::actingAs($recruiter, [], 'recruiter');
+
+        $response = $this->post('api/logout', [
+            'email' => $recruiter->email,
+            'password' => $recruiter->passwords,
+        ]);
+        $response->assertStatus(200);
+        */
     }
 }
