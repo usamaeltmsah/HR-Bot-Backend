@@ -26,7 +26,12 @@ Route::name('recruiterarea.')
 	->middleware('auth:recruiter')
 	->namespace('RecruiterArea')
 	->prefix(config('hrbot.route.prefix.recruiterarea'))->group(function () {
-
+		Route::name('jobs.')
+			->prefix('jobs')
+			->group(function(){
+				Route::get('/', 'JobsController@index')
+					->name('index');
+			});
 	});
 
 Route::name('applicantarea.')

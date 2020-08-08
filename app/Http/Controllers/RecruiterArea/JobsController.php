@@ -5,6 +5,7 @@ namespace App\Http\Controllers\RecruiterArea;
 use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Http\Resources\RecruiterArea\JobResource;
@@ -30,7 +31,7 @@ class JobsController extends Controller {
 
         $query = $this->applyIndexFilters($request, $query);
 
-        $jobs = $query->get();
+        $jobs = $query->paginate();
 
         return JobResource::collection($jobs);
     }
@@ -44,7 +45,7 @@ class JobsController extends Controller {
      * 
      * @return an instance of Job Model
      */
-    protected function applyIndexFilters($jobs)
+    protected function applyIndexFilters($request, $query)
     {
 
         $filters = $request->validate([
