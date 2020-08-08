@@ -40,7 +40,7 @@ class JobsController extends Controller
     	$user = $request->user();
 
     	$query = Job::acceptingInterviews()
-    				->didntAppliedBefore($user)
+    				->didntApplyBefore($user)
     				->select(['id', 'title', 'desc']);
 
     	$query = $this->applyIndexFilters($request, $q);

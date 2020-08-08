@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -116,9 +117,26 @@ class Interview extends Model
         return !is_null($this->submitted_at);
     }
 
+    /**
+     * Submit this interview
+     * 
+     * @return void
+     */
     public function submit(): void
     {
         $this->submitted_at = now();
         $this->save();
+    }
+
+    /**
+     * only interviews that should be answered by the given user
+     * 
+     * @param  \Illuminate\Database\Query\Builder   $query
+     * @param  \App\User                            $user
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeShouldBeAnsweredBy(Builder $query, User $user): Builder
+    {
+        return $query->where('applicant_id', $user->getKey());
     }
 }

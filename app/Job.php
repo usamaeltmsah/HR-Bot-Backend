@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
@@ -56,6 +57,32 @@ class Job extends Model
     public function getInterviewFor(User $user): ?Interview
     {
         return $this->interviews()->where('applicant_id', $user->getKey())->first();
+    }
+
+    /**
+     * only jobs that are accepting interviews
+     * 
+     * @param  \Illuminate\Database\Query\Builder $query
+     * 
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeAcceptingInterviews(Builder $query): Builder
+    {
+        return $query->where('accept_interviews_from', '>', now())
+                    ->where('accept_interviews_until', '<', now());
+    }
+
+    /**
+     * only jobs that the given user didn't apply on it before
+     * @param  Builder $query [description]
+     * @param  User    $user  [description]
+     * @return [type]         [description]
+     */
+    public function scopeDidntApplyBefore(Builder $query, User $user): Builder
+    {
+        return $query->whereDoesntHave('interviews', function (Builder $query) use ($user) {
+            $query->shouldBeAnsweredBy($user);
+        });
     }
 
     /*
