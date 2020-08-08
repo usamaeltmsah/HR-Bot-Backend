@@ -87,6 +87,19 @@ class Job extends Model
         });
     }
 
+    /**
+     * only jobs that are created by the given user
+     * 
+     * @param  \Illuminate\Database\Eloquent\Builder    $query
+     * @param  \App\User                                $user
+     * 
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCreatedBy(Builder $query, User $user): Builder
+    {
+        return $query->where('recruiter_id', $user->getKey());
+    }
+
     /*
      * must be run after creating the recruiters table
      */
