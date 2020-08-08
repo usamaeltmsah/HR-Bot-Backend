@@ -37,6 +37,9 @@ Route::name('applicantarea.')
 		Route::name('jobs.')
 			->prefix('jobs')
 			->group(function(){
+				Route::get('/', 'JobsController@index')
+					->name('index');
+
 				Route::post('{job}/apply', 'JobsController@apply')
 					->name('apply')
 					->middleware('can:apply,job');
