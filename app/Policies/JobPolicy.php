@@ -24,4 +24,16 @@ class JobPolicy
 
         return False;
     }
+
+    /**
+     * Check wether the current user can update the given job
+     * 
+     * @param  App\User   $user 
+     * @param  App\Job    $job  
+     * @return boolean
+     */
+    public function update(User $user, Job $job): bool
+    {
+        return $user->isRecruiter() && $job->isCreatedBy($user);
+    }
 }
