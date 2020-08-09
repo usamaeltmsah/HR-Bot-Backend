@@ -48,6 +48,23 @@ Route::name('recruiterarea.')
 
 				Route::post('/', 'JobsController@store')
 					->name('store');
+
+				Route::put('/{job}', 'JobsController@update')
+					->name('update')
+					->middleware('can:modify,job');
+
+				Route::delete('/{job}', 'JobsController@destroy')
+					->name('destroy')
+					->middleware('can:modify,job');
+
+				
+				Route::name('interviews.')
+					->prefix('{job}/interviews')
+					->group(function() {
+						Route::get('/', 'JobInterviewsController@index')
+							->name('index')
+							->middleware('can:modify,job');
+					});
 			});
 	});
 

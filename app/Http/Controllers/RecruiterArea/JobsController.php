@@ -6,8 +6,6 @@ use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateJobRequest;
-use App\Http\Resources\QuestionResource;
 use App\Http\Resources\RecruiterArea\JobResource;
 use App\Http\Requests\RecruiterArea\JobFormRequest;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -78,34 +76,33 @@ class JobsController extends Controller {
     }
 
     /**
-     * update a specific job by its id
-     * @param UpdateJobRequest $request
-     * @param Job $job
-     * @return JobResource
+     * update the given job
+     * 
+     * @param \App\Http\Requests\RecruiterArea\JobFormRequest   $request
+     * @param \App\Job                                          $job
+     * 
+     * @return \App\Http\Resources\RecruiterArea\JobResource
      */
-    public function update(UpdateJobRequest $request, Job $job) : JobResource{
-        $job->update($request->validated());
+    public function update(JobFormRequest $request, Job $job) : JobResource
+    {
+        $data = $request->validated();
+
+        $job->update($data);
+        
         return new JobResource($job);
     }
 
     /**
-     * delete a specific job by its id
-     * @param Job $job
+     * Delete the given job
+     * 
+     * @param \App\Job $job
+     * 
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Job $job) : Response{
+    public function destroy(Job $job) : Response
+    {
         $job->delete();
+
         return response(null, 204);
     }
-
-    /**
-     * @param Job $job
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function getJobQuestions(Job $job) {
-        $questions = $job->questions;
-        return QuestionResource::collection($questions);
-    }
-
-
 }
