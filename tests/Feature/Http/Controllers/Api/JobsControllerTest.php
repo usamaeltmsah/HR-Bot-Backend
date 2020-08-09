@@ -120,7 +120,7 @@ class JobsControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_recruiter_can_get_all_job_interviews_for_exact_jobs(){
+    public function test_recruiter_can_get_all_job_interviews_for_exact_job(){
         Passport::actingAs($this->recruiter, [], 'recruiter');
         $job_arr = factory(Job::class)->raw();
         $job = $this->recruiter->jobs()->create($job_arr);
