@@ -18,7 +18,7 @@ class ModelAnswer extends Model
     {
         parent::__construct($attributes);
 
-        $this->setTable(config('database.tables.answers'));
+        $this->setTable(config('database.tables.model_answers'));
     }
 
     /**
