@@ -6,6 +6,7 @@ return [
 			'recruiterarea' => 'recruiter',
 			'applicantarea' => 'applicant',
 			'guestarea' => 'guest',
+			'adminarea' => 'admin',
 		]
 	]
 ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminArea;
 
 use App\Skill;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\AdminArea\SkillResource;
 use App\Http\Requests\AdminArea\SkillFormRequest;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -70,7 +71,7 @@ class SkillsController extends Controller {
    public function destroy(Skill $skill): Response 
    {
        $skill->delete();
-       
+
        return response(null, 204);
    }
 }
