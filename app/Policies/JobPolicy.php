@@ -26,25 +26,13 @@ class JobPolicy
     }
 
     /**
-     * Check wether the current user can update the given job
+     * Check wether the current user can modify the given job
      * 
      * @param  App\User   $user 
      * @param  App\Job    $job  
      * @return boolean
      */
-    public function update(User $user, Job $job): bool
-    {
-        return $user->isRecruiter() && $job->isCreatedBy($user);
-    }
-
-    /**
-     * Check wether the current user can destroy the given job
-     * 
-     * @param  App\User   $user 
-     * @param  App\Job    $job  
-     * @return boolean
-     */
-    public function destroy(User $user, Job $job): bool
+    public function modify(User $user, Job $job): bool
     {
         return $user->isRecruiter() && $job->isCreatedBy($user);
     }
