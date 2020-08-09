@@ -58,4 +58,18 @@ class JobsControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+    
+    public function test_applicant_may_not_be_applied_on_interview()
+    {
+        $applicant = factory(Applicant::class)->create();
+        Passport::actingAs($applicant, [], 'applicant');
+        $response = $this->get('api/applicant/interviews');
+
+        $structure = [
+            'data' => []
+        ];
+        $response->assertJsonStructure($structure);
+
+        $response->assertStatus(200);
+    }
 }
