@@ -60,15 +60,6 @@ class JobsController extends Controller {
     }
 
     /**
-     * return a specific job by its id
-     * @param Job $job
-     * @return JobResource
-     */
-    public function show(Job $job) : JobResource{
-        return new JobResource($job);
-    }
-
-    /**
      * store a new job
      * @param StoreJobRequest $request
      * @return JobResource
