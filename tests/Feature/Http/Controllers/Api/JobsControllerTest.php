@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Applicant;
+use App\Recruiter;
 use App\Interview;
 use App\Job;
 use Laravel\Passport\Passport;
@@ -13,6 +14,7 @@ use Laravel\Passport\Passport;
 class JobsControllerTest extends TestCase
 {
     private $applicant = null;
+    private $recruiter = null;
     private $job = null;
     private $interview = null;
 
@@ -21,6 +23,7 @@ class JobsControllerTest extends TestCase
         parent::setUp();
 
         $this->applicant = factory(Applicant::class)->create();
+        $this->recruiter = factory(Recruiter::class)->create();
         $this->job = factory(Job::class)->create();
         $this->interview = $this->job->interviews()->create(['applicant_id' => $this->applicant->getKey() ]);
         $this->job = factory(Job::class)->create();
@@ -71,5 +74,18 @@ class JobsControllerTest extends TestCase
         $response->assertJsonStructure($structure);
 
         $response->assertStatus(200);
+    }
+
+    public function test_recruiter_can_add_new_job()
+    {
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+        $url = route('recruiterarea.jobs.store');
+        $job = factory('App\Job')->raw();
+        dd($job);
+        //unset($job["recruiter_id"]);
+
+        $response = $this->post($url, $job);
+        
+        $response->assertStatus(201);
     }
 }
