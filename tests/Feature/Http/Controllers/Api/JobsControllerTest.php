@@ -39,7 +39,6 @@ class JobsControllerTest extends TestCase
     {
         Passport::actingAs($this->applicant, [], 'applicant');
         $response = $this->get('api/applicant/interviews');
-        //dd($response);
 
         $structure = [
             'data' => [
@@ -68,14 +67,14 @@ class JobsControllerTest extends TestCase
         Passport::actingAs($applicant, [], 'applicant');
         $response = $this->get('api/applicant/interviews');
 
-        $structure = [
-            'data' => []
-        ];
-        $response->assertJsonStructure($structure);
+        $response->assertJson(['data' => []]);
 
         $response->assertStatus(200);
     }
-
+    public function test_applicant_cant_apply_on_job_interview_more_than_once()
+    {
+        //
+    }
     public function test_recruiter_can_add_new_job()
     {
         Passport::actingAs($this->recruiter, [], 'recruiter');
@@ -118,6 +117,46 @@ class JobsControllerTest extends TestCase
         
         $new_job = $job->fresh();
         $this->assertEquals($new_job->title, "NEW TITLE");
+        $response->assertStatus(200);
+    }
+
+    public function test_recruiter_can_get_all_job_interviews_for_exact_jobs(){
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+        $job_arr = factory(Job::class)->raw();
+        $job = $this->recruiter->jobs()->create($job_arr);
+        $job->interviews()->create(['applicant_id' => $this->applicant->getKey() ]);
+        $url = route('recruiterarea.jobs.interviews.index', [$job["id"]]);
+        $response = $this->get($url);
+        $structure = [
+            'data' => [
+                '*' => [
+                "id", 
+                "submitted_at", 
+                "created_at", 
+                "updated_at",
+                "applicant" => [
+                    "id",
+                    "name",
+                    "email"
+                ]
+            ]
+            ]
+        ];
+        $response->assertJsonStructure($structure);
+        $response->assertStatus(200);
+    }
+
+    public function test_recruiter_may_not_have_jobs(){
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+        $job_arr = factory(Job::class)->raw();
+        $job = $this->recruiter->jobs()->create($job_arr);
+        $url = route('recruiterarea.jobs.interviews.index', [$job["id"]]);
+        $response = $this->get($url);
+
+        $structure = [
+            'data' => []
+        ];
+        $response->assertJsonStructure($structure);
         $response->assertStatus(200);
     }
 }
