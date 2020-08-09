@@ -48,6 +48,16 @@ class Interview extends Model
     }
 
     /**
+     * The interview is done by a specific applicant
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function applicant(): BelongsTo
+    {
+        return $this->belongsTo(Applicant::class, 'applicant_id', 'id');
+    }
+
+    /**
      * The interview may have one or more answer
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
