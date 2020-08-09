@@ -18,6 +18,7 @@ class InterviewResource extends JsonResource
 
         return [
             'id' => (string) $interview->getRouteKey(),
+            'score' => (string) $interview->score,
             'submitted_at' => (string) $interview->submitted_at,
             'created_at' => (string) $interview->created_at,
             'updated_at' => (string) $interview->updated_at,
