@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\AdminArea;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,11 +14,13 @@ class SkillResource extends JsonResource
      */
     public function toArray($request)
     {
+        $skill = $this->resource;
+
         return [
-            'id'            => $this->id,
-            'name'          => $this->name,
-            'created_at'    => $this->created_at,
-            'updated_at'    => $this->updated_at
+            'id'            => $skill->id,
+            'name'          => $skill->name,
+            'created_at'    => $skill->created_at,
+            'updated_at'    => $skill->updated_at
         ];
     }
 }
