@@ -78,11 +78,11 @@ class Interview extends Model
     }
 
     /**
-     * check whether this interview should be answered by the given user
+     * check whether the given user is the applicant of this interview
      * 
      * @return boolean
      */
-    public function shouldBeAnsweredBy(User $user): bool
+    public function isTheApplicant(User $user): bool
     {
         return $this->applicant_id == $user->getKey();
     }
@@ -129,13 +129,13 @@ class Interview extends Model
     }
 
     /**
-     * only interviews that should be answered by the given user
+     * only interviews that the given user is the applicant of it
      * 
      * @param  \Illuminate\Database\Eloquent\Builder    $query
      * @param  \App\User                                $user
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeShouldBeAnsweredBy(Builder $query, User $user): Builder
+    public function scopeWhereIsTheApplicant(Builder $query, User $user): Builder
     {
         return $query->where('applicant_id', $user->getKey());
     }

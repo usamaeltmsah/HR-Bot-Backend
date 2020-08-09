@@ -83,7 +83,7 @@ class Job extends Model
     public function scopeDidntApplyBefore(Builder $query, User $user): Builder
     {
         return $query->whereDoesntHave('interviews', function (Builder $query) use ($user) {
-            $query->shouldBeAnsweredBy($user);
+            $query->whereIsTheApplicant($user);
         });
     }
 
