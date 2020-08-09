@@ -59,7 +59,7 @@ class GuestsTest extends TestCase
         $response = $this->post('api/register', $this->applicant_guest);
         // Have authentication but not as applicant or recruiter
         $this->assertAuthenticated();
-        //$response->assertStatus(201);
+        $response->assertStatus(201);
     }
 
     public function test_guest_can_register_as_recruiter()
@@ -67,7 +67,7 @@ class GuestsTest extends TestCase
         $response = $this->post('api/register', $this->recruiter_guest);
         // Have authentication but not as applicant or recruiter
         $this->assertAuthenticated();
-        //$response->assertStatus(201);
+        $response->assertStatus(201);
     }
 
     public function test_guest_cant_register_as_applicant_with_existing_email()
