@@ -17,7 +17,10 @@ class CreateInterviewsTable extends Migration
             $table->increments('id');
             $table->integer('job_id')->unsigned();
             $table->integer('applicant_id')->unsigned();
-            $table->dateTime('submitted_at')->nullable();
+            $table->dateTime('submitted_at');
+            $table->float('score')->nullable();
+            $table->enum('status', ['under consideration', 'selected', 'not selected'])->nullable();
+            $table->text('feedback')->nullable();
             $table->timestamps();
 
             // Indexes
