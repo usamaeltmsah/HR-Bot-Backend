@@ -65,13 +65,17 @@ Route::name('recruiterarea.')
 
 			});
 
-			Route::name('interviews.')
-				->prefix('interviews')
-				->group(function() {
-					Route::get('/{interview}', 'JobInterviewsController@show')
-						->name('show')
-						->middleware('can:access,interview');
-				});
+		Route::name('interviews.')
+			->prefix('interviews')
+			->group(function() {
+				Route::get('/{interview}', 'JobInterviewsController@show')
+					->name('show')
+					->middleware('can:access,interview');
+			});
+
+		Route::put('answers/{answer}/score', 'AnswersController@updateScore')
+			->name('answers.score.update')
+			->middleware('can:modify,answer');
 	});
 
 Route::name('applicantarea.')
