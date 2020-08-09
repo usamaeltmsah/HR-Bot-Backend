@@ -78,6 +78,14 @@ class GuestsTest extends TestCase
         $response->assertStatus(302);
     }
 
+    public function test_guest_cant_register_as_recruiter_with_existing_email()
+    {
+        $this->post('api/register', $this->recruiter_guest);
+        $response = $this->post('api/register', $this->recruiter_guest);
+
+        $response->assertStatus(302);
+    }
+
     public function test_guest_can_login_as_applicant()
     {
         $applicant = factory(Applicant::class)->create([
