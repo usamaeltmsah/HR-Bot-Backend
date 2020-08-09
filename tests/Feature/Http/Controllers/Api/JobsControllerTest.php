@@ -123,8 +123,9 @@ class JobsControllerTest extends TestCase
     public function test_recruiter_can_get_all_job_interviews_for_exact_job(){
         Passport::actingAs($this->recruiter, [], 'recruiter');
         $job_arr = factory(Job::class)->raw();
+        $applicant = factory(Applicant::class)->create();
         $job = $this->recruiter->jobs()->create($job_arr);
-        $job->interviews()->create(['applicant_id' => $this->applicant->getKey() ]);
+        $job->interviews()->create(['applicant_id' => $applicant->getKey() ]);
         $url = route('recruiterarea.jobs.interviews.index', [$job["id"]]);
         $response = $this->get($url);
         $structure = [
