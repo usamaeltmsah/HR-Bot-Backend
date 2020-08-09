@@ -56,6 +56,15 @@ Route::name('recruiterarea.')
 				Route::delete('/{job}', 'JobsController@destroy')
 					->name('destroy')
 					->middleware('can:modify,job');
+
+				
+				Route::name('interviews.')
+					->prefix('{job}/interviews')
+					->group(function() {
+						Route::get('/', 'JobInterviewsController@index')
+							->name('index')
+							->middleware('can:modify,job');
+					});
 			});
 	});
 
