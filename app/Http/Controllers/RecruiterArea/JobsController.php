@@ -6,7 +6,6 @@ use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\QuestionResource;
 use App\Http\Resources\RecruiterArea\JobResource;
 use App\Http\Requests\RecruiterArea\JobFormRequest;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -94,23 +93,16 @@ class JobsController extends Controller {
     }
 
     /**
-     * delete a specific job by its id
+     * Delete the given job
+     * 
      * @param Job $job
+     * 
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Job $job) : Response{
+    public function destroy(Job $job) : Response
+    {
         $job->delete();
+
         return response(null, 204);
     }
-
-    /**
-     * @param Job $job
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function getJobQuestions(Job $job) {
-        $questions = $job->questions;
-        return QuestionResource::collection($questions);
-    }
-
-
 }
