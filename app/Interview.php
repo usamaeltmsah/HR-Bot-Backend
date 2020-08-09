@@ -93,7 +93,7 @@ class Interview extends Model
      */
     public function isInProgress(): bool
     {
-        return ! $this->isSubmitted() && $this->hasTimeToSubmit();
+        return ! $this->isSubmitted();
     }
 
     /**
@@ -104,16 +104,6 @@ class Interview extends Model
     public function isTheApplicant(User $user): bool
     {
         return $this->applicant_id == $user->getKey();
-    }
-
-    /**
-     * Check whether this interview has time to submit
-     * 
-     * @return boolean
-     */
-    public function hasTimeToSubmit(): bool
-    {
-        return now()->diffInSeconds($this->created_at) < $this->job->interview_duration;
     }
 
     /**
