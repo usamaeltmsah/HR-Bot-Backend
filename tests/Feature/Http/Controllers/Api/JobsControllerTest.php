@@ -59,7 +59,7 @@ class JobsControllerTest extends TestCase
         $response->assertStatus(200);
     }
     
-    public function test_applicant_may_not_be_applied_on_interview()
+    public function test_applicant_may_not_be_applied_on_job_interview()
     {
         $applicant = factory(Applicant::class)->create();
         Passport::actingAs($applicant, [], 'applicant');
