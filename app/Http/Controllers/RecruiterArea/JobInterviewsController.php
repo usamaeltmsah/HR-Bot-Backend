@@ -21,7 +21,10 @@ class JobInterviewsController extends Controller {
      */
     public function index(Request $request, Job $job) : ResourceCollection
     {
-        $interviews = $job->interviews()->with('applicant')->paginate();
+        $interviews = $job->interviews()
+                            ->with('applicant')
+                            ->orderBy('score', 'desc')
+                            ->paginate();
 
         return InterviewResource::collection($interviews);
     }
