@@ -75,7 +75,6 @@ class GuestsTest extends TestCase
         $this->post('api/register', $this->applicant_guest);
         $response = $this->post('api/register', $this->applicant_guest);
 
-        // Have authentication but not as applicant or recruiter
         $response->assertStatus(302);
     }
 
