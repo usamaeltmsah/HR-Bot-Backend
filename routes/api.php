@@ -68,6 +68,9 @@ Route::name('applicantarea.')
 		Route::name('interviews.')
 			->prefix('interviews')
 			->group(function(){
+				Route::get('/', 'InterviewsController@index')
+					->name('index');
+
 				Route::get('{interview}/questions', 'InterviewsController@questions')
 					->name('questions.index')
 					->middleware(['can:access,interview']);
