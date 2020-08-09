@@ -50,7 +50,8 @@ Route::name('recruiterarea.')
 					->name('store');
 
 				Route::put('/{job}', 'JobsController@update')
-					->name('update');
+					->name('update')
+					->middleware('can:update,job');
 			});
 	});
 
