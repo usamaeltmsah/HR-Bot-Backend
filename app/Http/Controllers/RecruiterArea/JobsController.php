@@ -6,10 +6,10 @@ use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
-use App\Http\Resources\RecruiterArea\JobResource;
 use App\Http\Resources\QuestionResource;
+use App\Http\Resources\RecruiterArea\JobResource;
+use App\Http\Requests\RecruiterArea\JobFormRequest;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class JobsController extends Controller {
@@ -61,11 +61,19 @@ class JobsController extends Controller {
 
     /**
      * store a new job
-     * @param StoreJobRequest $request
-     * @return JobResource
+     * 
+     * @param \App\Http\Requests\RecruiterArea\JobFormRequest $request
+     * 
+     * @return \App\Http\Resources\RecruiterArea\JobResource
      */
-    public function store(StoreJobRequest $request) : JobResource{
-        $job = Job::create($request->validated());
+    public function store(JobFormRequest $request) : JobResource
+    {
+        $data = $request->validated();
+
+        $user = $request->user();
+
+        $job = $user->jobs()->create($data);
+        
         return new JobResource($job);
     }
 

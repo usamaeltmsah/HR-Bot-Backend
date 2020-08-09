@@ -6,12 +6,12 @@ use App\Question;
 use App\Interview;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\InterviewAnswerFormRequest;
 use App\Http\Resources\ApplicantArea\AnswerResource;
 use App\Http\Resources\ApplicantArea\QuestionResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Http\Resources\ApplicantArea\InterviewResource;
 use App\Http\Resources\ApplicantArea\InterviewWithJobResource;
+use App\Http\Requests\ApplicantArea\InterviewAnswerFormRequest;
 
 class InterviewsController extends Controller
 {

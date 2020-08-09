@@ -45,6 +45,9 @@ Route::name('recruiterarea.')
 			->group(function(){
 				Route::get('/', 'JobsController@index')
 					->name('index');
+
+				Route::post('/', 'JobsController@store')
+					->name('store');
 			});
 	});
 
