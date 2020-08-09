@@ -18,10 +18,10 @@ class InterviewResource extends JsonResource
 
         return [
             'id' => (string) $interview->getRouteKey(),
-            'applicant' => new ApplicantResource($interview->applicant),
             'submitted_at' => (string) $interview->submitted_at,
             'created_at' => (string) $interview->created_at,
             'updated_at' => (string) $interview->updated_at,
+            'applicant' => new ApplicantResource($interview->applicant),
         ];
     }
 }
