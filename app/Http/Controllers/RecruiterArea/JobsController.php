@@ -95,7 +95,7 @@ class JobsController extends Controller {
     /**
      * Delete the given job
      * 
-     * @param Job $job
+     * @param \App\Job $job
      * 
      * @return \Illuminate\Http\Response
      */
