@@ -35,6 +35,15 @@ class Interview extends Model
         parent::__construct($attributes);
 
         $this->setTable(config('database.tables.interviews'));
+
+        // Make sure sumitted at is not null and make it the maximum submit time
+        self::creating(function (Interview $interview) {
+            if(is_null($interview->submitted_at)) {
+                $duration = $interview->job->interview_duration;
+
+                $interview->submitted_at = now()->addSeconds($duration);     
+            }
+        });
     }
 
     /**
@@ -124,7 +133,7 @@ class Interview extends Model
      */
     public function isSubmitted(): bool
     {
-        return !is_null($this->submitted_at);
+        return $this->submitted_at->isPast();
     }
 
     /**
