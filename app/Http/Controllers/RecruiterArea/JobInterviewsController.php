@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Http\Resources\RecruiterArea\InterviewResource;
 use App\Http\Resources\RecruiterArea\InterviewReportResource;
+use App\Http\Requests\RecruiterArea\InterviewStatusFormRequest;
 
 class JobInterviewsController extends Controller {
 
@@ -43,6 +44,21 @@ class JobInterviewsController extends Controller {
     {
         $interview->load('answers.question', 'applicant');
 
+        return new InterviewReportResource($interview);
+    }
+
+    /**
+     * Update the interview status
+     * 
+     * @param  \App\Http\Requests\RecruiterArea\InterviewStatusFormRequest $request
+     * @param  \App\Interview                  $interview 
+     * @return \App\Http\Resources\RecruiterArea\InterviewReportResource
+     */
+    public function updateStatus(InterviewStatusFormRequest $request, Interview $interview): InterviewReportResource
+    {
+        $data = $request->validated();
+        $interview->status = $data['status'];
+        $interview->save();
         return new InterviewReportResource($interview);
     }
 }

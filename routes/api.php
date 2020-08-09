@@ -71,6 +71,10 @@ Route::name('recruiterarea.')
 				Route::get('/{interview}', 'JobInterviewsController@show')
 					->name('show')
 					->middleware('can:access,interview');
+
+				Route::put('/{interview}/status', 'JobInterviewsController@updateStatus')
+					->name('status')
+					->middleware('can:access,interview');
 			});
 
 		Route::put('answers/{answer}/score', 'AnswersController@updateScore')
