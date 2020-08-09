@@ -35,7 +35,7 @@ class GuestsTest extends TestCase
      * @return void
      */
     public function test_guest_can_get_jobs(){
-        $response = $this->json('GET', '/api/guest/jobs');
+        $response = $this->json('GET', route("guestarea.jobs.index"));
         $structure = [
             'data' => [
                 '*' => [
