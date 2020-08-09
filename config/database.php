@@ -171,5 +171,6 @@ return [
         'skills' => 'skills',
         'recruiters' => 'recruiters',
         'position_skill' => 'position_skill',
+        'model_answers' => 'model_answers',
     ],
 ];

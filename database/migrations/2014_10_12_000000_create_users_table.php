@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['applicant', 'recruiter'])->default('applicant');
+            $table->enum('role', ['applicant', 'recruiter', 'admin'])->default('applicant');
             $table->timestamps();
         });
     }

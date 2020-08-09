@@ -127,6 +127,18 @@ class Interview extends Model
     }
 
     /**
+     * Check wether this interview is for the given job
+     * 
+     * @param  \App\Job    $job
+     * 
+     * @return boolean
+     */
+    public function isForJob(Job $job): bool
+    {
+        return $job->getKey() == $this->job_id;
+    }
+
+    /**
      * Submit this interview
      * 
      * @return void

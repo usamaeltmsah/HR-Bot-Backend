@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Job;
 use App\User;
+use App\Interview;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class JobPolicy

@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\User;
+use App\Admin;
 use App\Applicant;
 use App\Recruiter;
 use Faker\Generator as Faker;
@@ -31,5 +32,14 @@ $factory->define(Recruiter::class, function (Faker $faker){
         'email' => $faker->unique()->safeEmail,
         'password' => '12345678',
         'role' => 'recruiter',
+    ];
+});
+
+$factory->define(Admin::class, function (Faker $faker){
+    return [
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => \Hash::make('12345678'),
+        'role' => 'admin',
     ];
 });

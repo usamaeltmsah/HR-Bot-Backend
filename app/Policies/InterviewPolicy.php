@@ -19,6 +19,10 @@ class InterviewPolicy
      */
     public function access(User $user, Interview $interview): bool
     {
+        if($user->isRecruiter()) {
+            return $interview->job->isCreatedBy($user);
+        }
+
         if($user->isApplicant() && $interview->isTheApplicant($user)) {
             return $interview->isInProgress();
         }

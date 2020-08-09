@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\RecruiterArea;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SkillFormRequest extends FormRequest
+class AnswerScoreFormRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,11 @@ class SkillFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string']
+            'score' => [
+                'required',
+                'numeric',
+                'min:0',
+            ]
         ];
     }
 }
