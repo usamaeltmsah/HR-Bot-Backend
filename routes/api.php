@@ -51,11 +51,11 @@ Route::name('recruiterarea.')
 
 				Route::put('/{job}', 'JobsController@update')
 					->name('update')
-					->middleware('can:update,job');
+					->middleware('can:modify,job');
 
 				Route::delete('/{job}', 'JobsController@destroy')
 					->name('destroy')
-					->middleware('can:destroy,job');
+					->middleware('can:modify,job');
 			});
 	});
 
