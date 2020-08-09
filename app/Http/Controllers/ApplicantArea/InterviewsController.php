@@ -11,9 +11,26 @@ use App\Http\Resources\ApplicantArea\AnswerResource;
 use App\Http\Resources\ApplicantArea\QuestionResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Http\Resources\ApplicantArea\InterviewResource;
+use App\Http\Resources\ApplicantArea\InterviewWithJobResource;
 
 class InterviewsController extends Controller
 {
+    /**
+     * retrive all interviews for the current applicant
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * 
+     * @return \Illuminate\Http\Resources\Json\ResourceCollection 
+     */
+    public function index(Request $request): ResourceCollection
+    {
+        $user = $request->user();
+
+        $interviews = Interview::with('job')->whereIsTheApplicant($user)->get();
+
+        return InterviewWithJobResource::collection($interviews);
+    }
+
 	/**
      * Get all questions for the given jobs
      * 

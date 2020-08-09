@@ -22,10 +22,24 @@ Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
 Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout');
 
+Route::name('guestarea.')
+	->middleware(['guest:applicant', 'guest:recruiter'])
+	->namespace('GuestArea')
+	->prefix(config('hrbot.route.prefix.guestarea'))
+	->group(function () {
+		Route::name('jobs.')
+			->prefix('jobs')
+			->group(function(){
+				Route::get('/', 'JobsController@index')
+					->name('index');
+			});
+	});
+
 Route::name('recruiterarea.')
 	->middleware('auth:recruiter')
 	->namespace('RecruiterArea')
-	->prefix(config('hrbot.route.prefix.recruiterarea'))->group(function () {
+	->prefix(config('hrbot.route.prefix.recruiterarea'))
+	->group(function () {
 		Route::name('jobs.')
 			->prefix('jobs')
 			->group(function(){
@@ -37,7 +51,8 @@ Route::name('recruiterarea.')
 Route::name('applicantarea.')
 	->middleware('auth:applicant')
 	->namespace('ApplicantArea')
-	->prefix(config('hrbot.route.prefix.applicantarea'))->group(function () {
+	->prefix(config('hrbot.route.prefix.applicantarea'))
+	->group(function () {
 
 		Route::name('jobs.')
 			->prefix('jobs')
@@ -53,6 +68,9 @@ Route::name('applicantarea.')
 		Route::name('interviews.')
 			->prefix('interviews')
 			->group(function(){
+				Route::get('/', 'InterviewsController@index')
+					->name('index');
+
 				Route::get('{interview}/questions', 'InterviewsController@questions')
 					->name('questions.index')
 					->middleware(['can:access,interview']);

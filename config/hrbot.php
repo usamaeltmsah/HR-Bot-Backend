@@ -5,6 +5,7 @@ return [
 		'prefix' => [
 			'recruiterarea' => 'recruiter',
 			'applicantarea' => 'applicant',
+			'guestarea' => 'guest',
 		]
 	]
 ];

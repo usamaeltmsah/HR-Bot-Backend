@@ -19,7 +19,7 @@ class InterviewPolicy
      */
     public function access(User $user, Interview $interview): bool
     {
-        if($user->isApplicant() && $interview->shouldBeAnsweredBy($user)) {
+        if($user->isApplicant() && $interview->isTheApplicant($user)) {
             return $interview->isInProgress();
         }
 

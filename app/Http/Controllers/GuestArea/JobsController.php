@@ -1,33 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\ApplicantArea;
+namespace App\Http\Controllers\GuestArea;
 
 use App\Job;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
-use App\Http\Resources\ApplicantArea\JobResource;
+use App\Http\Resources\GuestArea\JobResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use App\Http\Resources\ApplicantArea\InterviewResource;
 
 class JobsController extends Controller
 {
-	/**
-	 * Apply on the given job
-	 * 
-	 * @param  \Illuminate\Http\Request $request
-	 * @param  \App\Job     			$job
-	 * @return \App\Http\Resources\InterviewResource
-	 */
-    public function apply(Request $request, Job $job): InterviewResource
-    {
-    	$interview = $job->interviews()->create([
-    		'applicant_id' => $request->user()->getKey(),
-    	]);
-
-    	return new InterviewResource($interview);
-    }
-
     /**
      * List all the jobs that the applican should see
      * 
@@ -37,11 +20,8 @@ class JobsController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-    	$user = $request->user();
 
-    	$query = Job::acceptingInterviews()
-    				->didntApplyBefore($user)
-                    ->latest();
+    	$query = Job::acceptingInterviews()->latest();
 
     	$query = $this->applyIndexFilters($request, $query);
 
