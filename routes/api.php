@@ -48,6 +48,9 @@ Route::name('recruiterarea.')
 
 				Route::post('/', 'JobsController@store')
 					->name('store');
+
+				Route::put('/{job}', 'JobsController@update')
+					->name('update');
 			});
 	});
 
