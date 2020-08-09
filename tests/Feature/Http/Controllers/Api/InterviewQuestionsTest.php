@@ -59,6 +59,7 @@ class InterviewQuestionsTest extends TestCase
         $interview_duration = $this->job->interview_duration;
         $this->job->interview_duration = 0;
         $this->job->save();
+        $this->interview = $this->job->interviews()->create(['applicant_id' => $this->user->getKey() ]);
 
         Passport::actingAs($this->user, [], 'applicant');
         $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
