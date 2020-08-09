@@ -47,6 +47,6 @@ class Answer extends Model
      */
     public function interview(): BelongsTo
     {
-        return $this->belongsTo(interview::class);
+        return $this->belongsTo(Interview::class);
     }
 }
