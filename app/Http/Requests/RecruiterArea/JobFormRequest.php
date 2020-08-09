@@ -29,7 +29,6 @@ class JobFormRequest extends FormRequest
             'accept_interviews_from' => [
                 'required', 
                 'date_format:Y-m-d H:i:s', 
-                'after:now'
             ],
 
             'accept_interviews_until' => [
