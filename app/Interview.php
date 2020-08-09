@@ -158,4 +158,19 @@ class Interview extends Model
     {
         return $query->where('applicant_id', $user->getKey());
     }
+
+    /**
+     * Get status attribute
+     * 
+     * @param  string|null $status
+     * @return string
+     */
+    public function getStatusAttribute(?string $status): string
+    {
+        if (is_null($status)) {
+            return $this->isSubmitted() ? 'submitted' : 'interviewing';
+        }
+
+        return $status;
+    }
 }
