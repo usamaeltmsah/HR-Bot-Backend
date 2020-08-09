@@ -67,7 +67,7 @@ Route::name('recruiterarea.')
 
 						Route::get('/{interview}', 'JobInterviewsController@show')
 							->name('show')
-							->middleware('can:modify,job');
+							->middleware('can:access_job_interview_report,job,interview');
 					});
 			});
 	});
