@@ -81,11 +81,43 @@ class JobsControllerTest extends TestCase
         Passport::actingAs($this->recruiter, [], 'recruiter');
         $url = route('recruiterarea.jobs.store');
         $job = factory('App\Job')->raw();
-        dd($job);
-        //unset($job["recruiter_id"]);
 
         $response = $this->post($url, $job);
-        
         $response->assertStatus(201);
+    }
+
+    public function test_recruiter_can_delete_existing_job_created_by_him()
+    {
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+
+        $job_arr = factory(Job::class)->raw();
+        $job = $this->recruiter->jobs()->create($job_arr);
+        $url = route('recruiterarea.jobs.destroy', $job["id"]);
+
+        $response = $this->call('DELETE', $url);
+        $response->assertStatus(204);
+    }
+
+    public function test_recruiter_can_update_existing_job()
+    {
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+        $job_arr = factory(Job::class)->raw();
+        $job = $this->recruiter->jobs()->create($job_arr);
+        $url = route('recruiterarea.jobs.update', [$job["id"]]);
+        $response = $this->call('PUT', $url, $data = array(
+            "title" => "NEW TITLE",
+            "description" => "NEW DESCRIPTION",
+            "accept_interviews_from" => "2020-08-09 21:54:15",
+            "accept_interviews_until" => "2048-07-21 23:24:55",
+            "interview_duration" => 3111,
+            "recruiter_id" => 949,
+            "updated_at" => "2020-08-09 21:54:15",
+            "created_at" => "2020-08-09 21:54:15",
+            "id" => 618
+        ));
+        
+        $new_job = $job->fresh();
+        $this->assertEquals($new_job->title, "NEW TITLE");
+        $response->assertStatus(200);
     }
 }
