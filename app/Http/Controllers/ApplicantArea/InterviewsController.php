@@ -26,7 +26,9 @@ class InterviewsController extends Controller
     {
         $user = $request->user();
 
-        $interviews = Interview::with('job')->whereIsTheApplicant($user)->get();
+        $interviews = Interview::with('job')
+                        ->whereIsTheApplicant($user)
+                        ->paginate();
 
         return InterviewWithJobResource::collection($interviews);
     }
