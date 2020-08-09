@@ -42,6 +42,16 @@ class Question extends Model
     }
 
     /**
+     * The question may have one or more model answer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function modelAnswers(): HasMany
+    {
+        return $this->hasMany(ModelAnswer::class);
+    }
+
+    /**
      * The question may belong to one or more skill
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
