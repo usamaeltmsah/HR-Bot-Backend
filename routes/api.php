@@ -40,6 +40,7 @@ Route::name('recruiterarea.')
 	->namespace('RecruiterArea')
 	->prefix(config('hrbot.route.prefix.recruiterarea'))
 	->group(function () {
+
 		Route::name('jobs.')
 			->prefix('jobs')
 			->group(function(){
@@ -58,18 +59,19 @@ Route::name('recruiterarea.')
 					->middleware('can:modify,job');
 
 				
-				Route::name('interviews.')
-					->prefix('{job}/interviews')
-					->group(function() {
-						Route::get('/', 'JobInterviewsController@index')
-							->name('index')
-							->middleware('can:modify,job');
+				Route::get('{job}/interviews', 'JobInterviewsController@index')
+					->name('interviews.index')
+					->middleware('can:modify,job');
 
-						Route::get('/{interview}', 'JobInterviewsController@show')
-							->name('show')
-							->middleware('can:access_job_interview_report,job,interview');
-					});
 			});
+
+			Route::name('interviews.')
+				->prefix('interviews')
+				->group(function() {
+					Route::get('/{interview}', 'JobInterviewsController@show')
+						->name('show')
+						->middleware('can:access,interview');
+				});
 	});
 
 Route::name('applicantarea.')

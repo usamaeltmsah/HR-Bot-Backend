@@ -23,6 +23,7 @@ class InterviewReportResource extends JsonResource
             'submitted_at' => (string) $interview->submitted_at,
             'created_at' => (string) $interview->created_at,
             'updated_at' => (string) $interview->updated_at,
+            'job' => new JobResource($interview->job),
             'applicant' => new ApplicantResource($interview->applicant),
             'report' => InterviewAnswersReportResource::collection($interview->answers),
         ];

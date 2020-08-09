@@ -35,11 +35,11 @@ class JobInterviewsController extends Controller {
      * Show the details of the given interview
      * 
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Job                 $job
      * @param  \App\Interview           $interview
+     * 
      * @return \App\Http\Resources\RecruiterArea\InterviewReportResource
      */
-    public function show(Request $request, Job $job, Interview $interview): InterviewReportResource
+    public function show(Request $request, Interview $interview): InterviewReportResource
     {
         $interview->load('answers.question', 'applicant');
 

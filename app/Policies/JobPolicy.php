@@ -37,17 +37,4 @@ class JobPolicy
     {
         return $user->isRecruiter() && $job->isCreatedBy($user);
     }
-
-    /**
-     * Check if the current user can access the job interview report
-     *
-     * @param  App\User         $user 
-     * @param  App\Job          $job 
-     * @param  App\Interview    $interview 
-     * @return boolean
-     */
-    public function access_job_interview_report(User $user, Job $job, Interview $interview): bool
-    {
-        return $this->modify($user, $job) && $interview->isForJob($job);
-    }
 }
