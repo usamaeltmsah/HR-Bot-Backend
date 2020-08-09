@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\RecruiterArea;
 
 use App\Job;
+use App\Interview;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Http\Resources\RecruiterArea\InterviewResource;
+use App\Http\Resources\RecruiterArea\InterviewReportResource;
 
 class JobInterviewsController extends Controller {
 
@@ -27,5 +29,12 @@ class JobInterviewsController extends Controller {
                             ->paginate();
 
         return InterviewResource::collection($interviews);
+    }
+
+    public function show(Request $request, Job $job, Interview $interview): InterviewReportResource
+    {
+        $interview->load('answers.question', 'applicant');
+
+        return new InterviewReportResource($interview);
     }
 }

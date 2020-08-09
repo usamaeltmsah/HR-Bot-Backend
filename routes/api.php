@@ -64,6 +64,10 @@ Route::name('recruiterarea.')
 						Route::get('/', 'JobInterviewsController@index')
 							->name('index')
 							->middleware('can:modify,job');
+
+						Route::get('/{interview}', 'JobInterviewsController@show')
+							->name('show')
+							->middleware('can:modify,job');
 					});
 			});
 	});
