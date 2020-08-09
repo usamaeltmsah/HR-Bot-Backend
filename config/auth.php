@@ -55,6 +55,11 @@ return [
             'driver' => 'passport',
             'provider' => 'applicants',
         ],
+
+        'admin' => [
+            'driver' => 'passport',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -88,6 +93,11 @@ return [
         'applicants' => [
             'driver' => 'eloquent',
             'model' => App\Applicant::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
         ],
     ],
 
