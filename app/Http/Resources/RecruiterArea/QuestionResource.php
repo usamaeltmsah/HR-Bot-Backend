@@ -4,7 +4,7 @@ namespace App\Http\Resources\RecruiterArea;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class InterviewAnswersReportResource extends JsonResource
+class QuestionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +14,13 @@ class InterviewAnswersReportResource extends JsonResource
      */
     public function toArray($request)
     {
-        $answer = $this->resource;
+        $question = $this->resource;
 
         return [
-            'question' => new QuestionResource($answer->question),
-            'answer' => new AnserResource($answer)
+            'id' => (string) $question->getRouteKey(),
+            'body' => (string) $question->body,
+            'created_at' => (string) $question->created_at,
+            'updated_at' => (string) $question->updated_at,
         ];
     }
 }
