@@ -18,7 +18,7 @@ class InterviewAnswersReportResource extends JsonResource
 
         return [
             'question' => new QuestionResource($answer->question),
-            'answer' => new AnserResource($answer)
+            'answer' => new AnswerResource($answer)
         ];
     }
 }
