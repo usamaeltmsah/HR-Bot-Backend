@@ -13,8 +13,7 @@ class Job extends Model
         'description',
         'accept_interviews_from',
         'accept_interviews_until',
-        'interviews_duration',
-        'recruiter_id'
+        'interview_duration',
     ];
 
 
