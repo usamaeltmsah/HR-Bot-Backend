@@ -47,6 +47,8 @@ Route::name('adminarea.')
 
 		Route::post('skills/{skill}/questions', 'SkillQuestionsController@store')
 			->name('skills.questions.store');
+		
+		Route::apiResource('questions', 'QuestionsController');
 	});
 
 Route::name('recruiterarea.')
