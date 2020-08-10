@@ -44,6 +44,9 @@ Route::name('adminarea.')
 		
 		Route::get('skills/{skill}/questions', 'SkillQuestionsController@index')
 			->name('skills.questions.index');
+
+		Route::post('skills/{skill}/questions', 'SkillQuestionsController@store')
+			->name('skills.questions.store');
 	});
 
 Route::name('recruiterarea.')
