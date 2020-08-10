@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Admin;
 use App\Skill;
+use DB;
 use Laravel\Passport\Passport;
 
 class SkillsControllerTest extends TestCase
@@ -54,5 +55,21 @@ class SkillsControllerTest extends TestCase
         $response = $this->get($url);
 
         $response->assertJson(['data' => ['id' => $this->skill->getRouteKey()]])->assertStatus(200);
+    }
+
+    /**
+     * TODO: Check that the skill added to database
+     */
+    public function test_admin_can_add_new_skill()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+        
+        $url = route('adminarea.skills.store');
+        $skill = factory('App\Skill')->raw();
+        $response = $this->post($url, $skill);
+        
+        //$added_skill = DB::table('skills')->where('id', $skill);
+        $response->assertStatus(201);
+
     }
 }
