@@ -66,8 +66,10 @@ class SkillsControllerTest extends TestCase
         $url = route('adminarea.skills.store');
         $skill = factory('App\Skill')->raw();
         $response = $this->post($url, $skill);
-        
-        //$added_skill = DB::table('skills')->where('id', $skill);
+        // Check that it added successfully in database 
+        $added_skill = DB::table('skills')->where('id', $response["data"]["id"])->get();
+        $this->assertEquals($added_skill[0]->name, $skill["name"]);
+
         $response->assertStatus(201);
 
     }
@@ -128,4 +130,24 @@ class SkillsControllerTest extends TestCase
         
     }
 
+    public function test_admin_can_add_questions_for_existing_skill()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+        $this->skill->questions()->create(['body' => "question #1"]);
+        $this->skill->questions()->create(['body' => "question #2"]);
+        $url = route('adminarea.skills.questions.store', [$this->skill->getRouteKey()]);
+        
+        $response = $this->post($url, ['body' => "NEW Question"]);
+
+        // Count the number of question of this skill
+        $n_questions = count($this->skill->questions);
+
+        // The added skill will be always the last skill so need to check that it added successfully
+        $added_skill_q = [$this->skill->questions[$n_questions-1]['id'], $this->skill->questions[$n_questions-1]['body']];
+        $added_skill_q_from_response = [$response["data"]["id"], $response["data"]["body"]];
+
+        // Test that the 2 arrays are equals 
+        $this->assertEquals($added_skill_q, $added_skill_q_from_response);
+        $response->assertStatus(201);
+    }
 }
