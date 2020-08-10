@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\AdminArea;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -15,7 +15,16 @@ class QuestionFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'body' => ['required', 'string']
+            'body' => [
+                'required', 
+                'string',
+                'min:1',
+            ],
+
+            'skill_id' => [
+                'sometimes',
+                'exists:skills,id',
+            ],
         ];
     }
 }

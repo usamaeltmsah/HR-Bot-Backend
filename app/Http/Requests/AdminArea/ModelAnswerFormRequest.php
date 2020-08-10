@@ -4,7 +4,7 @@ namespace App\Http\Requests\AdminArea;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SkillFormRequest extends FormRequest
+class ModelAnswerFormRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,11 +14,16 @@ class SkillFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'required', 
+            'body' => [
+                'required',
                 'string',
                 'min:1',
-            ]
+            ],
+
+            'question_id' => [
+                'required',
+                'exists:questions,id',
+            ],
         ];
     }
 }

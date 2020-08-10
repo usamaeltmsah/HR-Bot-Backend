@@ -3,21 +3,30 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Skill extends Model
 {
     protected $fillable = ['name'];
 
-
-    public function jobs(): BelongsToMany{
+    /**
+     * A skill may belongs to one or more jobs
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function jobs(): BelongsToMany
+    {
         return $this->belongsToMany(Job::class, 'skills_jobs');
     }
 
-    /** it should work when make a relation between skills and questions */
-//    public function questions(): BelongsToMany{
-//        return $this->belongsToMany(Question::class, 'skills_questions');
-//    }
-
-
+    /**
+     * A skill may have one or more questions
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+	public function questions(): HasMany
+	{
+		return $this->hasMany(Question::class);
+	}
 }

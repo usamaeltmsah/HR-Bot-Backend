@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\RecruiterArea;
+namespace App\Http\Resources\AdminArea;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

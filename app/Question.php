@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Question extends Model
 {
-    protected $fillable = ['body'];
+    protected $fillable = ['body', 'skill_id'];
+    
     /**
      * Create a new Eloquent model instance.
      *
@@ -54,11 +55,11 @@ class Question extends Model
     /**
      * The question may belong to one or more skill
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function skills(): BelongsToMany
+    public function skill(): belongsTo
     {
-        return $this->belongsToMany(Skill::class)->withTimestamps();
+        return $this->belongsTo(Skill::class);
     }
 
     /**
