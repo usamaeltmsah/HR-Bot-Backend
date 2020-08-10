@@ -17,11 +17,12 @@ class QuestionFormRequest extends FormRequest
         return [
             'body' => [
                 'required', 
-                'string'
+                'string',
+                'min:1',
             ],
 
             'skill_id' => [
-                'required',
+                'sometimes',
                 'exists:skills,id',
             ],
         ];

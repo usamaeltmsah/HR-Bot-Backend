@@ -42,13 +42,7 @@ Route::name('adminarea.')
 	->group(function () {
 		Route::apiResource('skills', 'SkillsController');
 		
-		Route::get('skills/{skill}/questions', 'SkillQuestionsController@index')
-			->name('skills.questions.index');
-
-		Route::post('skills/{skill}/questions', 'SkillQuestionsController@store')
-			->name('skills.questions.store');
-		
-		Route::apiResource('questions', 'QuestionsController');
+		Route::apiResource('skills.questions', 'QuestionsController')->shallow();
 	});
 
 Route::name('recruiterarea.')

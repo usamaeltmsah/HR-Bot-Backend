@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AdminArea;
 
+use App\Skill;
 use App\Question;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -11,16 +12,34 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class QuestionsController extends Controller {
 
-    /**
-     * Get all the questions
-     * 
-     * @return \Illuminate\Http\Resources\Json\ResourceCollection
-     */
-    public function index(): ResourceCollection 
+/**
+   * List all the questions attached to the given skill
+   * 
+   * @param  \App\Skill  $skill
+   * @return \Illuminate\Http\Resources\Json\ResourceCollection
+   */
+    public function index(Skill $skill): ResourceCollection
     {
-        $questions = Question::latest()->paginate();
+      $questions = $skill->questions()->paginate();
 
-        return QuestionResource::collection($questions);
+      return QuestionResource::collection($questions);
+    }
+
+    /**
+     * Create a new question with the given data attached to the given skill
+     * 
+     * @param  \App\Http\Requests\AdminArea\QuestionFormRequest $request
+     * @param  \App\Skill               $skill
+     * 
+     * @return \App\Http\Resources\AdminArea\QuestionResource
+     */
+    public function store(QuestionFormRequest $request, Skill $skill): QuestionResource
+    {
+      $data = $request->validated();
+
+      $question = $skill->questions()->create($data);
+
+      return new QuestionResource($question);
     }
 
     /**
@@ -32,20 +51,6 @@ class QuestionsController extends Controller {
      */
     public function show(Question $question): QuestionResource 
     {
-        return new QuestionResource($question);
-    }
-
-    /**
-     * Store a new question with the given data
-     * 
-     * @param  \App\Http\Requests\AdminArea\QuestionFormRequest $request
-     * 
-     * @return \App\Http\Resources\QuestionResource
-     */
-    public function store(QuestionFormRequest $request): QuestionResource 
-    {
-        $question = Question::create($request->validated());
-        
         return new QuestionResource($question);
     }
 
