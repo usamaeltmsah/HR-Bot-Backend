@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Question extends Model
 {
-    protected $fillable = ['body'];
+    protected $fillable = ['body', 'skill_id'];
+    
     /**
      * Create a new Eloquent model instance.
      *
