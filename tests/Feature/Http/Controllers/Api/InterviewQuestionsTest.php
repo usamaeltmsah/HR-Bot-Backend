@@ -56,13 +56,14 @@ class InterviewQuestionsTest extends TestCase
     }
 
     public function test_applicant_cant_access_interview_questions_when_timeout(){
+        $user = factory(Applicant::class)->create();
         $interview_duration = $this->job->interview_duration;
         $this->job->interview_duration = 0;
         $this->job->save();
-        $this->interview = $this->job->interviews()->create(['applicant_id' => $this->user->getKey() ]);
+        $interview = $this->job->interviews()->create(['applicant_id' => $user->getKey() ]);
 
-        Passport::actingAs($this->user, [], 'applicant');
-        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $this->interview->getRouteKey()]));
+        Passport::actingAs($user, [], 'applicant');
+        $response = $this->json('GET', route('applicantarea.interviews.questions.index', ['interview' => $interview->getRouteKey()]));
         $response->assertStatus(403);
         $this->job->interview_duration = $interview_duration;
         $this->job->save();
