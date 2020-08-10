@@ -34,7 +34,7 @@ class SkillsControllerTest extends TestCase
         $url = route('adminarea.skills.index');
 
         $response = $this->get($url);
-
+        dd($response);
         $structure = [
             'data' => [
                 '*' => [
@@ -70,6 +70,25 @@ class SkillsControllerTest extends TestCase
         
         //$added_skill = DB::table('skills')->where('id', $skill);
         $response->assertStatus(201);
+
+    }
+
+    public function test_admin_can_update_existing_skill()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+        
+        $url = route('adminarea.skills.update', [$this->skill->getRouteKey()]);
+        
+        $new_data = array(
+            'name' => "NEW NAME",
+            'created_at',
+            'updated_at'
+        );
+
+        $response = $this->call('PUT', $url, $new_data);
+        $updated_skill = $this->skill->fresh();
+        $this->assertEquals($updated_skill->name, "NEW NAME");
+        $response->assertStatus(200);
 
     }
 }
