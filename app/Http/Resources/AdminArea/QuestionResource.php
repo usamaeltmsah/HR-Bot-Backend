@@ -18,6 +18,7 @@ class QuestionResource extends JsonResource
 
         return [
             'id' => (string) $question->getRouteKey(),
+            'skill_id' => (string) $question->skill_id,
             'body' => (string) $question->body,
             'created_at' => (string) $question->created_at,
             'updated_at' => (string) $question->updated_at,
