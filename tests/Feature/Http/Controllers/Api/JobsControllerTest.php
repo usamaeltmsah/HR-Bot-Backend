@@ -103,7 +103,8 @@ class JobsControllerTest extends TestCase
         $job_arr = factory(Job::class)->raw();
         $job = $this->recruiter->jobs()->create($job_arr);
         $url = route('recruiterarea.jobs.update', [$job["id"]]);
-        $response = $this->call('PUT', $url, $data = array(
+
+        $new_data = array(
             "title" => "NEW TITLE",
             "description" => "NEW DESCRIPTION",
             "accept_interviews_from" => "2020-08-09 21:54:15",
@@ -113,7 +114,9 @@ class JobsControllerTest extends TestCase
             "updated_at" => "2020-08-09 21:54:15",
             "created_at" => "2020-08-09 21:54:15",
             "id" => 618
-        ));
+        );
+
+        $response = $this->call('PUT', $url, $new_data);
         
         $new_job = $job->fresh();
         $this->assertEquals($new_job->title, "NEW TITLE");
