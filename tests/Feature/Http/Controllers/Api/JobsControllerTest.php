@@ -53,7 +53,7 @@ class JobsControllerTest extends TestCase
                       "interview_duration",
                       "recruiter_id"
                     ],
-            ]
+                ]
             ]
         ];
         $response->assertJsonStructure($structure);
