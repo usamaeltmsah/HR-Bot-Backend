@@ -34,7 +34,6 @@ class SkillsControllerTest extends TestCase
         $url = route('adminarea.skills.index');
 
         $response = $this->get($url);
-        dd($response);
         $structure = [
             'data' => [
                 '*' => [
@@ -101,4 +100,17 @@ class SkillsControllerTest extends TestCase
         $response = $this->call('DELETE', $url);
         $response->assertStatus(204);    
     }
+
+
+    public function test_admin_can_get_skill_questions()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+        
+        $url = route('adminarea.skills.questions.index', [$this->skill->getRouteKey()]);
+
+        $response = $this->get($url);
+        $response->assertStatus(200);
+        
+    }
+
 }
