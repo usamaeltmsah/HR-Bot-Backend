@@ -40,9 +40,9 @@ Route::name('adminarea.')
 	->namespace('AdminArea')
 	->prefix(config('hrbot.route.prefix.adminarea'))
 	->group(function () {
-		Route::apiResource('skills', 'SkillsController');
-		
+		Route::apiResource('skills', 'SkillsController');		
 		Route::apiResource('skills.questions', 'QuestionsController')->shallow();
+		Route::apiResource('questions.model_answers', 'ModelAnswersController')->shallow();
 	});
 
 Route::name('recruiterarea.')
