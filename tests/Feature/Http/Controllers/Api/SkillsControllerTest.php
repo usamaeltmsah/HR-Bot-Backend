@@ -105,10 +105,25 @@ class SkillsControllerTest extends TestCase
     public function test_admin_can_get_skill_questions()
     {
         Passport::actingAs($this->admin, [], 'admin');
+
+        $this->skill->questions()->create(['body' => "question #1"]);
+        $this->skill->questions()->create(['body' => "question #2"]);
         
         $url = route('adminarea.skills.questions.index', [$this->skill->getRouteKey()]);
 
         $response = $this->get($url);
+        $structure = [
+            'data' => [
+                '*' => [
+                  'id',
+                  'skill_id',
+                  'body',
+                  'created_at',
+                  'updated_at',
+                ]
+            ]
+        ];
+        $response->assertJsonStructure($structure)->assertStatus(200);
         $response->assertStatus(200);
         
     }
