@@ -8,6 +8,8 @@ use Tests\TestCase;
 use App\Applicant;
 use App\Recruiter;
 use App\Interview;
+use App\Question;
+use App\Answer;
 use App\Job;
 use Laravel\Passport\Passport;
 
@@ -32,8 +34,14 @@ class JobsControllerTest extends TestCase
     {
         Passport::actingAs($this->recruiter, [], 'recruiter');
         $job_arr = factory(Job::class)->raw();
+
         $job = $this->recruiter->jobs()->create($job_arr);
+        $question_1 = factory(Question::class)->create();
+        $question_2 = factory(Question::class)->create();
+        $job->questions()->attach($question_1);
         $interview = $job->interviews()->create(['applicant_id' => $this->applicant->getKey() ]);
+        $interview->answers()->create(['body'=> "Answer of the question #1", 'question_id'=> $question_1->id]);
+        $interview->answers()->create(['body'=> "Answer of the question #2", 'question_id'=> $question_2->id]);
         $url = route("recruiterarea.interviews.show", ['interview' => $interview->getRouteKey()]);
         
         $response = $this->get($url);
@@ -64,13 +72,13 @@ class JobsControllerTest extends TestCase
                     ],
                     "report" => [
                         '*' => [
-                            "question" =>[[
+                            "question" =>[
                                 "id",
                                 "body",
                                 "created_at",
                                 "updated_at"
-                            ]],
-                            "answer" => [[
+                            ],
+                            "answer" => [
                                 "id",
                                 "body",
                                 "score",
@@ -78,11 +86,12 @@ class JobsControllerTest extends TestCase
                                 "interview_id",
                                 "created_at",
                                 "updated_at"
-                            ]]
+                            ]
                         ]
                     ]   
             ]
         ];
+
         $response->assertJsonStructure($structure);
         $response->assertStatus(200);
     }
