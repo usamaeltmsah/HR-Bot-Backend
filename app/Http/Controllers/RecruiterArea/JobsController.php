@@ -34,6 +34,18 @@ class JobsController extends Controller {
         return JobResource::collection($jobs);
     }
 
+    /**
+     * Show the given job
+     * 
+     * @param \App\Job $job
+     * 
+     * @return \App\Http\Resources\RecruiterArea\JobResource
+     */
+    public function show(Job $job) : JobResource
+    {
+        return new JobResource($job);
+    }
+
     /** 
      * filtration on all retrieved data
      * 

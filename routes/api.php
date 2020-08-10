@@ -60,6 +60,10 @@ Route::name('recruiterarea.')
 				Route::post('/', 'JobsController@store')
 					->name('store');
 
+				Route::get('/{job}', 'JobsController@show')
+					->name('show')
+					->middleware('can:modify,job');
+
 				Route::put('/{job}', 'JobsController@update')
 					->name('update')
 					->middleware('can:modify,job');
