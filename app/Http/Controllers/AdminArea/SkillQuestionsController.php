@@ -6,8 +6,8 @@ use App\Skill;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdminArea\QuestionResource;
-use App\Http\Requests\AdminArea\QuestionFormRequest;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use App\Http\Requests\AdminArea\SkillQuestionFormRequest;
 
 class SkillQuestionsController extends Controller
 {
@@ -27,12 +27,12 @@ class SkillQuestionsController extends Controller
     /**
      * Create a new question with the given data attached to the given skill
      * 
-     * @param  \App\Http\Requests\AdminArea\QuestionFormRequest $request
+     * @param  \App\Http\Requests\AdminArea\SkillQuestionFormRequest $request
      * @param  \App\Skill               $skill
      * 
      * @return \App\Http\Resources\AdminArea\QuestionResource
      */
-    public function store(QuestionFormRequest $request, Skill $skill): QuestionResource
+    public function store(SkillQuestionFormRequest $request, Skill $skill): QuestionResource
     {
     	$data = $request->validated();
 

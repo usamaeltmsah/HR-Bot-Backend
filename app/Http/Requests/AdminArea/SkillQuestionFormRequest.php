@@ -4,7 +4,7 @@ namespace App\Http\Requests\AdminArea;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class QuestionFormRequest extends FormRequest
+class SkillQuestionFormRequest extends FormRequest
 {
 
     /**
