@@ -86,4 +86,29 @@ class JobsControllerTest extends TestCase
         $response->assertJsonStructure($structure);
         $response->assertStatus(200);
     }
+
+    public function test_recruiter_can_update_interview_status()
+    {
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+        $job_arr = factory(Job::class)->raw();
+        $job = $this->recruiter->jobs()->create($job_arr);
+        $interview = $job->interviews()->create(['applicant_id' => $this->applicant->getKey() ]);
+        $url = route("recruiterarea.interviews.status", ['interview' => $interview->getRouteKey()]);
+        
+        $new_data = array(
+            "score" => 8.4,
+            "status" => "not selected",
+            "submitted_at" => "2020-08-09 21:54:15",
+            "created_at" => "2048-07-21 23:24:55",
+            "updated_at" => "2020-08-09 21:54:15",
+            "job",
+            "applicant"
+        );
+
+        $response = $this->call('PUT', $url, $new_data);
+
+        $new_interview = $interview->fresh();
+        $this->assertEquals($new_interview->status, "not selected");
+        $response->assertStatus(200);
+    }
 }
