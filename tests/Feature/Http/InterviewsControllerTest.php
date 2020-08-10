@@ -87,7 +87,7 @@ class JobsControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_recruiter_can_update_interview_status()
+    public function test_recruiter_can_update_interview_status_for_an_applicant()
     {
         Passport::actingAs($this->recruiter, [], 'recruiter');
         $job_arr = factory(Job::class)->raw();
