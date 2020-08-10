@@ -91,4 +91,14 @@ class SkillsControllerTest extends TestCase
         $response->assertStatus(200);
 
     }
+
+    public function test_admin_can_delete_skill_by_id()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+        $skill = factory(Skill::class)->create();
+        $url = route('adminarea.skills.destroy', [$skill->getRouteKey()]);
+        
+        $response = $this->call('DELETE', $url);
+        $response->assertStatus(204);    
+    }
 }
