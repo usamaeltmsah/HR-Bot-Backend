@@ -9,6 +9,7 @@ use Tests\TestCase;
 use App\User;
 use App\Applicant;
 use App\Recruiter;
+use App\Admin;
 
 
 class GuestsTest extends TestCase
@@ -125,6 +126,16 @@ class GuestsTest extends TestCase
     {
         $recruiter = factory(Recruiter::class)->create();
         Passport::actingAs($recruiter, [], 'recruiter');
+        
+        $response = $this->json('POST', 'api/logout');
+
+        $response->assertUnauthorized();
+    }
+
+    public function test_admin_can_logout()
+    {
+        $admin = factory(Admin::class)->create();
+        Passport::actingAs($admin, [], 'admin');
         
         $response = $this->json('POST', 'api/logout');
 
