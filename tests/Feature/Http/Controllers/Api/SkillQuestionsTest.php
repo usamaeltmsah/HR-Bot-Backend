@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Admin;
+use App\Recruiter;
 use App\Skill;
 use App\Question;
 use Laravel\Passport\Passport;
@@ -13,6 +14,7 @@ use Laravel\Passport\Passport;
 class SkillQuestionsTest extends TestCase
 {
     private $admin = null;
+    private $recruiter = null;
     private $skill = null;
     private $question = null;
 
@@ -21,6 +23,7 @@ class SkillQuestionsTest extends TestCase
         parent::setUp();
 
         $this->admin = factory(Admin::class)->create();
+        $this->recruiter = factory(Recruiter::class)->create();
         $this->skill = factory(Skill::class)->create();
         $this->question = factory(Question::class)->create();
     }
@@ -110,5 +113,31 @@ class SkillQuestionsTest extends TestCase
 
         $response = $this->call('DELETE', $url);
         $response->assertStatus(204);
+    }
+
+    public function test_recruiter_can_get_skill_questions()
+    {
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+
+        $this->skill->questions()->create(['body' => "question #1"]);
+        $this->skill->questions()->create(['body' => "question #2"]);
+        
+        $url = route('recruiterarea.skills.questions.index', [$this->skill->getRouteKey()]);
+
+        $response = $this->get($url);
+        $structure = [
+            'data' => [
+                '*' => [
+                  'id',
+                  'skill_id',
+                  'body',
+                  'created_at',
+                  'updated_at',
+                ]
+            ]
+        ];
+        $response->assertJsonStructure($structure)->assertStatus(200);
+        $response->assertStatus(200);
+        
     }
 }
