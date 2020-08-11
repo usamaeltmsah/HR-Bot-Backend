@@ -106,5 +106,17 @@ class ModelAnswersTest extends TestCase
 
         $updated_model_answer = $model_answer->fresh();
         $this->assertEquals($updated_model_answer->body, "NEW Model Answer");
+        $response->assertStatus(200);
+    }
+
+    public function test_admin_can_delete_modelAnswer()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+
+        $model_answer = $this->question->modelAnswers()->create(['body' => "Answer # 1"]);
+        $url = route('adminarea.model_answers.destroy', ['model_answer' => $model_answer->getRouteKey()]);
+
+        $response = $this->call('DELETE', $url);
+        $response->assertStatus(204);
     }
 }
