@@ -57,7 +57,7 @@ class ModelAnswersTest extends TestCase
 
         $url = route('adminarea.questions.model_answers.store', ['question' => $question->getRouteKey()]);
         
-        $response = $this->post($url, ['body' => "NEW ANSWER", "question_id" => $question->getRouteKey()]);
+        $response = $this->post($url, ['body' => "NEW ANSWER", 'question_id' => $question->getRouteKey()]);
 
         // Count the number of model answers of this question
         $n_modelAnswers = count($question->modelAnswers);
@@ -88,5 +88,23 @@ class ModelAnswersTest extends TestCase
             ]
         ];
         $response->assertJsonStructure($structure)->assertStatus(200);
+    }
+
+    public function test_admin_can_update_modelAnswer()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+
+        $model_answer = $this->question->modelAnswers()->create(['body' => "Answer # 1"]);
+        $url = route('adminarea.model_answers.update', ['model_answer' => $model_answer->getRouteKey()]);
+
+        $new_data = array(
+            'body' => "NEW Model Answer",
+            'question_id' => $this->question->getRouteKey()
+        );
+
+        $response = $this->call('PUT', $url, $new_data);
+
+        $updated_model_answer = $model_answer->fresh();
+        $this->assertEquals($updated_model_answer->body, "NEW Model Answer");
     }
 }
