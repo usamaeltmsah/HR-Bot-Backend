@@ -92,4 +92,14 @@ class SkillQuestionsTest extends TestCase
         $this->assertEquals($updated_question->body, "NEW Question?");
         $response->assertStatus(200);
     }
+
+    public function test_admin_can_delete_questions()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+        $question = factory(Question::class)->create();
+        $url = route('adminarea.questions.destroy', ['question' => $question->id]);
+
+        $response = $this->call('DELETE', $url);
+        $response->assertStatus(204);
+    }
 }
