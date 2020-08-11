@@ -9,6 +9,7 @@ use App\Applicant;
 use App\Recruiter;
 use App\Interview;
 use App\Job;
+use App\Question;
 use Laravel\Passport\Passport;
 
 class JobsControllerTest extends TestCase
@@ -26,6 +27,8 @@ class JobsControllerTest extends TestCase
         $this->recruiter = factory(Recruiter::class)->create();
         $this->job = factory(Job::class)->create();
         $this->interview = $this->job->interviews()->create(['applicant_id' => $this->applicant->getKey() ]);
+        $this->question = factory(Question::class)->create();
+        $this->job->questions()->attach($this->question);
     }
 
     /**
@@ -69,10 +72,32 @@ class JobsControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_applicant_can_apply_on_job_have_question(){
+        Passport::actingAs(factory(Applicant::class)->create(), [], 'applicant');
+        $url = route('applicantarea.jobs.apply', ["job" => $this->job->getRouteKey()]);
+
+        $response = $this->json('POST', $url);
+
+        $response->assertStatus(201);
+    }
+
+    public function test_applicant_cant_apply_on_jobs_dont_have_questions()
+    {
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+        $job = factory(Job::class)->create();
+        $url = route('applicantarea.jobs.apply', ["job" => $job->getRouteKey()]);
+
+        $response = $this->json('POST', $url);
+
+        $response->assertStatus(401);
+    }
+
     public function test_applicant_cant_apply_on_job_interview_more_than_once()
     {
         //
     }
+
     public function test_recruiter_can_add_new_job()
     {
         Passport::actingAs($this->recruiter, [], 'recruiter');
@@ -121,7 +146,8 @@ class JobsControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_recruiter_can_get_all_job_interviews_for_exact_job(){
+    public function test_recruiter_can_get_all_job_interviews_for_exact_job()
+    {
         Passport::actingAs($this->recruiter, [], 'recruiter');
         $job_arr = factory(Job::class)->raw();
         $applicant = factory(Applicant::class)->create();
