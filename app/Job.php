@@ -15,6 +15,7 @@ class Job extends Model
         'accept_interviews_until',
         'interview_duration',
         'skills',
+        'questions',
     ];
 
 
@@ -111,6 +112,20 @@ class Job extends Model
     {
         static::saved(function (self $job) use ($skills) {
             $model->skills()->sync($skills);
+        });
+    }
+
+    /**
+     * Attach the given questions to the job.
+     *
+     * @param array $questions
+     *
+     * @return void
+     */
+    public function setQuestionsAttribute(array $questions): void
+    {
+        static::saved(function (self $job) use ($questions) {
+            $model->questions()->sync($questions);
         });
     }
 
