@@ -97,7 +97,7 @@ Route::name('recruiterarea.')
 
 		Route::apiResource('skills', 'SkillsController')->only(['index', 'show']);
 
-		Route::apiResource('skills.questions', 'QuestionsController')->only(['index']);
+		Route::apiResource('skills.questions', 'QuestionsController')->shallow()->only(['index', 'show']);
 	});
 
 Route::name('applicantarea.')
