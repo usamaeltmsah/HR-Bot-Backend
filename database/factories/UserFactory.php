@@ -5,6 +5,7 @@
 use App\User;
 use App\Admin;
 use App\Applicant;
+use App\Recruiter;
 use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker){
@@ -20,7 +21,7 @@ $factory->define(Applicant::class, function (Faker $faker){
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => \Hash::make('12345678'),
+        'password' => '12345678',
         'role' => 'applicant',
     ];
 });
@@ -29,7 +30,7 @@ $factory->define(Recruiter::class, function (Faker $faker){
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => \Hash::make('12345678'),
+        'password' => '12345678',
         'role' => 'recruiter',
     ];
 });
