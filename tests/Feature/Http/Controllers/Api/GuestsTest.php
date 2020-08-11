@@ -144,7 +144,7 @@ class GuestsTest extends TestCase
         
         $response = $this->json('POST', 'api/applicant/logout');
 
-        $response->assertUnauthorized();
+        $response->assertStatus(204);
     }
 
     public function test_recruiter_can_logout()
@@ -154,7 +154,7 @@ class GuestsTest extends TestCase
         
         $response = $this->json('POST', 'api/recruiter/logout');
 
-        $response->assertUnauthorized();
+        $response->assertStatus(204);
     }
 
     public function test_admin_can_logout()
@@ -164,6 +164,6 @@ class GuestsTest extends TestCase
         
         $response = $this->json('POST', 'api/admin/logout');
 
-        $response->assertUnauthorized();
+        $response->assertStatus(204);
     }
 }
