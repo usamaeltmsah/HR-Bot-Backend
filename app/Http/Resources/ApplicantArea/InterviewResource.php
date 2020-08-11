@@ -19,6 +19,7 @@ class InterviewResource extends JsonResource
         return [
             'id' => (string) $interview->getRouteKey(),
             'job_id' => (string) $interview->job_id,
+            'remaining_time' => (string) $interview->remaining_time,
         ];
     }
 }
