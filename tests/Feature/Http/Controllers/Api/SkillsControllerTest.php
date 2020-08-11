@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Admin;
+use App\Recruiter;
 use App\Skill;
 use DB;
 use Laravel\Passport\Passport;
@@ -13,6 +14,7 @@ use Laravel\Passport\Passport;
 class SkillsControllerTest extends TestCase
 {
     private $admin = null;
+    private $recruiter = null;
     private $skill = null;
 
     public function setUp(): void
@@ -20,6 +22,7 @@ class SkillsControllerTest extends TestCase
         parent::setUp();
 
         $this->admin = factory(Admin::class)->create();
+        $this->recruiter = factory(Recruiter::class)->create();
         $this->skill = factory(Skill::class)->create();
     }
     /**
@@ -101,5 +104,25 @@ class SkillsControllerTest extends TestCase
         
         $response = $this->call('DELETE', $url);
         $response->assertStatus(204);    
+    }
+
+    public function test_recruiter_can_get_skills()
+    {
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+        
+        $url = route('recruiterarea.skills.index');
+
+        $response = $this->get($url);
+        $structure = [
+            'data' => [
+                '*' => [
+                  'id',
+                  'name',
+                  'created_at',
+                  'updated_at'
+                ]
+            ]
+        ];
+        $response->assertJsonStructure($structure)->assertStatus(200);
     }
 }
