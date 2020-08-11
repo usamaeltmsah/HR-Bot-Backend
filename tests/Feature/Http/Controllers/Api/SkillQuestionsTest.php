@@ -140,4 +140,13 @@ class SkillQuestionsTest extends TestCase
         $response->assertStatus(200);
         
     }
+
+    public function test_recruiter_can_get_single_question_by_id()
+    {
+        Passport::actingAs($this->recruiter, [], 'recruiter');
+        $url = route('recruiterarea.questions.show', ['question' => $this->question->id]);
+        $response = $this->get($url);
+
+        $response->assertJson(['data' => ['id' => $this->question->getRouteKey()]])->assertStatus(200);
+    }
 }
