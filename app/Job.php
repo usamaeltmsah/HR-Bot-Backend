@@ -14,6 +14,8 @@ class Job extends Model
         'accept_interviews_from',
         'accept_interviews_until',
         'interview_duration',
+        'skills',
+        'questions',
     ];
 
 
@@ -99,20 +101,32 @@ class Job extends Model
         return $query->where('recruiter_id', $user->getKey());
     }
 
-    /*
-     * must be run after creating the recruiters table
+    /**
+     * Attach the given skills to the job.
+     *
+     * @param array $skills
+     *
+     * @return void
      */
+    public function setSkillsAttribute(array $skills): void
+    {
+        static::saved(function (self $job) use ($skills) {
+            $model->skills()->sync($skills);
+        });
+    }
 
-//    public function recruiter(){
-//        return $this->belongsTo(RecruiterModel::class, 'recruiter_id');
-//    }
-
-    /*
-     * must be run after creating the job_skills table
+    /**
+     * Attach the given questions to the job.
+     *
+     * @param array $questions
+     *
+     * @return void
      */
-
-//    public function skills(){
-//        return $this->belongsToMany(Skill::class, 'job_skills');
-//    }
+    public function setQuestionsAttribute(array $questions): void
+    {
+        static::saved(function (self $job) use ($questions) {
+            $model->questions()->sync($questions);
+        });
+    }
 
 }

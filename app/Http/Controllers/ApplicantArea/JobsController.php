@@ -40,6 +40,7 @@ class JobsController extends Controller
     	$user = $request->user();
 
     	$query = Job::acceptingInterviews()
+                    ->has('questions')
     				->didntApplyBefore($user)
                     ->latest();
 
