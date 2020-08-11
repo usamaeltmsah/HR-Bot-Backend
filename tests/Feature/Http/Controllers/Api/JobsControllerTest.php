@@ -26,8 +26,6 @@ class JobsControllerTest extends TestCase
         $this->recruiter = factory(Recruiter::class)->create();
         $this->job = factory(Job::class)->create();
         $this->interview = $this->job->interviews()->create(['applicant_id' => $this->applicant->getKey() ]);
-        $this->job = factory(Job::class)->create();
-        $this->interview = $this->job->interviews()->create(['applicant_id' => $this->applicant->getKey() ]);
     }
 
     /**
