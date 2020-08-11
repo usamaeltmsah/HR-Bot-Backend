@@ -70,4 +70,23 @@ class ModelAnswersTest extends TestCase
         $this->assertEquals($added_modelAnswers, $added_modelAnswers_from_response);
         $response->assertStatus(201);
     }
+
+    public function test_admin_can_get_modelAnswer_by_id()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+        
+        $model_answer = $this->question->modelAnswers()->create(['body' => "Answer # 1"]);
+
+        $url = route('adminarea.model_answers.show', ['model_answer' => $model_answer->getRouteKey()]);
+        
+        $response = $this->get($url);
+        $structure = [
+            'data' => [
+                  'id',
+                  "body",
+                  "question_id"
+            ]
+        ];
+        $response->assertJsonStructure($structure)->assertStatus(200);
+    }
 }
