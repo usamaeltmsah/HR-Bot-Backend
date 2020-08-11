@@ -14,6 +14,7 @@ class SkillQuestionsTest extends TestCase
 {
     private $admin = null;
     private $skill = null;
+    private $question = null;
 
     public function setUp(): void
     {
@@ -21,6 +22,7 @@ class SkillQuestionsTest extends TestCase
 
         $this->admin = factory(Admin::class)->create();
         $this->skill = factory(Skill::class)->create();
+        $this->question = factory(Question::class)->create();
     }
 
     /**
@@ -56,6 +58,15 @@ class SkillQuestionsTest extends TestCase
         
     }
 
+    public function test_admin_can_get_single_question_by_id()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+        $url = route('adminarea.questions.show', ['question' => $this->question->id]);
+        $response = $this->get($url);
+
+        $response->assertJson(['data' => ['id' => $this->question->getRouteKey()]])->assertStatus(200);
+    }
+
     public function test_admin_can_add_questions_for_existing_skill()
     {
         Passport::actingAs($this->admin, [], 'admin');
@@ -80,15 +91,14 @@ class SkillQuestionsTest extends TestCase
     public function test_admin_can_update_existing_questions()
     {
         Passport::actingAs($this->admin, [], 'admin');
-        $question = factory(Question::class)->create();
-        $url = route('adminarea.questions.update', ['question' => $question->id]);
+        $url = route('adminarea.questions.update', ['question' => $this->question->id]);
 
         $new_data = array(
             'body' => "NEW Question?",
         );
 
         $response = $this->call('PUT', $url, $new_data);
-        $updated_question = $question->fresh();
+        $updated_question = $this->question->fresh();
         $this->assertEquals($updated_question->body, "NEW Question?");
         $response->assertStatus(200);
     }
@@ -96,8 +106,7 @@ class SkillQuestionsTest extends TestCase
     public function test_admin_can_delete_questions()
     {
         Passport::actingAs($this->admin, [], 'admin');
-        $question = factory(Question::class)->create();
-        $url = route('adminarea.questions.destroy', ['question' => $question->id]);
+        $url = route('adminarea.questions.destroy', ['question' => $this->question->id]);
 
         $response = $this->call('DELETE', $url);
         $response->assertStatus(204);
