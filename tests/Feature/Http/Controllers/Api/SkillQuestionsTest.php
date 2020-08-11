@@ -28,13 +28,6 @@ class SkillQuestionsTest extends TestCase
         $this->question = factory(Question::class)->create();
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    
-
     public function test_admin_can_get_skill_questions()
     {
         Passport::actingAs($this->admin, [], 'admin');

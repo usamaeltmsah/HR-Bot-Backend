@@ -29,11 +29,6 @@ class GuestsTest extends TestCase
         $this->recruiter_guest["password_confirmation"]  = $this->recruiter_guest["password"];
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_guest_can_get_jobs(){
         $response = $this->json('GET', route("guestarea.jobs.index"));
         $structure = [
@@ -118,29 +113,21 @@ class GuestsTest extends TestCase
 
     public function test_applicant_can_logout()
     {
-        /*
         $applicant = factory(Applicant::class)->create();
         Passport::actingAs($applicant, [], 'applicant');
-
-        //$response = $this->post('api/logout');
         
         $response = $this->json('POST', 'api/logout');
-        $this->assertAuthenticated();
-        $this->assertAuthenticatedAs($applicant, $guard = null);
-        */
+
+        $response->assertUnauthorized();
     }
 
     public function test_recruiter_can_logout()
     {
-        /*
         $recruiter = factory(Recruiter::class)->create();
         Passport::actingAs($recruiter, [], 'recruiter');
+        
+        $response = $this->json('POST', 'api/logout');
 
-        $response = $this->post('api/logout', [
-            'email' => $recruiter->email,
-            'password' => $recruiter->passwords,
-        ]);
-        $response->assertStatus(204);
-        */
+        $response->assertUnauthorized();
     }
 }

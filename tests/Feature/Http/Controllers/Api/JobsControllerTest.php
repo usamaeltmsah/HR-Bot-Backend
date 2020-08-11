@@ -31,11 +31,6 @@ class JobsControllerTest extends TestCase
         $this->job->questions()->attach($this->question);
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_applicant_can_get_interviews_for_jobs_he_applied_on()
     {
         Passport::actingAs($this->applicant, [], 'applicant');
