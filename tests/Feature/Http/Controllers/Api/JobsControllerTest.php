@@ -95,7 +95,13 @@ class JobsControllerTest extends TestCase
 
     public function test_applicant_cant_apply_on_job_interview_more_than_once()
     {
-        //
+        $applicant = factory(Applicant::class)->create();
+        Passport::actingAs($applicant, [], 'applicant');
+        $url = route('applicantarea.jobs.apply', ["job" => $this->job->getRouteKey()]);
+        $this->json('POST', $url);
+        $response = $this->json('POST', $url);
+
+        $response->assertStatus(403);
     }
 
     public function test_recruiter_can_add_new_job()
