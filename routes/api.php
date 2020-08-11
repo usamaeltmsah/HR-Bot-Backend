@@ -94,6 +94,10 @@ Route::name('recruiterarea.')
 		Route::put('answers/{answer}/score', 'AnswersController@updateScore')
 			->name('answers.score.update')
 			->middleware('can:modify,answer');
+
+		Route::apiResource('skills', 'SkillsController')->only(['index', 'show']);
+
+		Route::apiResource('skills.questions', 'QuestionsController')->only(['index']);
 	});
 
 Route::name('applicantarea.')
