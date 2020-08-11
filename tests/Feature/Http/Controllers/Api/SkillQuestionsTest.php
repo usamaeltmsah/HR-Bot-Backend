@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Admin;
 use App\Skill;
+use App\Question;
 use Laravel\Passport\Passport;
 
 class SkillQuestionsTest extends TestCase
@@ -74,5 +75,21 @@ class SkillQuestionsTest extends TestCase
         // Test that the 2 arrays are equals 
         $this->assertEquals($added_skill_q, $added_skill_q_from_response);
         $response->assertStatus(201);
+    }
+
+    public function test_admin_can_update_existing_questions()
+    {
+        Passport::actingAs($this->admin, [], 'admin');
+        $question = factory(Question::class)->create();
+        $url = route('adminarea.questions.update', ['question' => $question->id]);
+
+        $new_data = array(
+            'body' => "NEW Question?",
+        );
+
+        $response = $this->call('PUT', $url, $new_data);
+        $updated_question = $question->fresh();
+        $this->assertEquals($updated_question->body, "NEW Question?");
+        $response->assertStatus(200);
     }
 }
