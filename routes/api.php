@@ -96,6 +96,8 @@ Route::name('recruiterarea.')
 			->middleware('can:modify,answer');
 
 		Route::apiResource('skills', 'SkillsController')->only(['index', 'show']);
+
+		Route::apiResource('skills.questions', 'QuestionsController')->only(['index']);
 	});
 
 Route::name('applicantarea.')
