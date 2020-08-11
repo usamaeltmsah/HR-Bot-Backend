@@ -22,8 +22,19 @@ Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
 Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout');
 
+Route::get(config('hrbot.route.prefix.applicantarea'), 'UserInfoController@currentUser')
+	->middleware('auth:applicant')
+	->name('applicantarea.current_user');
+
+Route::get(config('hrbot.route.prefix.adminarea'), 'UserInfoController@currentUser')
+	->middleware('auth:admin')
+	->name('adminarea.current_user');
+
+Route::get(config('hrbot.route.prefix.recruiterarea'), 'UserInfoController@currentUser')
+	->middleware('auth:recruiter')
+	->name('recruiterarea.current_user');
+
 Route::name('guestarea.')
-	->middleware(['guest:applicant', 'guest:recruiter'])
 	->namespace('GuestArea')
 	->prefix(config('hrbot.route.prefix.guestarea'))
 	->group(function () {
@@ -105,7 +116,6 @@ Route::name('applicantarea.')
 	->namespace('ApplicantArea')
 	->prefix(config('hrbot.route.prefix.applicantarea'))
 	->group(function () {
-
 		Route::name('jobs.')
 			->prefix('jobs')
 			->group(function(){

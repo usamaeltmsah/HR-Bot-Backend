@@ -175,4 +175,20 @@ class Interview extends Model
 
         return $status;
     }
+
+    /**
+     * Get this interview duration
+     * 
+     * @return int
+     */
+    public function getRemainingTimeAttribute()
+    {        
+        $remaining_time = now()->diffInSeconds($this->submitted_at);
+        
+        if ($remaining_time <= 0) {
+            return 0;
+        }
+
+        return $remaining_time;
+    }
 }
