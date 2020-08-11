@@ -76,15 +76,9 @@ class JobsController extends Controller {
      * 
      * @return \App\Http\Resources\RecruiterArea\JobResource
      */
-    public function store(JobFormRequest $request) : JobResource
+    public function store(JobFormRequest $request, Job $job) : JobResource
     {
-        $data = $request->validated();
-
-        $user = $request->user();
-
-        $job = $user->jobs()->create($data);
-        
-        return new JobResource($job);
+        return $this->processSaving($request, $job);
     }
 
     /**
@@ -97,9 +91,25 @@ class JobsController extends Controller {
      */
     public function update(JobFormRequest $request, Job $job) : JobResource
     {
+        return $this->processSaving($request, $job);
+    }
+
+    /**
+     * Process saving a job in the database
+     * 
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Job     $job    
+     * @return \App\Http\Resources\RecruiterArea\JobResource
+     */
+    protected function processSaving(Request $request, Job $job): JobResource
+    {
+        $user = $request->user();
+
         $data = $request->validated();
 
-        $job->update($data);
+        $data['recruiter_id'] = $user->getKey();
+        
+        $job->fill($data)->save();
         
         return new JobResource($job);
     }

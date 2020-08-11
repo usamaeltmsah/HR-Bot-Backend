@@ -14,13 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/login', 'Auth\LoginController@login');
-Route::middleware('auth:api')->post('/logout', 'Auth\LoginController@logout');
 
 Route::get(config('hrbot.route.prefix.applicantarea'), 'UserInfoController@currentUser')
 	->middleware('auth:applicant')
@@ -51,6 +46,8 @@ Route::name('adminarea.')
 	->namespace('AdminArea')
 	->prefix(config('hrbot.route.prefix.adminarea'))
 	->group(function () {
+		Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')
+			->name('logout');
 		Route::apiResource('skills', 'SkillsController');		
 		Route::apiResource('skills.questions', 'QuestionsController')->shallow();
 		Route::apiResource('questions.model_answers', 'ModelAnswersController')->shallow();
@@ -61,6 +58,8 @@ Route::name('recruiterarea.')
 	->namespace('RecruiterArea')
 	->prefix(config('hrbot.route.prefix.recruiterarea'))
 	->group(function () {
+		Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')
+			->name('logout');
 
 		Route::name('jobs.')
 			->prefix('jobs')
@@ -116,6 +115,9 @@ Route::name('applicantarea.')
 	->namespace('ApplicantArea')
 	->prefix(config('hrbot.route.prefix.applicantarea'))
 	->group(function () {
+		Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')
+			->name('logout');
+		
 		Route::name('jobs.')
 			->prefix('jobs')
 			->group(function(){
@@ -146,39 +148,3 @@ Route::name('applicantarea.')
 					->middleware(['can:access,interview']);
 			});
 	});
-
-/**
- * crud operations for skills
- * people who can access this link
- * - recruiter can create a new skill
- * - recruiter can Update/ Delete/ retrieve a skill who created before
- */
-// Route::apiResource('/skills', 'SkillsController');
-/**
- * crud operations for questions
- * people who can access this link
- * - recruiter can create a new question for a specific job
- * - recruiter can Update/ Delete/ retrieve a question who created before
- */
-// Route::apiResource('/questions', 'QuestionsController');
-/**
- * crud operations for answers
- * people who can access this link
- * - recruiter can add a perfect answer for a question who added
- * - recruiter can Update/ Delete/ retrieve a perfect answer who created before
- * - applicant can just add his/her answer for a given question in the interview
- */
-// Route::apiResource('/answers', 'AnswerController');
-/**
- * crud operations for jobs
- * people who can access this link
- * - recruiter can create a new job
- * - recruiter can Update/ Delete/ retrieve a job who created before
- */
-// Route::apiResource('/jobs', 'JobsController');
-/**
- *  people who can access this link
- *  - the recruiter who created the job
- *  - any applicant didn't access this interview before
- */
-// Route::get('/jobs/{job}/questions', 'JobsController@getJobQuestions');

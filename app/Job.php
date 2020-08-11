@@ -16,6 +16,7 @@ class Job extends Model
         'interview_duration',
         'skills',
         'questions',
+        'recruiter_id',
     ];
 
 
@@ -28,6 +29,11 @@ class Job extends Model
      */
     public function interviews(){
         return $this->hasMany(Interview::class, 'job_id');
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'skills_jobs');
     }
 
     /**
@@ -111,7 +117,7 @@ class Job extends Model
     public function setSkillsAttribute(array $skills): void
     {
         static::saved(function (self $job) use ($skills) {
-            $model->skills()->sync($skills);
+            $job->skills()->sync($skills);
         });
     }
 
@@ -125,7 +131,7 @@ class Job extends Model
     public function setQuestionsAttribute(array $questions): void
     {
         static::saved(function (self $job) use ($questions) {
-            $model->questions()->sync($questions);
+            $job->questions()->sync($questions);
         });
     }
 
