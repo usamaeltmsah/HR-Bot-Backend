@@ -10,7 +10,7 @@ use App\User;
 use App\Applicant;
 use App\Recruiter;
 use App\Admin;
-
+use App\Job;
 
 class GuestsTest extends TestCase
 {
@@ -32,6 +32,31 @@ class GuestsTest extends TestCase
 
     public function test_guest_can_get_jobs(){
         $response = $this->json('GET', route("guestarea.jobs.index"));
+        $structure = [
+            'data' => [
+                '*' => [
+                  'id',
+                  'title',
+                  'description',
+                  'accept_interviews_from',
+                  'accept_interviews_until',
+                  'interview_duration',
+                  'recruiter_id'
+            ]
+            ]
+        ];
+        $response->assertJsonStructure($structure);
+
+        $response->assertStatus(200);
+    }
+
+    public function test_guest_can_get_job_by_title(){
+        $job = factory(Job::class)->create();
+        $url = route("guestarea.jobs.index").'?payload={ "title": '.("\"").($job->title).("\" }");
+        //dd($url);
+        $response = $this->json('GET', $url);
+        
+        //dd($response);
         $structure = [
             'data' => [
                 '*' => [
@@ -117,7 +142,7 @@ class GuestsTest extends TestCase
         $applicant = factory(Applicant::class)->create();
         Passport::actingAs($applicant, [], 'applicant');
         
-        $response = $this->json('POST', 'api/logout');
+        $response = $this->json('POST', 'api/applicant/logout');
 
         $response->assertUnauthorized();
     }
@@ -127,7 +152,7 @@ class GuestsTest extends TestCase
         $recruiter = factory(Recruiter::class)->create();
         Passport::actingAs($recruiter, [], 'recruiter');
         
-        $response = $this->json('POST', 'api/logout');
+        $response = $this->json('POST', 'api/recruiter/logout');
 
         $response->assertUnauthorized();
     }
@@ -137,7 +162,7 @@ class GuestsTest extends TestCase
         $admin = factory(Admin::class)->create();
         Passport::actingAs($admin, [], 'admin');
         
-        $response = $this->json('POST', 'api/logout');
+        $response = $this->json('POST', 'api/admin/logout');
 
         $response->assertUnauthorized();
     }
