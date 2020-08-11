@@ -183,6 +183,12 @@ class Interview extends Model
      */
     public function getRemainingTimeAttribute()
     {        
-        return now()->diffInSeconds($this->submitted_at);
+        $remaining_time = now()->diffInSeconds($this->submitted_at);
+        
+        if ($remaining_time <= 0) {
+            return 0;
+        }
+
+        return $remaining_time;
     }
 }
