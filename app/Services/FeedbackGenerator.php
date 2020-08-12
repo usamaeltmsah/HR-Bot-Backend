@@ -10,9 +10,9 @@ class FeedbackGenerator
 	 * Generate feedback for the given skills
 	 * 
 	 * @param  array  $skills 
-	 * @return string
+	 * @return array
 	 */
-	public function generate(array $skills): string
+	public function generate(array $skills): array
 	{
 		$body = [
 			'skills' => $skills,
@@ -21,6 +21,6 @@ class FeedbackGenerator
 
 		$response = Http::post(config('hrbot.feedback_model.endpoint'), $body);
 
-		return (string) json_encode($response['feedback']);
+		return $response['feedback'];
 	}
 }

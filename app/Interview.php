@@ -230,4 +230,9 @@ class Interview extends Model
 
         return $res;
     }
+
+    public function getFeedbackAttribute(string $feedback): array
+    {
+        return json_decode($feedback, true);
+    }
 }
