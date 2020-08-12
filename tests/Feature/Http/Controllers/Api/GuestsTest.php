@@ -50,13 +50,14 @@ class GuestsTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_guest_can_get_job_by_title(){
+    public function test_guest_can_get_jobs_by_title(){
+
+        $data = [];
         $job = factory(Job::class)->create();
-        $url = route("guestarea.jobs.index").'?payload={ "title": '.("\"").($job->title).("\" }");
-        //dd($url);
+        $data["title"] = $job->title;
+        $url = route("guestarea.jobs.index", $data);
         $response = $this->json('GET', $url);
         
-        //dd($response);
         $structure = [
             'data' => [
                 '*' => [
@@ -67,7 +68,7 @@ class GuestsTest extends TestCase
                   'accept_interviews_until',
                   'interview_duration',
                   'recruiter_id'
-            ]
+                ]
             ]
         ];
         $response->assertJsonStructure($structure);
