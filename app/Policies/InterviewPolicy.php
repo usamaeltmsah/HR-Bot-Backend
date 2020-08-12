@@ -45,4 +45,15 @@ class InterviewPolicy
 
         return False;
     }
+
+    /**
+     * Check wether the current user can check the interview results
+     * @param  App\User      $user
+     * @param  App\Interview $interview
+     * @return boolean
+     */
+    public function check_results(User $user, Interview $interview): bool
+    {
+        return $user->isApplicant() && $interview->isTheApplicant($user);
+    }
 }

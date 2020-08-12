@@ -135,6 +135,10 @@ Route::name('applicantarea.')
 				Route::get('/', 'InterviewsController@index')
 					->name('index');
 
+				Route::get('/{interview}', 'InterviewsController@show')
+					->name('show')
+					->middleware(['can:check_results,interview']);
+
 				Route::get('{interview}/questions', 'InterviewsController@questions')
 					->name('questions.index')
 					->middleware(['can:access,interview']);

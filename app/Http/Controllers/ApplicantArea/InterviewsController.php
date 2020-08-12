@@ -33,6 +33,17 @@ class InterviewsController extends Controller
         return InterviewWithJobResource::collection($interviews);
     }
 
+    /**
+     * Show the given interview
+     * 
+     * @param  \App\Interview $interview
+     * @return \App\Http\Resources\ApplicantArea\InterviewWithJobResource
+     */
+    public function show(Interview $interview): InterviewWithJobResource
+    {
+        return new InterviewWithJobResource($interview);
+    }
+
 	/**
      * Get all questions for the given jobs
      * 
