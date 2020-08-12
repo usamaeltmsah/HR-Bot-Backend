@@ -26,7 +26,7 @@ class QuestionsController extends Controller
 
         $query = $this->applyIndexFilters($request, $query);
 
-        $questions = $query->paginate();
+        $questions = $query->get();
 
         return QuestionResource::collection($questions);
     }
