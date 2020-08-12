@@ -197,4 +197,37 @@ class Interview extends Model
         $this->score = $this->answers()->sum('score');
         $this->save();
     }
+
+    public function getSkillsNamesNeedImprovement()
+    {
+        $questions = $this->questions()->with(['answers' => function($query) {
+                            $query->where('interview_id', $this->getKey());
+                        }])->get();
+
+        $skills_statistics = [];
+        foreach ($questions as $question) {
+            if (!isset($skills_statistics[$question->skill_id])) {
+                $skills_statistics[$question->skill_id] = [
+                    'total' => 0,
+                    'counter' => 0,
+                ];
+            }
+
+            $skills_statistics[$question->skill_id]['counter'] += 1;
+            if ($question->answers->isNotEmpty()) {
+                $skills_statistics[$question->skill_id]['total'] += $question->answers->first()->score;
+            }
+        }
+
+        $skills_ids = [];
+        foreach ($skills_statistics as $skill => $statisitcs) {
+            if (($statisitcs["total"] / $statisitcs["counter"]) < 5) {
+                $skills_ids[] = $skill;
+            }
+        }
+
+        $res = Skill::whereIn('id', $skills_ids)->pluck('name')->toArray();
+
+        return $res;
+    }
 }

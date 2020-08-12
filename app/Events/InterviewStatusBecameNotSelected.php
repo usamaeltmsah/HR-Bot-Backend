@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Interview;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,7 +15,7 @@ class InterviewStatusBecameNotSelected
 {
     use Dispatchable, SerializesModels;
 
-    protected $interview;
+    public $interview;
 
     /**
      * Create a new event instance.

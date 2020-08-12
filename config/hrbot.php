@@ -14,4 +14,9 @@ return [
 		'endpoint' => env('EVALUATION_MODEL_ENDPOINT'),
 		'token' => env('EVALUATION_MODEL_TOKEN'),
 	],
+
+	'feedback_model' => [
+		'endpoint' => env('FEEDBACK_MODEL_ENDPOINT'),
+		'token' => env('FEEDBACK_MODEL_TOKEN'),
+	],
 ];
