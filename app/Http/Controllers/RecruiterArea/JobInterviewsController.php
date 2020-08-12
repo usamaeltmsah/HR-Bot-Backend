@@ -7,6 +7,7 @@ use App\Interview;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Events\InterviewStatusBecameNotSelected;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Http\Resources\RecruiterArea\InterviewResource;
 use App\Http\Resources\RecruiterArea\InterviewReportResource;
@@ -59,6 +60,9 @@ class JobInterviewsController extends Controller {
         $data = $request->validated();
         $interview->status = $data['status'];
         $interview->save();
+        if ($interview->status === "not selected") {
+            event(new InterviewStatusBecameNotSelected($interview));
+        }
         return new InterviewReportResource($interview);
     }
 }
