@@ -20,6 +20,6 @@ class EvaluateAnswer
         $answer = $event->answer->body;
         $modelAnswers = $event->answer->question->modelAnswers->pluck('body')->toArray();
         $score = $evaluator->evaluate($answer, $modelAnswers);
-        $event->answer->update(['score' => $score]);
+        $event->answer->fill(['score' => $score])->save();
     }
 }
