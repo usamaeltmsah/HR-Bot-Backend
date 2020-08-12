@@ -5,6 +5,7 @@ namespace App\Http\Requests\RecruiterArea;
 use App\Skill;
 use App\Question;
 use App\Rules\AllExist;
+use App\Rules\AllQuestionsHaveModelAnswers;
 use Illuminate\Foundation\Http\FormRequest;
 
 class JobFormRequest extends FormRequest
@@ -84,7 +85,7 @@ class JobFormRequest extends FormRequest
                 'required',
                 'array',
                 new AllExist(Question::class),
-                new AllHaveModelAnswers(),
+                new AllQuestionsHaveModelAnswers(),
             ],
         ];
     }
