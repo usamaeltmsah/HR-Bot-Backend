@@ -18,6 +18,7 @@ class AnswerScoreFormRequest extends FormRequest
                 'required',
                 'numeric',
                 'min:0',
+                'max:10',
             ]
         ];
     }
