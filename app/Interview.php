@@ -191,4 +191,10 @@ class Interview extends Model
 
         return $remaining_time;
     }
+
+    public function recalculateScore()
+    {
+        $this->score = $this->answers()->sum('score');
+        $this->save();
+    }
 }

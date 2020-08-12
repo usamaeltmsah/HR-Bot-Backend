@@ -28,6 +28,10 @@ class Answer extends Model
         parent::__construct($attributes);
 
         $this->setTable(config('database.tables.answers'));
+
+        static::saved(function (self $answer) {
+            $answer->interview->recalculateScore();
+        });
     }
 
     /**

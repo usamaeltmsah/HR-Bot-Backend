@@ -3,13 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\AnswerCreated;
-use App\Http\Controllers\AnswerController;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Services\AnswerEvaluator;
 
-class EvaluateAnswer implements ShouldQueue
+class EvaluateAnswer
 {
-    use InteractsWithQueue;
 
     /**
      * Handle the event.
@@ -19,16 +16,10 @@ class EvaluateAnswer implements ShouldQueue
      */
     function handle($event)
     {
-        // strings
-        // $question = $event->newAnswer->question->body;
-        $answer = $event->newAnswer->body;
-
-        // float
-        $score = AnswerController::evalAnswer($answer);
-        
-        // $event->newAnswer->score = $score;
-        // $event->newAnswer->save();
-        // $event->newAnswer->fill(['score' => $score])->save();
-        $event->newAnswer->update(['score' => $score]);
+        $evaluator = new AnswerEvaluator();
+        $answer = $event->answer->body;
+        $modelAnswers = $event->answer->question->modelAnswers->pluck('body')->toArray();
+        $score = $evaluator->evaluate($answer, $modelAnswers);
+        $event->answer->fill(['score' => $score])->save();
     }
 }
