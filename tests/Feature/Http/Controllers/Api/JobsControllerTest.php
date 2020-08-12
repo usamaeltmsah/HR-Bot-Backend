@@ -9,6 +9,7 @@ use App\Applicant;
 use App\Recruiter;
 use App\Interview;
 use App\Job;
+use App\Skill;
 use App\Question;
 use Laravel\Passport\Passport;
 
@@ -103,9 +104,12 @@ class JobsControllerTest extends TestCase
     {
         Passport::actingAs($this->recruiter, [], 'recruiter');
         $url = route('recruiterarea.jobs.store');
-        $job = factory('App\Job')->raw();
-
-        $response = $this->post($url, $job);
+        $data = factory('App\Job')->raw();
+        $skill = factory(Skill::class)->create();
+        $data["skills"] = [$skill->id];
+        $question = $skill->questions()->create(['body' => "question #1"]);
+        $data["questions"] = [$question->id];
+        $response = $this->post($url, $data);
         $response->assertStatus(201);
     }
 
@@ -124,11 +128,10 @@ class JobsControllerTest extends TestCase
     public function test_recruiter_can_update_existing_job()
     {
         Passport::actingAs($this->recruiter, [], 'recruiter');
-        $job_arr = factory(Job::class)->raw();
-        $job = $this->recruiter->jobs()->create($job_arr);
-        $url = route('recruiterarea.jobs.update', [$job["id"]]);
 
-        $new_data = array(
+        $job = factory(Job::class)->create();
+        $url = route('recruiterarea.jobs.update', [$job["id"]]);
+        $new_job = array(
             "title" => "NEW TITLE",
             "description" => "NEW DESCRIPTION",
             "accept_interviews_from" => "2020-08-09 21:54:15",
@@ -140,10 +143,15 @@ class JobsControllerTest extends TestCase
             "id" => 618
         );
 
-        $response = $this->call('PUT', $url, $new_data);
+        $skill = factory(Skill::class)->create();
+        $new_job["skills"] = [$skill->id];
+        $question = $skill->questions()->create(['body' => "question #1"]);
+        $new_job["questions"] = [$question->id];
+
+        $response = $this->call('PUT', $url, $new_job);
         
-        $new_job = $job->fresh();
-        $this->assertEquals($new_job->title, "NEW TITLE");
+        $job = $job->fresh();
+        $this->assertEquals($job->title, "NEW TITLE");
         $response->assertStatus(200);
     }
 
