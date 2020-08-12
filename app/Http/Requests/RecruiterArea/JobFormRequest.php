@@ -84,6 +84,7 @@ class JobFormRequest extends FormRequest
                 'required',
                 'array',
                 new AllExist(Question::class),
+                new AllHaveModelAnswers(),
             ],
         ];
     }
