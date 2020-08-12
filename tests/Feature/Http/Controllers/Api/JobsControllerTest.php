@@ -128,6 +128,7 @@ class JobsControllerTest extends TestCase
     public function test_recruiter_can_update_existing_job()
     {
         Passport::actingAs($this->recruiter, [], 'recruiter');
+        $recruiter = factory(Recruiter::class)->create();
 
         $job = factory(Job::class)->create();
         $url = route('recruiterarea.jobs.update', [$job["id"]]);
@@ -137,7 +138,7 @@ class JobsControllerTest extends TestCase
             "accept_interviews_from" => "2020-08-09 21:54:15",
             "accept_interviews_until" => "2048-07-21 23:24:55",
             "interview_duration" => 3111,
-            "recruiter_id" => 949,
+            "recruiter_id" => $recruiter->id,
             "updated_at" => "2020-08-09 21:54:15",
             "created_at" => "2020-08-09 21:54:15",
             "id" => 618
@@ -147,6 +148,8 @@ class JobsControllerTest extends TestCase
         $new_job["skills"] = [$skill->id];
         $question = $skill->questions()->create(['body' => "question #1"]);
         $new_job["questions"] = [$question->id];
+
+        $recruiter->jobs()->create([$new_job]);
 
         $response = $this->call('PUT', $url, $new_job);
         
