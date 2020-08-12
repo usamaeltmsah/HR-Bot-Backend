@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3aac0f10-8b73-4d61-b77c-a933cc98d980" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/JobsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/JobsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ََQuestionFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ََQuestionFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Interview.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Interview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/JobFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/JobFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_10_082338_alter_questions_table_add_skill_id.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_10_082338_alter_questions_table_add_skill_id.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,6 +125,28 @@
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-diactoros" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-zendframework-bridge" />
+      <path value="$PROJECT_DIR$/vendor/nyholm/psr7" />
+      <path value="$PROJECT_DIR$/vendor/league/event" />
+      <path value="$PROJECT_DIR$/vendor/league/oauth2-server" />
+      <path value="$PROJECT_DIR$/vendor/defuse/php-encryption" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/samasend/laravel-make-scope" />
+      <path value="$PROJECT_DIR$/vendor/php-http/message-factory" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php70" />
+      <path value="$PROJECT_DIR$/vendor/laravel/passport" />
+      <path value="$PROJECT_DIR$/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
     </include_path>
   </component>
   <component name="ProjectId" id="1fGv2jk2fRZKhM0buN1xQIwRSkx" />
@@ -164,6 +187,7 @@
       <method v="2" />
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -191,11 +215,18 @@
       <workItem from="1595945548708" duration="3960000" />
       <workItem from="1596004721982" duration="5282000" />
       <workItem from="1596015339121" duration="3242000" />
+      <workItem from="1596747841555" duration="25000" />
+      <workItem from="1596751021014" duration="388000" />
+      <workItem from="1596786388917" duration="31000" />
+      <workItem from="1596895419122" duration="765000" />
+      <workItem from="1597095624454" duration="663000" />
+      <workItem from="1597168984263" duration="25000" />
+      <workItem from="1597221207653" duration="1008000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
     <state x="350" y="0" width="646" height="723" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1591978039885">
@@ -210,21 +241,21 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="416" y="121" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1595949281916" />
-    <state width="1322" height="173" key="GridCell.Tab.0.bottom" timestamp="1595960657261">
+    <state width="1322" height="173" key="GridCell.Tab.0.bottom" timestamp="1596745298701">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595960657261" />
-    <state width="1322" height="173" key="GridCell.Tab.0.center" timestamp="1595960657260">
+    <state width="1322" height="173" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1596745298701" />
+    <state width="1322" height="173" key="GridCell.Tab.0.center" timestamp="1596745298700">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1595960657260" />
-    <state width="1322" height="173" key="GridCell.Tab.0.left" timestamp="1595960657260">
+    <state width="1322" height="173" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1596745298700" />
+    <state width="1322" height="173" key="GridCell.Tab.0.left" timestamp="1596745298700">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1595960657260" />
-    <state width="1322" height="173" key="GridCell.Tab.0.right" timestamp="1595960657260">
+    <state width="1322" height="173" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1596745298700" />
+    <state width="1322" height="173" key="GridCell.Tab.0.right" timestamp="1596745298701">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595960657260" />
+    <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1596745298701" />
   </component>
 </project>
