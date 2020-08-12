@@ -16,7 +16,7 @@ class CreateAnswersTable extends Migration
         Schema::create(config('database.tables.answers'), function (Blueprint $table) {
             $table->increments('id');
             $table->text('body');
-            $table->float('score')->nullable();
+            $table->float('score')->nullable()->default(0);
             $table->integer('question_id')->unsigned();
             $table->integer('interview_id')->unsigned()->nullable();
             $table->timestamps();
