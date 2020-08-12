@@ -13,8 +13,9 @@ use Illuminate\Queue\SerializesModels;
 
 class AnswerCreated
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $newAnswer;
+    use Dispatchable, SerializesModels;
+    
+    public $answer;
 
     /**
      * Create a new event instance.
@@ -23,17 +24,6 @@ class AnswerCreated
      */
     public function __construct(Answer $answer)
     {
-        $this->newAnswer = $answer;
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-
-        return new PrivateChannel('channel-name');
+        $this->answer = $answer;
     }
 }
