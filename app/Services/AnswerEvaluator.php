@@ -21,7 +21,7 @@ class AnswerEvaluator
 			'token' => config('hrbot.evaluation_model.token'),
 		];
 
-		$response = Http::post(config('hrbot.evaluation_model.endpoint'));
+		$response = Http::post(config('hrbot.evaluation_model.endpoint'), $body);
 
 		return (float) $response['score'];
 	}
