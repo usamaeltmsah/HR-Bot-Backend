@@ -22,7 +22,7 @@ class QuestionsController extends Controller
     public function index(QuestionsListingFormRequest $request): ResourceCollection
     {
 
-        $query = Question::latest();
+        $query = Question::has('modelAnswers')->latest();
 
         $query = $this->applyIndexFilters($request, $query);
 
