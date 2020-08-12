@@ -14,8 +14,8 @@ class AlterQuestionsTableAddSkillId extends Migration
     public function up()
     {
         Schema::table(config('database.tables.questions'), function (Blueprint $table) {
-            $table->integer('skill_id')->unsigned();
-            
+//            $table->integer('skill_id')->unsigned();
+
             // Index
             $table->foreign('skill_id')
                             ->references('id')

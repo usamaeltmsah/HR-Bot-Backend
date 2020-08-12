@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Interview extends Model
 {
     protected $fillable = [
-        'job_id', 
+        'job_id',
         'applicant_id'
     ];
 
@@ -41,14 +41,14 @@ class Interview extends Model
             if(is_null($interview->submitted_at)) {
                 $duration = $interview->job->interview_duration;
 
-                $interview->submitted_at = now()->addSeconds($duration);     
+                $interview->submitted_at = now()->addSeconds($duration);
             }
         });
     }
 
     /**
      * The interview is done for a specific job
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function job(): BelongsTo
@@ -58,7 +58,7 @@ class Interview extends Model
 
     /**
      * The interview is done by a specific applicant
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function applicant(): BelongsTo
@@ -68,7 +68,7 @@ class Interview extends Model
 
     /**
      * The interview may have one or more answer
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function answers(): HasMany
@@ -78,7 +78,7 @@ class Interview extends Model
 
     /**
      * The interview may have one or more questions
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function questions(): BelongsToMany
@@ -88,7 +88,7 @@ class Interview extends Model
 
     /**
      * check whether this interview is in progress
-     * 
+     *
      * @return boolean
      */
     public function isInProgress(): bool
@@ -98,7 +98,7 @@ class Interview extends Model
 
     /**
      * check whether the given user is the applicant of this interview
-     * 
+     *
      * @return boolean
      */
     public function isTheApplicant(User $user): bool
@@ -108,17 +108,17 @@ class Interview extends Model
 
     /**
      * Check whether this interview should ask this question
-     * @param  Question $question 
+     * @param  Question $question
      * @return boolean
      */
     public function hasQuestion(Question $question): bool
     {
         return $this->questions->contains($question);
     }
-    
+
     /**
      * Is this interview submitted
-     * 
+     *
      * @return boolean
      */
     public function isSubmitted(): bool
@@ -128,9 +128,9 @@ class Interview extends Model
 
     /**
      * Check wether this interview is for the given job
-     * 
+     *
      * @param  \App\Job    $job
-     * 
+     *
      * @return boolean
      */
     public function isForJob(Job $job): bool
@@ -140,7 +140,7 @@ class Interview extends Model
 
     /**
      * Submit this interview
-     * 
+     *
      * @return void
      */
     public function submit(): void
@@ -151,7 +151,7 @@ class Interview extends Model
 
     /**
      * only interviews that the given user is the applicant of it
-     * 
+     *
      * @param  \Illuminate\Database\Eloquent\Builder    $query
      * @param  \App\User                                $user
      * @return \Illuminate\Database\Eloquent\Builder
@@ -163,7 +163,7 @@ class Interview extends Model
 
     /**
      * Get status attribute
-     * 
+     *
      * @param  string|null $status
      * @return string
      */
@@ -178,13 +178,13 @@ class Interview extends Model
 
     /**
      * Get this interview duration
-     * 
+     *
      * @return int
      */
     public function getRemainingTimeAttribute()
-    {        
+    {
         $remaining_time = now()->diffInSeconds($this->submitted_at);
-        
+
         if ($remaining_time <= 0) {
             return 0;
         }
