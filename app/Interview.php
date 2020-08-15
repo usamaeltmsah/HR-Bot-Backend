@@ -269,7 +269,7 @@ class Interview extends Model
             return True;
         }
 
-        return  is_null($feedback) && $this->isSubmitted() && $this->thresholdChecker->check($this->score);
+        return  $this->isSubmitted() && $this->thresholdChecker->check($this->score);
     }
 
     /**
@@ -280,11 +280,11 @@ class Interview extends Model
     private function regenerateFeedback(): ?string
     {
         $skills = $this->getSkillsNamesNeedImprovement();
-        
+
         if (empty($skills)) {
             $this->attributes['feedback'] = '{}';
         } else {
-            $feedbackGenerator = new FeedbackGenerator();
+            $feedbackGenerator = new feedbackGenerator();
             $feedback = $feedbackGenerator->generate($skills);
             $this->attributes['feedback']= json_encode($feedback);
         }
