@@ -29,6 +29,13 @@ class Interview extends Model
     ];
 
     /**
+     * Threshold checker
+     * 
+     * @var \App\Services\ThresholdChecker
+     */
+    protected $thresholdChecker;
+
+    /**
      * Create a new Eloquent model instance.
      *
      * @param array $attributes
@@ -282,7 +289,7 @@ class Interview extends Model
         $skills = $this->getSkillsNamesNeedImprovement();
 
         if (empty($skills)) {
-            $this->attributes['feedback'] = '{}';
+            $this->attributes['feedback'] = null;
         } else {
             $feedbackGenerator = new feedbackGenerator();
             $feedback = $feedbackGenerator->generate($skills);
