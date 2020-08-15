@@ -255,28 +255,11 @@ class Interview extends Model
      */
     public function getFeedbackAttribute(?string $feedback = null): ?array
     {
-        if (is_null($feedback) && $this->hasFeedback()) {
-            ;
+        if (is_null($feedback) && $this->isSubmitted()) {
             $feedback = $this->regenerateFeedback();
         }
 
         return json_decode($feedback, true);
-    }
-
-    /**
-     * Check wether this interview has feedback or not
-     * 
-     * @return boolean
-     */
-    private function hasFeedback(): bool
-    {
-        $feedback = Arr::get($this->attributes, 'feedback', null);
-        
-        if ('not selected' == $this->status) {
-            return True;
-        }
-
-        return  $this->isSubmitted() && $this->thresholdChecker->check($this->score);
     }
 
     /**
