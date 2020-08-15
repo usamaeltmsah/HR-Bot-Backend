@@ -38,7 +38,7 @@ class QuestionsListingFormRequest extends FormRequest
         return [
             'skills' => [
                 'bail',
-                'nullable',
+                'required',
                 'array',
                 new AllExist(Skill::class),
             ],
