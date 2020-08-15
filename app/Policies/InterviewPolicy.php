@@ -56,4 +56,15 @@ class InterviewPolicy
     {
         return $user->isApplicant() && $interview->isTheApplicant($user);
     }
+
+    /**
+     * check wether the current user can update the status of the given interview
+     * @param  \App\User      $user
+     * @param  \App\Interview $interview
+     * @return boolean
+     */
+    public function update_status(User $user, Interview $interview): bool
+    {
+        return $user->isRecruiter() && $interview->isSubmitted();
+    }
 }
