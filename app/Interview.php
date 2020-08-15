@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Support\Arr;
+use App\Services\ThresholdChecker;
 use App\Services\FeedbackGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -46,6 +47,8 @@ class Interview extends Model
                 $interview->submitted_at = now()->addSeconds($duration);
             }
         });
+
+        $this->thresholdChecker = new ThresholdChecker(config('hrbot.threshold'));
     }
 
     /**
@@ -210,20 +213,21 @@ class Interview extends Model
         foreach ($questions as $question) {
             if (!isset($skills_statistics[$question->skill_id])) {
                 $skills_statistics[$question->skill_id] = [
-                    'total' => 0,
-                    'counter' => 0,
+                    'total_score' => 0,
+                    'questions_counter' => 0,
                 ];
             }
 
-            $skills_statistics[$question->skill_id]['counter'] += 1;
+            $skills_statistics[$question->skill_id]['questions_counter'] += 1;
             if ($question->answers->isNotEmpty()) {
-                $skills_statistics[$question->skill_id]['total'] += $question->answers->first()->score;
+                $skills_statistics[$question->skill_id]['total_score'] += $question->answers->first()->score;
             }
         }
 
         $skills_ids = [];
         foreach ($skills_statistics as $skill => $statisitcs) {
-            if (($statisitcs["total"] / $statisitcs["counter"]) < 5) {
+            $skill_score = $statisitcs['total_score'] / $statisitcs['questions_counter'];
+            if ($this->thresholdChecker->check($skill_score)) {
                 $skills_ids[] = $skill;
             }
         }
@@ -260,7 +264,12 @@ class Interview extends Model
     private function hasFeedback(): bool
     {
         $feedback = Arr::get($this->attributes, 'feedback', null);
-        return ('not selected' == $this->status) || (is_null($feedback) && $this->isSubmitted() && $this->score < 5);
+        
+        if ('not selected' == $this->status) {
+            return True;
+        }
+
+        return  is_null($feedback) && $this->isSubmitted() && $this->thresholdChecker->check($this->score);
     }
 
     /**
@@ -271,6 +280,7 @@ class Interview extends Model
     private function regenerateFeedback(): ?string
     {
         $skills = $this->getSkillsNamesNeedImprovement();
+        
         if (empty($skills)) {
             $this->attributes['feedback'] = '{}';
         } else {
