@@ -19,4 +19,6 @@ return [
 		'endpoint' => env('FEEDBACK_MODEL_ENDPOINT'),
 		'token' => env('FEEDBACK_MODEL_TOKEN'),
 	],
+
+	'threshold' => 6,
 ];
