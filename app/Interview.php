@@ -272,7 +272,7 @@ class Interview extends Model
         $skills = $this->getSkillsNamesNeedImprovement();
 
         if (empty($skills)) {
-            $this->attributes['feedback'] = null;
+            $this->attributes['feedback'] = '{}';
         } else {
             $feedbackGenerator = new feedbackGenerator();
             $feedback = $feedbackGenerator->generate($skills);
