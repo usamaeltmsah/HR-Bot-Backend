@@ -65,6 +65,6 @@ class InterviewPolicy
      */
     public function update_status(User $user, Interview $interview): bool
     {
-        return $user->isRecruiter() && $interview->isSubmitted();
+        return $user->isRecruiter() && $this->access($user, $interview) && $interview->isSubmitted();
     }
 }
