@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Support\Arr;
+use App\Services\FeedbackGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -226,13 +228,58 @@ class Interview extends Model
             }
         }
 
+        if(empty($skills_ids)) {
+            return [];
+        }
+
         $res = Skill::whereIn('id', $skills_ids)->pluck('name')->toArray();
 
         return $res;
     }
 
+    /**
+     * Get the interview feedback attribute
+     * @param  string|null $feedback
+     * @return array|null
+     */
     public function getFeedbackAttribute(?string $feedback = null): ?array
     {
+        if (is_null($feedback) && $this->hasFeedback()) {
+            ;
+            $feedback = $this->regenerateFeedback();
+        }
+
         return json_decode($feedback, true);
+    }
+
+    /**
+     * Check wether this interview has feedback or not
+     * 
+     * @return boolean
+     */
+    private function hasFeedback(): bool
+    {
+        $feedback = Arr::get($this->attributes, 'feedback', null);
+        return ('not selected' == $this->status) || (is_null($feedback) && $this->isSubmitted() && $this->score < 5);
+    }
+
+    /**
+     * Regenerate the interview feedback 
+     * 
+     * @return string|null
+     */
+    private function regenerateFeedback(): ?string
+    {
+        $skills = $this->getSkillsNamesNeedImprovement();
+        if (empty($skills)) {
+            $this->attributes['feedback'] = '{}';
+        } else {
+            $feedbackGenerator = new FeedbackGenerator();
+            $feedback = $feedbackGenerator->generate($skills);
+            $this->attributes['feedback']= json_encode($feedback);
+        }
+
+        $this->save();
+        return $this->attributes['feedback'];
     }
 }
