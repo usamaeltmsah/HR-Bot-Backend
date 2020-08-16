@@ -14,27 +14,46 @@ git clone https://github.com/usamaeltmsah/HR-Bot-Backend.git && cd HR-Bot-Backen
 composer install
 ```
 
-3. Generate a laravel project key
+3. Copy the enviroment varaibales file template
+```
+cp .env.example .env
+```
+
+4. Set your own enviroment variables, replace the following pseudo variables with your values in the following commands, then execute them from the terminal:
+
+- `YOUR_DATABASE_HOST_HERE`
+- `YOUR_DATABASE_NAME_HERE`
+- `YOUR_DATABASE_USERNAME_HERE`
+- `YOUR_DATABASE_PASSWORD_HERE`
+
+```
+sed -i "s/DB_HOST=.*/DB_HOST=YOUR_DATABASE_HOST_HERE/" .env
+sed -i "s/DB_DATABASE=.*/DB_DATABASE=YOUR_DATABASE_NAME_HERE/" .env
+sed -i "s/DB_USERNAME=.*/DB_USERNAME=YOUR_DATABASE_USERNAME_HERE/" .env
+sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=YOUR_DATABASE_PASSWORD_HERE/" .env
+```
+
+5. Generate a laravel project key
 ```
 php artisan key:generate
 ```
 
-4. Migrate the database tables
+6. Migrate the database tables
 ```
 php artisan migrate
 ```
 
-5. Install passport
+7. Install passport
 ```
 php artisan passport:install
 ```
 
-6. [optional] seed the database with some data
+8. [optional] seed the database with some data
 ```
 php artisan db:seed
 ```
 
-7. run the application
+9. run the application
 ```
 php artisan serve
 ```
